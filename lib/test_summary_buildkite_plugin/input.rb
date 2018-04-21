@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 module TestSummaryBuildkitePlugin
+  WORKDIR = 'tmp/test-summary'
+
   module Input
     def self.create(type:, **options)
       type = type.to_sym
-      raise StandardError, "Unknown file type: #{type}" unless PARSERS.key?(type)
-      PARSERS[type].new(options)
+      raise StandardError, "Unknown file type: #{type}" unless TYPES.key?(type)
+      TYPES[type].new(options)
     end
 
     class Base
@@ -68,5 +70,11 @@ module TestSummaryBuildkitePlugin
     class Tap < Base
       # TODO
     end
+
+    TYPES = {
+      oneline: Input::OneLine,
+      junit: Input::JUnit,
+      tap: Input::Tap
+    }.freeze
   end
 end
