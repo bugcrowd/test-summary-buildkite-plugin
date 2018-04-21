@@ -1,0 +1,3 @@
+/Users/foo/test-summary-buildkite-plugin/lib/test_summary_buildkite_plugin/agent.rb:22:7: C: Style/GuardClause: Use a guard clause instead of wrapping the code inside a conditional expression.
+/Users/foo/test-summary-buildkite-plugin/lib/test_summary_buildkite_plugin/formatter.rb:24:37: C: Style/Semicolon: Do not use semicolons to terminate expressions.
+/Users/foo/test-summary-buildkite-plugin/lib/test_summary_buildkite_plugin/formatter.rb:36:1: C: Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body beginning.

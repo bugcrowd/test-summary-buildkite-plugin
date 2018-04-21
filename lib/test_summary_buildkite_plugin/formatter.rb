@@ -22,7 +22,7 @@ module TestSummaryBuildkitePlugin
 
       def heading(input)
         count = input.failures.count
-        "#{count} #{input.label} failure#{'s' unless count.zero?}"
+        "#{count} #{input.label} failure#{'s' unless count == 1}"
       end
     end
 

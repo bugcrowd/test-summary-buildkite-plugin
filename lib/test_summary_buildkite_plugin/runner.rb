@@ -9,7 +9,7 @@ module TestSummaryBuildkitePlugin
     end
 
     def run
-      markdown = inputs.map { |input| formatter.markdown(input) }.join("\n\n")
+      markdown = inputs.map { |input| formatter.markdown(input) }.compact.join("\n\n")
       if markdown.empty?
         Agent.run('annotate', '--style', 'success', 'All tests passed :party:')
       else

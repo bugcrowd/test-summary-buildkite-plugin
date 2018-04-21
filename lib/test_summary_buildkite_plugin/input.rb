@@ -49,7 +49,7 @@ module TestSummaryBuildkitePlugin
 
     class OneLine < Base
       def failures_raw
-        files.map { |file| read(file).split("\n")[crop.start...-crop.end] }
+        files.map { |file| read(file).split("\n")[crop.start..crop.end] }
              .flatten
              .reject(&:empty?)
              .map { |line| Failure::Oneline.new(line) }
@@ -60,7 +60,7 @@ module TestSummaryBuildkitePlugin
       def crop
         @crop ||= OpenStruct.new(
           start: options.dig(:crop, :start) || 0,
-          end: options.dig(:crop, :end) || 0
+          end: -1 - (options.dig(:crop, :end) || 0)
         )
       end
     end
