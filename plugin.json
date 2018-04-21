@@ -1,0 +1,7 @@
+{
+  "name": "test-summary",
+  "description": "Collates test results as a buildkite annotation",
+  "author": "@tessereth",
+  "public": true,
+  "requirements": ["docker"]
+}

@@ -1,0 +1,39 @@
+steps:
+  # Run all your tests, uploading results as artifacts
+  - label: Upload artifacts
+    command: buildkite-agent artifact upload spec/sample_artifacts/**/*
+
+  # Wait for the tests to finish
+  - wait: ~
+    continue_on_failure: true
+
+  # Add test summary
+  - label: annotate
+    plugins:
+      bugcrowd/test-summary#v0.1.0:
+        inputs:
+#          - label: rspec
+#            artifact_path: spec/sample_artifacts/rspec/*
+#            type: junit
+#            encoding: UTF-8
+#          - label: ava
+#            artifact_path: spec/sample_artifacts/ava.txt
+#            type: tap
+          - label: eslint
+            artifact_path: spec/sample_artifacts/eslint.txt
+            type: oneline
+            # ignore the last two lines
+            crop:
+              start: 0
+              end: 2
+          - label: rubocop
+            artifact_path: spec/sample_artifacts/rubocop.txt
+            type: oneline
+#          - label: stylelint
+#            artifact_path: spec/sample_artifacts/stylelint.xml
+#            type: junit
+        # oneline or verbose annotation
+        formatter:
+          type: oneline
+          hide_after: 20
+        context: default

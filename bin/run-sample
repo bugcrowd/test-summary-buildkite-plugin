@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'bundler/setup'
+require 'test_summary_buildkite_plugin'
+require 'yaml'
+
+pipeline_sample = YAML.load_file('.buildkite/pipeline-sample.yml')
+ENV['BUILDKITE_PLUGIN_TEST_SUMMARY'] = pipeline_sample['steps'].last['plugins'].values.first.to_json
+
+TestSummaryBuildkitePlugin::Runner.run
