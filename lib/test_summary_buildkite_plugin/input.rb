@@ -79,7 +79,7 @@ module TestSummaryBuildkitePlugin
             failures << Failure::Structured.new(
               file: testcase['file'],
               name: testcase['name'],
-              details: failure.content
+              details: failure.inner_html
             )
           end
         end

@@ -17,12 +17,16 @@ module TestSummaryBuildkitePlugin
 
       def markdown(input)
         return nil if input.failures.count.zero?
-        "#{heading(input)}\n\n#{input.failures.map { |failure| failure_markdown(failure) }.join("\n")}"
+        "#{heading(input)}\n\n#{failures_markdown(input)}"
+      end
+
+      def failures_markdown(input)
+        input.failures.map { |failure| failure_markdown(failure) }.join("\n")
       end
 
       def heading(input)
         count = input.failures.count
-        "#{count} #{input.label} failure#{'s' unless count == 1}"
+        "##### #{input.label}: #{count} failure#{'s' unless count == 1}"
       end
     end
 
@@ -36,14 +40,20 @@ module TestSummaryBuildkitePlugin
       def failure_markdown(failure)
         if failure.details
           <<~END_MARKDOWN
-            <details>
-              <summary><code>#{failure.summary}</code></summary>
-              <code><pre>#{failure.details}</pre></code>
-            </details>
+            <li>
+              <details>
+                <summary><code>#{failure.summary}</code></summary>
+                <code><pre>#{failure.details}</pre></code>
+              </details>
+            </li>
           END_MARKDOWN
         else
-          "    #{failure.summary}"
+          "<li><code>#{failure.summary}</code></li>"
         end
+      end
+
+      def failures_markdown(input)
+        "<ul>#{super(input)}</ul>"
       end
     end
 
