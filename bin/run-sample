@@ -8,11 +8,13 @@ $LOAD_PATH.unshift(Pathname.new(__FILE__).dirname.dirname.join('lib').to_s)
 require 'yaml'
 require 'test_summary_buildkite_plugin'
 
+TestSummaryBuildkitePlugin::Agent.stub = true
+
 pipeline_sample = YAML.load_file('.buildkite/pipeline-sample.yml')
 
-[2, 3].each do |step_idx|
-  ENV['BUILDKITE_PLUGIN_TEST_SUMMARY'] = pipeline_sample['steps'][step_idx]['plugins'].values.first.to_json
+pipeline_sample['steps'].each do |step|
+  next unless step['plugins']
 
-  TestSummaryBuildkitePlugin::Agent.stub = true
+  ENV['BUILDKITE_PLUGINS'] = step['plugins'].to_json
   TestSummaryBuildkitePlugin::Runner.run
 end
