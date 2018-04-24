@@ -6,6 +6,9 @@ require 'test_summary_buildkite_plugin'
 require 'yaml'
 
 pipeline_sample = YAML.load_file('.buildkite/pipeline-sample.yml')
-ENV['BUILDKITE_PLUGIN_TEST_SUMMARY'] = pipeline_sample['steps'].last['plugins'].values.first.to_json
 
-TestSummaryBuildkitePlugin::Runner.run
+[2, 3].each do |step_idx|
+  ENV['BUILDKITE_PLUGIN_TEST_SUMMARY'] = pipeline_sample['steps'][step_idx]['plugins'].values.first.to_json
+
+  TestSummaryBuildkitePlugin::Runner.run
+end

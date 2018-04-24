@@ -24,6 +24,8 @@ module TestSummaryBuildkitePlugin
       end
 
       alias sort_key summary
+
+      def details; end
     end
 
     class Structured < Base

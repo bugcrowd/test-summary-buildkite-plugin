@@ -33,7 +33,18 @@ module TestSummaryBuildkitePlugin
     end
 
     class Verbose < Base
-      # TODO
+      def failure_markdown(failure)
+        if failure.details
+          <<~END_MARKDOWN
+            <details>
+              <summary><code>#{failure.summary}</code></summary>
+              <code><pre>#{failure.details}</pre></code>
+            </details>
+          END_MARKDOWN
+        else
+          "    #{failure.summary}"
+        end
+      end
     end
 
     TYPES = {

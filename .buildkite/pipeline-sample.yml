@@ -15,7 +15,7 @@ steps:
           - label: rspec
             artifact_path: spec/sample_artifacts/rspec*
             type: junit
-#            encoding: UTF-8
+            encoding: UTF-8
 #          - label: ava
 #            artifact_path: spec/sample_artifacts/ava.txt
 #            type: tap
@@ -36,4 +36,35 @@ steps:
         formatter:
           type: oneline
           hide_after: 20
-        context: default
+        context: simple-annotation
+
+  # Add test summary, including failure details
+  - label: annotate
+    plugins:
+      bugcrowd/test-summary#v0.1.0:
+        inputs:
+          - label: rspec
+            artifact_path: spec/sample_artifacts/rspec*
+            type: junit
+            encoding: UTF-8
+#          - label: ava
+#            artifact_path: spec/sample_artifacts/ava.txt
+#            type: tap
+          - label: eslint
+            artifact_path: spec/sample_artifacts/eslint.txt
+            type: oneline
+            # ignore the last two lines
+            crop:
+              start: 0
+              end: 2
+          - label: rubocop
+            artifact_path: spec/sample_artifacts/rubocop.txt
+            type: oneline
+#          - label: stylelint
+#            artifact_path: spec/sample_artifacts/stylelint.xml
+#            type: junit
+        # oneline or verbose annotation
+        formatter:
+          type: verbose
+          hide_after: 20
+        context: verbose-annotation
