@@ -10,7 +10,7 @@ steps:
   # Add test summary
   - label: annotate
     plugins:
-      bugcrowd/test-summary#v0.1.0:
+      bugcrowd/test-summary#@VERSION@:
         inputs:
           - label: rspec
             artifact_path: spec/sample_artifacts/rspec*
@@ -41,7 +41,7 @@ steps:
   # Add test summary, including failure details
   - label: annotate
     plugins:
-      bugcrowd/test-summary#v0.1.0:
+      bugcrowd/test-summary#@VERSION@:
         inputs:
           - label: rspec
             artifact_path: spec/sample_artifacts/rspec*
