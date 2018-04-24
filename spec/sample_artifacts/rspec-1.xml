@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="rspec" tests="4" skipped="0" failures="1" errors="0" time="9.066393" timestamp="2018-04-24T11:21:13+10:00" hostname="foo.local">
+<testsuite name="rspec" tests="4" skipped="0" failures="1" errors="0" time="9.658348" timestamp="2018-04-24T14:55:21+10:00" hostname="foo.local">
 <properties>
-<property name="seed" value="38627"/>
+<property name="seed" value="42001"/>
 </properties>
-<testcase classname="spec.features.sign_in_out_spec" name="signing in and out sign in then out and kill session" file="./spec/features/sign_in_out_spec.rb" time="5.057488"></testcase>
-<testcase classname="spec.features.sign_in_out_spec" name="signing in and out sign_in reset password" file="./spec/features/sign_in_out_spec.rb" time="1.980750"><failure message="awesomesauce" type="RuntimeError">Failure/Error: \e[0mfail(\e[31m\e[1;31m&apos;\e[0m\e[31mawesomesauce\e[1;31m&apos;\e[0m\e[31m\e[0m)
+<testcase classname="spec.features.sign_in_out_spec" name="signing in and out sign in then out and kill session" file="./spec/features/sign_in_out_spec.rb" time="5.496461"></testcase>
+<testcase classname="spec.features.sign_in_out_spec" name="signing in and out sign_in when hitting setting/account require password" file="./spec/features/sign_in_out_spec.rb" time="0.479118"></testcase>
+<testcase classname="spec.features.sign_in_out_spec" name="signing in and out sign_in reset password" file="./spec/features/sign_in_out_spec.rb" time="2.068429"><failure message="awesomesauce" type="RuntimeError">Failure/Error: fail(&apos;awesomesauce&apos;)
 
 RuntimeError:
   awesomesauce
 ./spec/features/sign_in_out_spec.rb:27:in `block (3 levels) in &lt;top (required)&gt;&apos;</failure></testcase>
-<testcase classname="spec.features.sign_in_out_spec" name="signing in and out sign_in when hitting setting/account require password" file="./spec/features/sign_in_out_spec.rb" time="0.461375"></testcase>
-<testcase classname="spec.features.sign_in_out_spec" name="signing in and out sign_in when user is external it signs in" file="./spec/features/sign_in_out_spec.rb" time="1.371337"></testcase>
+<testcase classname="spec.features.sign_in_out_spec" name="signing in and out sign_in when user is external it signs in" file="./spec/features/sign_in_out_spec.rb" time="1.398856"></testcase>
 </testsuite>
