@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
-echo TODO
-
-exit 1
+env
+docker build -t test-summary-$BUILDKITE_BUILD_ID .
+docker run --rm --mount type=bind,src=/usr/bin/buildkite-agent,dst=/usr/bin/buildkite-agent \
+  -e BUILDKITE_JOB_ID -e BUILDKITE_AGENT_ACCESS_TOKEN \
+  test-summary-$BUILDKITE_BUILD_ID

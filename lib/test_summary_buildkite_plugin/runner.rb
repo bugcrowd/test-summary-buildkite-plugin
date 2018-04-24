@@ -34,7 +34,7 @@ module TestSummaryBuildkitePlugin
     end
 
     def self.run
-      options = JSON.parse(ENV['BUILDKITE_PLUGIN_TEST_SUMMARY'], symbolize_names: true)
+      options = JSON.parse(ENV.fetch('BUILDKITE_PLUGIN_TEST_SUMMARY'), symbolize_names: true)
       p options
       new(options).run
     end
