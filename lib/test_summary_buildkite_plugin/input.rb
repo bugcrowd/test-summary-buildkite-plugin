@@ -102,8 +102,7 @@ module TestSummaryBuildkitePlugin
         raise 'Only TAP version 13 supported' unless lines.first.strip == 'TAP version 13'
         tests = []
         in_failure = false
-        in_yaml = false
-        details = []
+        yaml_lines = nil
         lines.each do |line|
           if (matchdata = line.match(TEST_LINE))
             if matchdata['not']
@@ -117,13 +116,12 @@ module TestSummaryBuildkitePlugin
               in_failure = false
             end
           elsif line.match?(YAML_START)
-            in_yaml = true
+            yaml_lines = []
           elsif line.match?(YAML_END)
-            in_yaml = false
-            tests.last.details = details.join("\n")
-            details = []
-          elsif in_failure && in_yaml
-            details << line
+            tests.last.details = yaml_lines.join("\n")
+            yaml_lines = nil
+          elsif in_failure && yaml_lines
+            yaml_lines << line
           end
         end
         tests
