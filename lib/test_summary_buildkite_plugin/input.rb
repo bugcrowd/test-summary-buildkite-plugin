@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module TestSummaryBuildkitePlugin
-  WORKDIR = 'tmp/test-summary'
-
   module Input
+    WORKDIR = 'tmp/test-summary'
+
     def self.create(type:, **options)
       type = type.to_sym
       raise StandardError, "Unknown file type: #{type}" unless TYPES.key?(type)
