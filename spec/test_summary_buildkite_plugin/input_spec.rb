@@ -129,4 +129,14 @@ severity: fail')
       expect(input.failures.first.column).to be_nil
     end
   end
+
+  describe 'setting ascii encoding' do
+    let(:type) { 'oneline' }
+    let(:artifact_path) { 'eslint.txt' }
+    let(:additional_options) { { encoding: 'ascii' } }
+
+    it 'tries to parse as ascii' do
+      expect { input.failures }.to raise_error('invalid byte sequence in US-ASCII')
+    end
+  end
 end
