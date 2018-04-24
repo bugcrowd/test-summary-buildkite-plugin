@@ -15,6 +15,7 @@ pipeline_sample = YAML.load_file('.buildkite/pipeline-sample.yml')
 pipeline_sample['steps'].each do |step|
   next unless step['plugins']
 
-  ENV['BUILDKITE_PLUGINS'] = step['plugins'].to_json
+  # Match the formatting that buildkite gives
+  ENV['BUILDKITE_PLUGINS'] = [step['plugins']].to_json
   TestSummaryBuildkitePlugin::Runner.run
 end
