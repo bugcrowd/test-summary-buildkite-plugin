@@ -118,7 +118,7 @@ module TestSummaryBuildkitePlugin
           elsif line.match?(YAML_START)
             yaml_lines = []
           elsif line.match?(YAML_END)
-            tests.last.details = yaml_lines.join("\n")
+            tests.last.details = details(yaml_lines)
             yaml_lines = nil
           elsif in_failure && yaml_lines
             yaml_lines << line
@@ -131,6 +131,12 @@ module TestSummaryBuildkitePlugin
         # There's a convention to put a ' - ' between the test number and the description
         # We strip that for better readability
         matchdata['description'].strip.gsub(/^- /, '')
+      end
+
+      def details(yaml_lines)
+        # strip indent
+        indent = yaml_lines.first.match(/(\s*)/)[1].length
+        yaml_lines.map { |line| line[indent..-1] }.join("\n")
       end
     end
 

@@ -105,10 +105,10 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
     end
 
     it 'failures have details' do
-      expect(input.failures.first.details).to eq('    operator: ===
-    expected: false
-    actual: true
-    at: true')
+      expect(input.failures.first.details).to eq('operator: ===
+expected: false
+actual: true
+at: true')
     end
 
     it 'failures have name' do
