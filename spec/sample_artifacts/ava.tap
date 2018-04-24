@@ -1,0 +1,39 @@
+TAP version 13
+# VrtTableTest › <VrtTable /> renders all valid VRT rows on initial load
+ok 1 - VrtTableTest › <VrtTable /> renders all valid VRT rows on initial load
+# VrtTableTest › <VrtTable /> renders VRT rows sorted by priority on initial load
+ok 2 - VrtTableTest › <VrtTable /> renders VRT rows sorted by priority on initial load
+# VrtTableTest › <VrtTable /> renders VRT rows sorted by descending priority
+ok 3 - VrtTableTest › <VrtTable /> renders VRT rows sorted by descending priority
+# VrtTableTest › <VrtTable /> renders VRT rows sorted alphabetically by category
+ok 4 - VrtTableTest › <VrtTable /> renders VRT rows sorted alphabetically by category
+# ToggleTest › When enabled checkbox is checked
+not ok 5 - ToggleTest › When enabled checkbox is checked
+  ---
+    operator: ===
+    expected: false
+    actual: true
+    at: true
+  ...
+# VrtTableTest › <VrtTable /> renders VRT rows sorted alphabetically by subcategory with blank values at the end regardless of sort order
+ok 6 - VrtTableTest › <VrtTable /> renders VRT rows sorted alphabetically by subcategory with blank values at the end regardless of sort order
+# ToggleTest › When disabled checkbox is unchecked
+ok 7 - ToggleTest › When disabled checkbox is unchecked
+# ToggleTest › Passes enabledMessage to appropriate data tag
+ok 8 - ToggleTest › Passes enabledMessage to appropriate data tag
+# VrtTableTest › <VrtTable /> renders VRT rows sorted alphabetically by variant
+ok 9 - VrtTableTest › <VrtTable /> renders VRT rows sorted alphabetically by variant
+# ToggleTest › Passes disabledMessage to appropriate data tag
+ok 10 - ToggleTest › Passes disabledMessage to appropriate data tag
+# ToggleTest › Adds/removes loading class based on the loading prop
+ok 11 - ToggleTest › Adds/removes loading class based on the loading prop
+# ToggleTest › When not loading does not have the loading class
+ok 12 - ToggleTest › When not loading does not have the loading class
+# VrtTableTest › <VrtTable /> renders VRT rows filtered by search
+ok 13 - VrtTableTest › <VrtTable /> renders VRT rows filtered by search
+
+1..13
+# tests 13
+# pass 12
+# fail 1
+

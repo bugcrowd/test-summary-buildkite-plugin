@@ -93,4 +93,31 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
       expect(input.failures.last.file).to eq('./spec/lib/url_whitelist_spec.rb')
     end
   end
+
+  describe 'tap' do
+    let(:type) { 'tap' }
+    let(:artifact_path) { 'ava.tap' }
+
+    it { is_expected.to be_a(TestSummaryBuildkitePlugin::Input::Tap) }
+
+    it 'has all failures' do
+      expect(input.failures.count).to eq(1)
+    end
+
+    it 'failures have name' do
+      expect(input.failures.first.name).to eq('ToggleTest › When enabled checkbox is checked')
+    end
+
+    it 'failures have no file' do
+      expect(input.failures.first.file).to be_nil
+    end
+
+    it 'failures have no line' do
+      expect(input.failures.first.line).to be_nil
+    end
+
+    it 'failures have no column' do
+      expect(input.failures.first.column).to be_nil
+    end
+  end
 end

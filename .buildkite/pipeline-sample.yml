@@ -16,9 +16,9 @@ steps:
             artifact_path: spec/sample_artifacts/rspec*
             type: junit
             encoding: UTF-8
-#          - label: ava
-#            artifact_path: spec/sample_artifacts/ava.txt
-#            type: tap
+          - label: ava
+            artifact_path: spec/sample_artifacts/ava.tap
+            type: tap
           - label: eslint
             artifact_path: spec/sample_artifacts/eslint.txt
             type: oneline
@@ -47,9 +47,9 @@ steps:
             artifact_path: spec/sample_artifacts/rspec*
             type: junit
             encoding: UTF-8
-#          - label: ava
-#            artifact_path: spec/sample_artifacts/ava.txt
-#            type: tap
+          - label: ava
+            artifact_path: spec/sample_artifacts/ava.tap
+            type: tap
           - label: eslint
             artifact_path: spec/sample_artifacts/eslint.txt
             type: oneline

@@ -87,7 +87,41 @@ module TestSummaryBuildkitePlugin
     end
 
     class Tap < Base
-      # TODO
+      TEST_LINE = /^(?<not>not )?ok(?<test_number> \d+)?(?<description>[^#]*)(#(?<directive>.*))?/.freeze
+
+      def failures_raw
+        files.map { |file| read(file) }
+             .map { |tap| tap_to_failures(tap) }
+             .flatten
+      end
+
+      def tap_to_failures(tap)
+        lines = tap.split("\n")
+        raise 'Only TAP version 13 supported' unless lines.first.strip == 'TAP version 13'
+        tests = []
+        in_failure = false
+        lines.each do |line|
+          if matchdata = line.match(TEST_LINE)
+            if matchdata['not']
+              # start of a failing test
+              in_failure = true
+              tests << Failure::Structured.new(
+                name: name(matchdata)
+              )
+            else
+              # we're in a successful test, ignore subsequent lines until we hit a failure
+              in_failure = false
+            end
+          end
+        end
+        tests
+      end
+
+      def name(matchdata)
+        # There's a convention to put a ' - ' between the test number and the description
+        # We strip that for better readability
+        matchdata['description'].strip.gsub(/^- /, '')
+      end
     end
 
     TYPES = {

@@ -31,7 +31,7 @@ module TestSummaryBuildkitePlugin
     class Structured < Base
       attr_reader :file, :line, :column, :name, :details
 
-      def initialize(file:, name:, line: nil, column: nil, details: nil)
+      def initialize(name:, file: nil, line: nil, column: nil, details: nil)
         @file = file
         @line = line
         @column = column
@@ -44,18 +44,18 @@ module TestSummaryBuildkitePlugin
       end
 
       def summary
-        "#{location}: #{name}"
+        "#{location}#{name}"
       end
 
       private
 
       def location
-        if line && column
-          "#{file}:#{line}:#{column}"
-        elsif line
-          "#{file}:#{line}"
-        else
-          file
+        if file && line && column
+          "#{file}:#{line}:#{column}: "
+        elsif file && line
+          "#{file}:#{line}: "
+        elsif file
+          "#{file}: "
         end
       end
     end
