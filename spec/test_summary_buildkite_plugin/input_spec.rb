@@ -63,6 +63,10 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
 ./spec/lib/url_whitelist_spec.rb:96:in `block (4 levels) in &lt;top (required)&gt;\'')
     end
 
+    it 'details escape html' do
+      expect(input.failures.first.details).to include('&lt;')
+    end
+
     it 'failures have file' do
       expect(input.failures.first.file).to eq('./spec/lib/url_whitelist_spec.rb')
     end
@@ -96,23 +100,21 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
 
   describe 'tap' do
     let(:type) { 'tap' }
-    let(:artifact_path) { 'ava.tap' }
+    let(:artifact_path) { 'example.tap' }
 
     it { is_expected.to be_a(TestSummaryBuildkitePlugin::Input::Tap) }
 
     it 'has all failures' do
-      expect(input.failures.count).to eq(1)
+      expect(input.failures.count).to eq(2)
     end
 
     it 'failures have details' do
-      expect(input.failures.first.details).to eq('operator: ===
-expected: false
-actual: true
-at: true')
+      expect(input.failures.first.details).to eq('message: \'timeout\'
+severity: fail')
     end
 
     it 'failures have name' do
-      expect(input.failures.first.name).to eq('ToggleTest › When enabled checkbox is checked')
+      expect(input.failures.first.name).to eq('pinged quartz')
     end
 
     it 'failures have no file' do

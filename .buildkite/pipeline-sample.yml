@@ -1,4 +1,17 @@
 steps:
+#
+#  - label: rubocop
+#    command: rubocop
+#
+#  - label: rspec
+#    command: rspec
+#
+#  - wait
+#
+#  - block: Show sample
+#
+#  - wait
+#
   # Run all your tests, uploading results as artifacts
   - label: Upload artifacts
     command: buildkite-agent artifact upload spec/sample_artifacts/**/*
@@ -16,8 +29,8 @@ steps:
             artifact_path: spec/sample_artifacts/rspec*
             type: junit
             encoding: UTF-8
-          - label: ava
-            artifact_path: spec/sample_artifacts/ava.tap
+          - label: tap
+            artifact_path: spec/sample_artifacts/example.tap
             type: tap
           - label: eslint
             artifact_path: spec/sample_artifacts/eslint.txt
@@ -47,8 +60,8 @@ steps:
             artifact_path: spec/sample_artifacts/rspec*
             type: junit
             encoding: UTF-8
-          - label: ava
-            artifact_path: spec/sample_artifacts/ava.tap
+          - label: tap
+            artifact_path: spec/sample_artifacts/example.tap
             type: tap
           - label: eslint
             artifact_path: spec/sample_artifacts/eslint.txt
