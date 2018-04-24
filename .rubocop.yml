@@ -3,3 +3,7 @@ Metrics/LineLength:
 
 Documentation:
   Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
