@@ -29,7 +29,7 @@ module TestSummaryBuildkitePlugin
     end
 
     class Structured < Base
-      attr_reader :file, :line, :column, :name, :details
+      attr_accessor :file, :line, :column, :name, :details
 
       def initialize(name:, file: nil, line: nil, column: nil, details: nil)
         @file = file

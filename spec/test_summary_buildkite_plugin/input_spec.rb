@@ -104,6 +104,13 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
       expect(input.failures.count).to eq(1)
     end
 
+    it 'failures have details' do
+      expect(input.failures.first.details).to eq('    operator: ===
+    expected: false
+    actual: true
+    at: true')
+    end
+
     it 'failures have name' do
       expect(input.failures.first.name).to eq('ToggleTest › When enabled checkbox is checked')
     end

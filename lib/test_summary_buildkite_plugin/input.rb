@@ -87,7 +87,9 @@ module TestSummaryBuildkitePlugin
     end
 
     class Tap < Base
-      TEST_LINE = /^(?<not>not )?ok(?<test_number> \d+)?(?<description>[^#]*)(#(?<directive>.*))?/.freeze
+      TEST_LINE = /^(?<not>not )?ok(?<test_number> \d+)?(?<description>[^#]*)(#(?<directive>.*))?/
+      YAML_START = /^\s+---/
+      YAML_END = /^\s+\.\.\./
 
       def failures_raw
         files.map { |file| read(file) }
@@ -100,8 +102,10 @@ module TestSummaryBuildkitePlugin
         raise 'Only TAP version 13 supported' unless lines.first.strip == 'TAP version 13'
         tests = []
         in_failure = false
+        in_yaml = false
+        details = []
         lines.each do |line|
-          if matchdata = line.match(TEST_LINE)
+          if (matchdata = line.match(TEST_LINE))
             if matchdata['not']
               # start of a failing test
               in_failure = true
@@ -112,6 +116,14 @@ module TestSummaryBuildkitePlugin
               # we're in a successful test, ignore subsequent lines until we hit a failure
               in_failure = false
             end
+          elsif line.match?(YAML_START)
+            in_yaml = true
+          elsif line.match?(YAML_END)
+            in_yaml = false
+            tests.last.details = details.join("\n")
+            details = []
+          elsif in_failure && in_yaml
+            details << line
           end
         end
         tests
