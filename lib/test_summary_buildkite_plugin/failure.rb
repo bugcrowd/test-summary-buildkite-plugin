@@ -7,7 +7,7 @@ module TestSummaryBuildkitePlugin
         raise 'abstract method'
       end
 
-      def oneline
+      def summary
         raise 'abstract method'
       end
 
@@ -16,29 +16,45 @@ module TestSummaryBuildkitePlugin
       end
     end
 
-    class Oneline < Base
-      attr_reader :line
+    class Unstructured < Base
+      attr_reader :summary
 
-      def initialize(line)
-        @line = line
+      def initialize(summary)
+        @summary = summary
       end
 
-      alias sort_key line
-
-      def oneline
-        "    #{line}"
-      end
-
-      def structure
-        nil
-      end
+      alias sort_key summary
     end
 
     class Structured < Base
-      attr_reader :failure
+      attr_reader :file, :line, :column, :name, :details
 
-      def initialize(failure)
-        @failure = failure
+      def initialize(file:, name:, line: nil, column: nil, details: nil)
+        @file = file
+        @line = line
+        @column = column
+        @name = name
+        @details = details
+      end
+
+      def sort_key
+        [file, line, column, name, details]
+      end
+
+      def summary
+        "#{location}: #{name}"
+      end
+
+      private
+
+      def location
+        if line && column
+          "#{file}:#{line}:#{column}"
+        elsif line
+          "#{file}:#{line}"
+        else
+          file
+        end
       end
     end
   end

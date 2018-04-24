@@ -45,16 +45,12 @@ module TestSummaryBuildkitePlugin
       end
     end
 
-    class JUnit < Base
-      # TODO
-    end
-
     class OneLine < Base
       def failures_raw
         files.map { |file| read(file).split("\n")[crop.start..crop.end] }
              .flatten
              .reject(&:empty?)
-             .map { |line| Failure::Oneline.new(line) }
+             .map { |line| Failure::Unstructured.new(line) }
       end
 
       private
@@ -64,6 +60,28 @@ module TestSummaryBuildkitePlugin
           start: options.dig(:crop, :start) || 0,
           end: -1 - (options.dig(:crop, :end) || 0)
         )
+      end
+    end
+
+    class JUnit < Base
+      def failures_raw
+        files.map { |file| File.open(file) { |f| Nokogiri::XML(f, nil, encoding) } }
+          .map { |xml| xml_to_failures(xml) }
+          .flatten
+      end
+
+      private
+
+      def xml_to_failures(xml)
+        xml.css('testcase').each_with_object([]) do |testcase, failures|
+          testcase.css('failure').each do |failure|
+            failures << Failure::Structured.new(
+              file: testcase['file'],
+              name: testcase['name'],
+              details: failure.content
+            )
+          end
+        end
       end
     end
 

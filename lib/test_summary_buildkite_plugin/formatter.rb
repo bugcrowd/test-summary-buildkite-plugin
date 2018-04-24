@@ -28,7 +28,7 @@ module TestSummaryBuildkitePlugin
 
     class OneLine < Base
       def failure_markdown(failure)
-        failure.oneline
+        "    #{failure.summary}"
       end
     end
 

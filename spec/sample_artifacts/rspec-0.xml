@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="rspec" tests="25" skipped="0" failures="4" errors="0" time="0.130365" timestamp="2018-04-24T11:10:42+10:00" hostname="foo.local">
+<properties>
+<property name="seed" value="54148"/>
+</properties>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist with port should be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.027859"></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist with port should not be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.001992"></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist basic usage should be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.002178"></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist basic usage should be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.002679"></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist basic usage should not be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.002186"></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist basic usage should be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.001977"></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist basic usage should not be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.002230"></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist basic usage should not be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.005378"></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist basic usage should be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.004723"></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist with protocol should not be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.003330"></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist with protocol should not be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.002636"></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist with protocol should be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.002363"></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist missing protocol in url should not be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.002260"></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist with invalid protocol in url should not be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.002004"></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist with domain wildcard should not be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.036658"><failure message="expected http://bar.foo.example.com not to be allowed by [&quot;*.foo.example.com&quot;] with resource_scheme http" type="RSpec::Expectations::ExpectationNotMetError">Failure/Error: \e[0m\e[32mit\e[0m { \e[32mexpect\e[0m(url).not_to be_allowed_url }
+  expected http://bar.foo.example.com not to be allowed by [&quot;*.foo.example.com&quot;] with resource_scheme http
+./spec/lib/url_whitelist_spec.rb:92:in `block (4 levels) in &lt;top (required)&gt;&apos;</failure></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist with domain wildcard should be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.001864"><failure message="expected http://example.com to be allowed by [&quot;*.foo.example.com&quot;] with resource_scheme http" type="RSpec::Expectations::ExpectationNotMetError">Failure/Error: \e[0m\e[32mit\e[0m { \e[32mexpect\e[0m(url).to be_allowed_url }
+  expected http://example.com to be allowed by [&quot;*.foo.example.com&quot;] with resource_scheme http
+./spec/lib/url_whitelist_spec.rb:96:in `block (4 levels) in &lt;top (required)&gt;&apos;</failure></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist with domain wildcard should be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.001953"><failure message="expected http://foo.example.com to be allowed by [&quot;*.foo.example.com&quot;] with resource_scheme http" type="RSpec::Expectations::ExpectationNotMetError">Failure/Error: \e[0m\e[32mit\e[0m { \e[32mexpect\e[0m(url).to be_allowed_url }
+  expected http://foo.example.com to be allowed by [&quot;*.foo.example.com&quot;] with resource_scheme http
+./spec/lib/url_whitelist_spec.rb:96:in `block (4 levels) in &lt;top (required)&gt;&apos;</failure></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist with domain wildcard should not be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.001801"><failure message="expected http://baz.bar.foo.example.com not to be allowed by [&quot;*.foo.example.com&quot;] with resource_scheme http" type="RSpec::Expectations::ExpectationNotMetError">Failure/Error: \e[0m\e[32mit\e[0m { \e[32mexpect\e[0m(url).not_to be_allowed_url }
+  expected http://baz.bar.foo.example.com not to be allowed by [&quot;*.foo.example.com&quot;] with resource_scheme http
+./spec/lib/url_whitelist_spec.rb:92:in `block (4 levels) in &lt;top (required)&gt;&apos;</failure></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist with port wildcard should not be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.002047"></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist with port wildcard should be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.001672"></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist with port wildcard should be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.001924"></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist with https resource should not be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.002119"></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist with https resource should be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.001837"></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist with https resource should not be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.002346"></testcase>
+<testcase classname="spec.lib.url_whitelist_spec" name="UrlWhitelist with non-parseable url should not be allowed url" file="./spec/lib/url_whitelist_spec.rb" time="0.001988"></testcase>
+</testsuite>

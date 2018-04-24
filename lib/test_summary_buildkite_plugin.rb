@@ -3,6 +3,7 @@
 require 'English'
 require 'singleton'
 require 'json'
+require 'nokogiri'
 
 require 'test_summary_buildkite_plugin/agent'
 require 'test_summary_buildkite_plugin/failure'

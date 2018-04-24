@@ -12,9 +12,9 @@ steps:
     plugins:
       bugcrowd/test-summary#v0.1.0:
         inputs:
-#          - label: rspec
-#            artifact_path: spec/sample_artifacts/rspec/*
-#            type: junit
+          - label: rspec
+            artifact_path: spec/sample_artifacts/rspec*
+            type: junit
 #            encoding: UTF-8
 #          - label: ava
 #            artifact_path: spec/sample_artifacts/ava.txt
