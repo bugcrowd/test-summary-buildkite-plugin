@@ -1,9 +1,3 @@
-PATH
-  remote: .
-  specs:
-    test_summary_buildkite_plugin (0.1.0)
-      nokogiri
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -46,10 +40,10 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.16)
+  nokogiri
   rake (~> 10.0)
   rspec (~> 3.0)
   rubocop
-  test_summary_buildkite_plugin!
 
 BUNDLED WITH
    1.16.1

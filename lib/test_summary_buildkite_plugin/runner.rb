@@ -11,11 +11,14 @@ module TestSummaryBuildkitePlugin
     def run
       markdown = inputs.map { |input| formatter.markdown(input) }.compact.join("\n\n")
       if markdown.empty?
-        Agent.run('annotate', '--context', context, '--style', 'success', 'All tests passed :party:')
+        annotate('success', 'All tests passed :party:')
       else
-        puts markdown
-        Agent.run('annotate', '--context', context, '--style', 'error', stdin: markdown)
+        annotate('error', markdown)
       end
+    end
+
+    def annotate(style, markdown)
+      Agent.run('annotate', '--context', context, '--style', style, stdin: markdown)
     end
 
     def formatter

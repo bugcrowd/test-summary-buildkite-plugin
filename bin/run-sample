@@ -2,13 +2,17 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
-require 'test_summary_buildkite_plugin'
+require 'pathname'
+$LOAD_PATH.unshift(Pathname.new(__FILE__).dirname.dirname.join('lib').to_s)
+
 require 'yaml'
+require 'test_summary_buildkite_plugin'
 
 pipeline_sample = YAML.load_file('.buildkite/pipeline-sample.yml')
 
 [2, 3].each do |step_idx|
   ENV['BUILDKITE_PLUGIN_TEST_SUMMARY'] = pipeline_sample['steps'][step_idx]['plugins'].values.first.to_json
 
+  TestSummaryBuildkitePlugin::Agent.stub = true
   TestSummaryBuildkitePlugin::Runner.run
 end

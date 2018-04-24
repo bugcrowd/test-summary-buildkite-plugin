@@ -2,6 +2,9 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
+require 'pathname'
+$LOAD_PATH.unshift(Pathname.new(__FILE__).dirname.dirname.join('lib').to_s)
+
 require 'test_summary_buildkite_plugin'
 
 TestSummaryBuildkitePlugin::Runner.run
