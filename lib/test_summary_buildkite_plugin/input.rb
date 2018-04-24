@@ -66,8 +66,8 @@ module TestSummaryBuildkitePlugin
     class JUnit < Base
       def failures_raw
         files.map { |file| File.open(file) { |f| Nokogiri::XML(f, nil, encoding) } }
-          .map { |xml| xml_to_failures(xml) }
-          .flatten
+             .map { |xml| xml_to_failures(xml) }
+             .flatten
       end
 
       private
