@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require 'English'
+require 'forwardable'
+require 'singleton'
+
 module TestSummaryBuildkitePlugin
   class Agent
     include Singleton

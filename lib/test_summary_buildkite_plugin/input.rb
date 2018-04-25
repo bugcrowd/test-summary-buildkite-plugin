@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'nokogiri'
+
 module TestSummaryBuildkitePlugin
   module Input
     WORKDIR = 'tmp/test-summary'

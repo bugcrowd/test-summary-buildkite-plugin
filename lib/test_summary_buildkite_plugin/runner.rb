@@ -32,12 +32,5 @@ module TestSummaryBuildkitePlugin
     def style
       options[:style] || 'error'
     end
-
-    def self.run
-      plugins = JSON.parse(ENV.fetch('BUILDKITE_PLUGINS'), symbolize_names: true)
-      # plugins is an array of hashes, keyed by <github-url>#<version>
-      options = plugins.find { |k, _| k.to_s.include?('test-summary') }.values.first
-      new(options).run
-    end
   end
 end

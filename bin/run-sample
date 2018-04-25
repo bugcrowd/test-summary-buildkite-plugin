@@ -17,5 +17,5 @@ pipeline_sample['steps'].each do |step|
 
   # Match the formatting that buildkite gives
   ENV['BUILDKITE_PLUGINS'] = [step['plugins']].to_json
-  TestSummaryBuildkitePlugin::Runner.run
+  TestSummaryBuildkitePlugin.run
 end
