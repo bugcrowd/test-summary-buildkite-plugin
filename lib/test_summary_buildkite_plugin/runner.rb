@@ -18,7 +18,7 @@ module TestSummaryBuildkitePlugin
     end
 
     def formatter
-      @formatter ||= Formatter.create(options[:formatter])
+      @formatter ||= Formatter.new(options[:formatter])
     end
 
     def inputs

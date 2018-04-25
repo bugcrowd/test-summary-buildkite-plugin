@@ -1,0 +1,14 @@
+%ul
+  - failures.each do |failure|
+    %li
+      - if failure.details
+        %details
+          %summary
+            %code
+              = failure.summary
+          %pre
+            %code
+              = failure.details
+      - else
+        %code
+          = failure.summary

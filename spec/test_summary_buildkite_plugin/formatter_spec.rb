@@ -7,7 +7,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
   let(:input) { double(TestSummaryBuildkitePlugin::Input::Base, label: 'animals') }
   let(:failures) { [] }
 
-  subject(:markdown) { described_class.create(type: type, show_first: show_first).markdown(input) }
+  subject(:markdown) { described_class.new(type: type, show_first: show_first).markdown(input) }
 
   before do
     allow(input).to receive(:failures).and_return(failures)
@@ -121,6 +121,14 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
         expect(markdown.split('<details').last).to include('horse')
         expect(markdown.split('<details').last).to include('unicorn')
       end
+    end
+  end
+
+  describe 'unknown type' do
+    let(:type) { 'foo' }
+
+    it 'raises an exception' do
+      expect { markdown }.to raise_error(/Unknown type/)
     end
   end
 end
