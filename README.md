@@ -12,13 +12,17 @@ Supported formats:
 
 ## Example
 
-Upload build results as artifacts using any supported format:
+Upload build results as artifacts using any supported format. Some examples:
 
 ```yaml
 steps:
   - label: rspec
-    command: rspec -f RspecJunitFormatter -o artifacts/rspec-%n.xml
+    command: rspec
     parallelism: 10
+    # With spec_helper.rb:
+    # RSpec.configure do |config|
+    #   config.add_formatter('RspecJunitFormatter', "artifacts/rspec-#{ENV['BUILDKITE_PARALLEL_JOB']}.xml")
+    # end
     artifact_paths: "artifacts/*"
 
   - label: ava
@@ -71,12 +75,13 @@ The plugin takes a list of input sources. Each input source has:
 
 ### Formatter
 
-There are two formatter types, `summary` and `details`. The `summary` formatter
-only includes a single line in the markdown for each failure.
+There are two formatter types, `summary` and `details`.
+
+The `summary` formatter includes a single line for each failure.
 
 ![example summary annotation](doc/summary.png)
 
-The details formatter
+The `details` formatter
 includes extra information about the failure in an accordion (if available).
 
 ![example details annotation](doc/details.png)
