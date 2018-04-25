@@ -2,7 +2,7 @@
 
 module TestSummaryBuildkitePlugin
   module Formatter
-    def self.create(type:, **options)
+    def self.create(type: 'details', **options)
       type = type.to_sym
       raise StandardError, "Unknown formatter type: #{type}" unless TYPES.key?(type)
       TYPES[type].new(options)
@@ -17,16 +17,31 @@ module TestSummaryBuildkitePlugin
 
       def markdown(input)
         return nil if input.failures.count.zero?
-        "#{heading(input)}\n\n#{failures_markdown(input)}"
+        "#{heading(input)}\n\n#{input_markdown(input)}"
       end
 
-      def failures_markdown(input)
-        input.failures.map { |failure| failure_markdown(failure) }.join("\n")
+      def input_markdown(input)
+        if show_first.negative? || show_first >= input.failures.count
+          failures_markdown(input.failures)
+        elsif show_first.zero?
+          "<details><summary>Show failures</summary>\n#{failures_markdown(input.failures)}\n</details>"
+        else
+          failures_markdown(input.failures[0...show_first]) +
+            "\n\n<details><summary>Show additional failures</summary>\n#{failures_markdown(input.failures[show_first..-1])}\n</details>"
+        end
+      end
+
+      def failures_markdown(failures)
+        failures.map { |failure| failure_markdown(failure) }.join("\n")
       end
 
       def heading(input)
         count = input.failures.count
         "##### #{input.label}: #{count} failure#{'s' unless count == 1}"
+      end
+
+      def show_first
+        options[:show_first] || 20
       end
     end
 
