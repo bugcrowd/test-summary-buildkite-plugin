@@ -81,3 +81,4 @@ steps:
           type: details
           show_first: 3
         context: verbose-annotation
+        style: warning
