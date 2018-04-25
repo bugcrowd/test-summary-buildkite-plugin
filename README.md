@@ -1,7 +1,7 @@
 # Test Summary Buildkite Plugin
 
 A [Buildkite plugin](https://buildkite.com/docs/agent/v3/plugins) that adds a single annotation
-of all your test failures using
+for all your test failures using
 [buildkite-agent annotate](https://buildkite.com/docs/agent/v3/cli-annotate).
 
 Supported formats:
@@ -12,7 +12,7 @@ Supported formats:
 
 ## Example
 
-Upload build results as artifacts using any supported format. Some examples:
+Upload test results as artifacts using any supported format. Some examples:
 
 ```yaml
 steps:
@@ -26,10 +26,11 @@ steps:
     artifact_paths: "artifacts/*"
 
   - label: ava
-    command: yarn --silent test --tap -o artifacts/ava.tap
+    command: yarn test --tap -o artifacts/ava.tap
     artifact_paths: "artifacts/*"
 
   - label: rubocop
+    # The emacs format is plain text with one failure per line
     command: rubocop -f emacs -o artifacts/rubocop.txt
     artifact_paths: "artifacts/*"
 ```
