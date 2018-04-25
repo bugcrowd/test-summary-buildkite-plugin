@@ -1,43 +1,56 @@
-# TestSummaryBuildkitePlugin
+# Test Summary Buildkite Plugin
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/test_summary_buildkite_plugin`. To experiment with that code, run `bin/console` for an interactive prompt.
+A [Buildkite plugin](https://buildkite.com/docs/agent/v3/plugins) that adds a single annotation
+of all your test failures using
+[buildkite-agent annotate](https://buildkite.com/docs/agent/v3/cli-annotate).
 
-TODO: Delete this and the text above, and describe your gem
+* JUnit
+* [Tap](https://testanything.org)
+* Plain text files with one failure per line
 
-## Installation
+## Example
 
-Add this line to your application's Gemfile:
+Upload build results as artifacts using any supported format
 
-```ruby
-gem 'test_summary_buildkite_plugin'
+```yaml
+steps:
+  - label: rspec
+    command: rspec --format RspecJunitFormatter --out artifacts/rspec-%n.xml
+    parallelism: 10
+    artifact_paths: "artifacts/*"
+
+  - label: ava
+    command: yarn --silent test --tap -o artifacts/ava.tap
+    artifact_paths: "artifacts/*"
+
+  - label: rubocop
+    command: rubocop -f emacs -o artifacts/rubocop.txt
+    artifact_paths: "artifacts/*"
 ```
 
-And then execute:
+Wait for all the tests to finish
 
-    $ bundle
+```yaml
+  - wait: ~
+    continue_on_failure: true
+```
 
-Or install it yourself as:
+Add a build step using the test-summary plugin
 
-    $ gem install test_summary_buildkite_plugin
-
-## Usage
-
-TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/test_summary_buildkite_plugin. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-
-## Code of Conduct
-
-Everyone interacting in the TestSummaryBuildkitePlugin project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/test_summary_buildkite_plugin/blob/master/CODE_OF_CONDUCT.md).
+```yaml
+  - label: annotate
+    plugins:
+      bugcrowd/test-summary#v1.0.0:
+        inputs:
+          - label: rspec
+            artifact_path: artifacts/rspec*
+            type: junit
+          - label: tap
+            artifact_path: artifacts/ava.tap
+            type: tap
+          - label: rubocop
+            artifact_path: artifacts/rubocop.txt
+            type: oneline
+        formatter:
+          type: details
+```

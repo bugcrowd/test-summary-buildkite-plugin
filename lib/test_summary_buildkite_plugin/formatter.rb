@@ -30,13 +30,13 @@ module TestSummaryBuildkitePlugin
       end
     end
 
-    class OneLine < Base
+    class Summary < Base
       def failure_markdown(failure)
         "    #{failure.summary}"
       end
     end
 
-    class Verbose < Base
+    class Details < Base
       def failure_markdown(failure)
         if failure.details
           <<~END_MARKDOWN
@@ -58,8 +58,8 @@ module TestSummaryBuildkitePlugin
     end
 
     TYPES = {
-      oneline: Formatter::OneLine,
-      verbose: Formatter::Verbose
+      summary: Formatter::Summary,
+      details: Formatter::Details
     }.freeze
   end
 end

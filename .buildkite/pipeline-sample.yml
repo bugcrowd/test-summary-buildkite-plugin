@@ -47,7 +47,7 @@ steps:
 #            type: junit
         # oneline or verbose annotation
         formatter:
-          type: oneline
+          type: summary
           hide_after: 20
         context: simple-annotation
 
@@ -78,6 +78,6 @@ steps:
 #            type: junit
         # oneline or verbose annotation
         formatter:
-          type: verbose
+          type: details
           hide_after: 20
         context: verbose-annotation
