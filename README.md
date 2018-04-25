@@ -7,7 +7,7 @@ of all your test failures using
 Supported formats:
 
 * JUnit
-* [Tap](https://testanything.org)
+* [TAP](https://testanything.org)
 * Plain text files with one failure per line
 
 ## Example
