@@ -83,6 +83,7 @@ The `summary` formatter includes a single line for each failure.
 
 The `details` formatter
 includes extra information about the failure in an accordion (if available).
+This is the default option.
 
 ![example details annotation](doc/details.png)
 
