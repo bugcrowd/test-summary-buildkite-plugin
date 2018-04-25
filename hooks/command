@@ -2,10 +2,14 @@
 
 set -euo pipefail
 
-cd "$( dirname "${BASH_SOURCE[0]}" )/.."
+DOCKER_REPO=tessereth/test-summary-buildkite-plugin
 
-docker build -t test-summary:$BUILDKITE_JOB_ID .
+# cd to plugin directory
+cd "$( dirname "${BASH_SOURCE[0]}" )/.."
+COMMIT=$(git rev-parse HEAD)
+
+docker pull $DOCKER_REPO:$COMMIT
 docker run --rm \
   --mount type=bind,src=$(which buildkite-agent),dst=/usr/bin/buildkite-agent \
   -e BUILDKITE_BUILD_ID -e BUILDKITE_JOB_ID -e BUILDKITE_AGENT_ACCESS_TOKEN -e BUILDKITE_PLUGINS \
-  test-summary:$BUILDKITE_JOB_ID
+  $DOCKER_REPO:$COMMIT

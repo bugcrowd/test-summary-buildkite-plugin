@@ -10,10 +10,10 @@ require 'test_summary_buildkite_plugin'
 
 TestSummaryBuildkitePlugin::Agent.stub = true
 
-pipeline_sample = YAML.load_file('.buildkite/pipeline-sample.yml')
+pipeline_sample = YAML.load_file('.buildkite/pipeline.yml')
 
 pipeline_sample['steps'].each do |step|
-  next unless step['plugins']
+  next unless step['plugins']&.find { |k, _| k.include?('test-summary') }
 
   # Match the formatting that buildkite gives
   ENV['BUILDKITE_PLUGINS'] = [step['plugins']].to_json

@@ -1,27 +1,41 @@
 steps:
-#
-#  - label: rubocop
-#    command: rubocop
-#
-#  - label: rspec
-#    command: rspec
-#
-#  - wait
-#
-#  - block: Show sample
-#
-#  - wait
-#
-  # Run all your tests, uploading results as artifacts
-  - label: Upload artifacts
+  - label: ":docker: build"
+    timeout: 10
+    plugins:
+      docker-compose#v2.1.0:
+        build: test
+        image-repository: $DOCKER_REPO
+        image-name: $BUILDKITE_COMMIT
+
+  - wait
+
+  - label: ":rspec: rspec"
+    command: rspec
+    timeout: 5
+    plugins:
+      docker-compose#v2.1.0:
+        run: test
+
+  - label: ":rubocop: rubocop"
+    command: rubocop
+    timeout: 5
+    plugins:
+      docker-compose#v2.1.0:
+        run: test
+
+  - wait
+
+  - block: show sample
+
+  - wait
+
+  - label: ":arrow_up: artifacts"
     command: buildkite-agent artifact upload spec/sample_artifacts/**/*
 
-  # Wait for the tests to finish
   - wait: ~
     continue_on_failure: true
 
-  # Add test summary
-  - label: annotate
+  - label: ":pencil: summary"
     plugins:
       bugcrowd/test-summary#@VERSION@:
         inputs:
@@ -52,7 +66,7 @@ steps:
         context: simple-annotation
 
   # Add test summary, including failure details
-  - label: annotate
+  - label: ":pencil: details"
     plugins:
       bugcrowd/test-summary#@VERSION@:
         inputs:
