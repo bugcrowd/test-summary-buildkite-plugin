@@ -3,9 +3,9 @@ ok 1 - retrieving servers from the database
 # need to ping 6 servers
 ok 2 - pinged diamond
 ok 3 - pinged ruby
-not ok 4 - pinged saphire
+not ok 4 - pinged sapphire
   ---
-  message: 'hostname "saphire" unknown'
+  message: 'hostname "sapphire" unknown'
   severity: fail
   ...
 ok 5 - pinged onyx
