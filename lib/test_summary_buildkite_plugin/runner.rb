@@ -37,7 +37,6 @@ module TestSummaryBuildkitePlugin
       plugins = JSON.parse(ENV.fetch('BUILDKITE_PLUGINS'), symbolize_names: true)
       # plugins is an array of hashes, keyed by <github-url>#<version>
       options = plugins.find { |k, _| k.to_s.include?('test-summary') }.values.first
-      p options
       new(options).run
     end
   end
