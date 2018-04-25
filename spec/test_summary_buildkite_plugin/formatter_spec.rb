@@ -90,6 +90,8 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
     let(:failures) do
       %w[dog cat pony horse unicorn].map { |x| TestSummaryBuildkitePlugin::Failure::Unstructured.new(x) }
     end
+    let(:before_details) { markdown.split('<details').first }
+    let(:after_details) { markdown.split('<details').last }
 
     context 'when larger than failure count' do
       let(:show_first) { 10 }
@@ -107,19 +109,51 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
       end
 
       it 'includes correct elements before details' do
-        expect(markdown.split('<details').first).to include('dog')
-        expect(markdown.split('<details').first).to include('cat')
-        expect(markdown.split('<details').first).to include('pony')
-        expect(markdown.split('<details').first).not_to include('horse')
-        expect(markdown.split('<details').first).not_to include('unicorn')
+        expect(before_details).to include('dog')
+        expect(before_details).to include('cat')
+        expect(before_details).to include('pony')
+        expect(before_details).not_to include('horse')
+        expect(before_details).not_to include('unicorn')
       end
 
       it 'includes correct elements after details' do
-        expect(markdown.split('<details').last).not_to include('dog')
-        expect(markdown.split('<details').last).not_to include('cat')
-        expect(markdown.split('<details').last).not_to include('pony')
-        expect(markdown.split('<details').last).to include('horse')
-        expect(markdown.split('<details').last).to include('unicorn')
+        expect(after_details).not_to include('dog')
+        expect(after_details).not_to include('cat')
+        expect(after_details).not_to include('pony')
+        expect(after_details).to include('horse')
+        expect(after_details).to include('unicorn')
+      end
+    end
+
+    context 'when zero' do
+      let(:show_first) { 0 }
+
+      it 'includes a details element' do
+        expect(markdown).to include('<details')
+      end
+
+      it 'includes no elements before details' do
+        expect(before_details).not_to include('dog')
+        expect(before_details).not_to include('cat')
+        expect(before_details).not_to include('pony')
+        expect(before_details).not_to include('horse')
+        expect(before_details).not_to include('unicorn')
+      end
+
+      it 'includes all elements after details' do
+        expect(after_details).to include('dog')
+        expect(after_details).to include('cat')
+        expect(after_details).to include('pony')
+        expect(after_details).to include('horse')
+        expect(after_details).to include('unicorn')
+      end
+    end
+
+    context 'when negative' do
+      let(:show_first) { -1 }
+
+      it 'has no details element' do
+        expect(markdown).not_to include('<details')
       end
     end
   end
