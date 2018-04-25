@@ -2,16 +2,13 @@
 
 module TestSummaryBuildkitePlugin
   module Failure
+    # All failure classes should have #summary and #details methods
     class Base
-      def sort_key
-        raise 'abstract method'
-      end
-
       def summary
         raise 'abstract method'
       end
 
-      def verbose_markdown
+      def details
         raise 'abstract method'
       end
     end
@@ -22,8 +19,6 @@ module TestSummaryBuildkitePlugin
       def initialize(summary)
         @summary = summary
       end
-
-      alias sort_key summary
 
       def details; end
     end
@@ -37,10 +32,6 @@ module TestSummaryBuildkitePlugin
         @column = column
         @name = name
         @details = details
-      end
-
-      def sort_key
-        [file, line, column, name, details]
       end
 
       def summary

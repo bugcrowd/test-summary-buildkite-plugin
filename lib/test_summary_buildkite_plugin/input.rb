@@ -20,7 +20,7 @@ module TestSummaryBuildkitePlugin
       end
 
       def failures
-        @failures ||= failures_raw.sort_by(&:sort_key)
+        @failures ||= failures_raw.sort_by(&:summary)
       end
 
       protected
