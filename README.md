@@ -63,6 +63,8 @@ Add a build step using the test-summary plugin:
         context: test-summary
 ```
 
+See buildkite annotation of all the failures. There are some example annotations included below.
+
 ## Configuration
 
 ### Inputs
