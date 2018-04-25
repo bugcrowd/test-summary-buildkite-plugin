@@ -4,6 +4,8 @@ A [Buildkite plugin](https://buildkite.com/docs/agent/v3/plugins) that adds a si
 of all your test failures using
 [buildkite-agent annotate](https://buildkite.com/docs/agent/v3/cli-annotate).
 
+Supported formats:
+
 * JUnit
 * [Tap](https://testanything.org)
 * Plain text files with one failure per line
@@ -54,3 +56,29 @@ Add a build step using the test-summary plugin
         formatter:
           type: details
 ```
+
+## Configuration
+
+### Inputs
+
+The plugin takes a list of input sources. Each input source has:
+
+* `label`: the name used in the heading to identify the test group
+* `artifact_path`: a glob used to download one or more artifacts
+* `type`: one of `junit`, `tap` or `oneline`
+* `encoding`: The file encoding to use. Defaults to `UTF-8`
+
+### Formatter
+
+There are two formatter types, `summary` and `details`. The summary formatter
+only includes a single line in the markdown for each failure. The details formatter
+includes extra information about the failure in an accordion (if available). Other
+formatter options are:
+
+* `show_first`: The number of failures to show before hiding the rest inside an accordion.
+  If set to zero, all failures will be hidden by default. If set to a negative number, all failures
+  will be shown. Defaults to 20.
+
+### Other options
+
+* `context`: The buildkite annotation context. Defaults to `test-summary`

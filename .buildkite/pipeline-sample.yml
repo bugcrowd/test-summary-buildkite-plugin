@@ -48,7 +48,7 @@ steps:
         # oneline or verbose annotation
         formatter:
           type: summary
-          hide_after: 20
+          show_first: 20
         context: simple-annotation
 
   # Add test summary, including failure details
@@ -79,5 +79,5 @@ steps:
         # oneline or verbose annotation
         formatter:
           type: details
-          hide_after: 20
+          show_first: 20
         context: verbose-annotation
