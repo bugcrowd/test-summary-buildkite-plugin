@@ -12,12 +12,12 @@ Supported formats:
 
 ## Example
 
-Upload build results as artifacts using any supported format
+Upload build results as artifacts using any supported format:
 
 ```yaml
 steps:
   - label: rspec
-    command: rspec --format RspecJunitFormatter --out artifacts/rspec-%n.xml
+    command: rspec -f RspecJunitFormatter -o artifacts/rspec-%n.xml
     parallelism: 10
     artifact_paths: "artifacts/*"
 
@@ -30,14 +30,14 @@ steps:
     artifact_paths: "artifacts/*"
 ```
 
-Wait for all the tests to finish
+Wait for all the tests to finish:
 
 ```yaml
   - wait: ~
     continue_on_failure: true
 ```
 
-Add a build step using the test-summary plugin
+Add a build step using the test-summary plugin:
 
 ```yaml
   - label: annotate
@@ -64,10 +64,10 @@ Add a build step using the test-summary plugin
 
 The plugin takes a list of input sources. Each input source has:
 
-* `label:` the name used in the heading to identify the test group
-* `artifact_path:` a glob used to download one or more artifacts
-* `type:` one of `junit`, `tap` or `oneline`
-* `encoding:` The file encoding to use. Defaults to `UTF-8`
+* `label:` the name used in the heading to identify the test group.
+* `artifact_path:` a glob used to download one or more artifacts.
+* `type:` one of `junit`, `tap` or `oneline`.
+* `encoding:` The file encoding to use. Defaults to `UTF-8`.
 
 ### Formatter
 
@@ -89,4 +89,5 @@ Other formatter options are:
 
 ### Other options
 
-* `context:` The buildkite annotation context. Defaults to `test-summary`
+* `context:` The Buildkite annotation context. Defaults to `test-summary`.
+* `style:` Set the annotation style. Defaults to `error`.

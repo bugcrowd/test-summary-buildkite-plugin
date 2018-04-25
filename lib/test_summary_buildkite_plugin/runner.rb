@@ -10,14 +10,10 @@ module TestSummaryBuildkitePlugin
 
     def run
       markdown = inputs.map { |input| formatter.markdown(input) }.compact.join("\n\n")
-      if markdown.empty?
-        annotate('success', 'All tests passed :party:')
-      else
-        annotate('error', markdown)
-      end
+      annotate('error', markdown) unless markdown.empty?
     end
 
-    def annotate(style, markdown)
+    def annotate(markdown)
       Agent.run('annotate', '--context', context, '--style', style, stdin: markdown)
     end
 
@@ -31,6 +27,10 @@ module TestSummaryBuildkitePlugin
 
     def context
       options[:context] || 'test-summary'
+    end
+
+    def style
+      options[:style] || 'error'
     end
 
     def self.run
