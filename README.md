@@ -47,7 +47,7 @@ Add a build step using the test-summary plugin
           - label: rspec
             artifact_path: artifacts/rspec*
             type: junit
-          - label: tap
+          - label: ava
             artifact_path: artifacts/ava.tap
             type: tap
           - label: rubocop
@@ -55,6 +55,7 @@ Add a build step using the test-summary plugin
             type: oneline
         formatter:
           type: details
+        context: test-summary
 ```
 
 ## Configuration
@@ -63,22 +64,29 @@ Add a build step using the test-summary plugin
 
 The plugin takes a list of input sources. Each input source has:
 
-* `label`: the name used in the heading to identify the test group
-* `artifact_path`: a glob used to download one or more artifacts
-* `type`: one of `junit`, `tap` or `oneline`
-* `encoding`: The file encoding to use. Defaults to `UTF-8`
+* `label:` the name used in the heading to identify the test group
+* `artifact_path:` a glob used to download one or more artifacts
+* `type:` one of `junit`, `tap` or `oneline`
+* `encoding:` The file encoding to use. Defaults to `UTF-8`
 
 ### Formatter
 
-There are two formatter types, `summary` and `details`. The summary formatter
-only includes a single line in the markdown for each failure. The details formatter
-includes extra information about the failure in an accordion (if available). Other
-formatter options are:
+There are two formatter types, `summary` and `details`. The `summary` formatter
+only includes a single line in the markdown for each failure.
 
-* `show_first`: The number of failures to show before hiding the rest inside an accordion.
+![example summary annotation](doc/summary.png)
+
+The details formatter
+includes extra information about the failure in an accordion (if available).
+
+![example details annotation](doc/details.png)
+
+Other formatter options are:
+
+* `show_first:` The number of failures to show before hiding the rest inside an accordion.
   If set to zero, all failures will be hidden by default. If set to a negative number, all failures
   will be shown. Defaults to 20.
 
 ### Other options
 
-* `context`: The buildkite annotation context. Defaults to `test-summary`
+* `context:` The buildkite annotation context. Defaults to `test-summary`
