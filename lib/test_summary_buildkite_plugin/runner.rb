@@ -10,7 +10,11 @@ module TestSummaryBuildkitePlugin
 
     def run
       markdown = inputs.map { |input| formatter.markdown(input) }.compact.join("\n\n")
-      annotate(markdown) unless markdown.empty?
+      if markdown.empty?
+        puts('No errors found! 🎉')
+      else
+        annotate(markdown)
+      end
     end
 
     def annotate(markdown)
