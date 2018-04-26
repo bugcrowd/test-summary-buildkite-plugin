@@ -23,22 +23,22 @@ steps:
     plugins:
       bugcrowd/test-summary#@VERSION@:
         inputs:
-          - label: rspec
+          - label: ":rspec: rspec"
             artifact_path: spec/sample_artifacts/rspec*
             type: junit
             encoding: UTF-8
             strip_colors: true
-          - label: tap
+          - label: ":camel: tap"
             artifact_path: spec/sample_artifacts/example.tap
             type: tap
-          - label: eslint
+          - label: ":eslint: eslint"
             artifact_path: spec/sample_artifacts/eslint.txt
             type: oneline
             # ignore the last two lines
             crop:
               start: 0
               end: 2
-          - label: rubocop
+          - label: ":rubocop: rubocop"
             artifact_path: spec/sample_artifacts/rubocop.txt
             type: oneline
         formatter:
@@ -52,22 +52,22 @@ steps:
     plugins:
       bugcrowd/test-summary#@VERSION@:
         inputs:
-          - label: rspec
+          - label: ":rspec: rspec"
             artifact_path: spec/sample_artifacts/rspec*
             type: junit
             encoding: UTF-8
             strip_colors: true
-          - label: tap
+          - label: ":camel: tap"
             artifact_path: spec/sample_artifacts/example.tap
             type: tap
-          - label: eslint
+          - label: ":eslint: eslint"
             artifact_path: spec/sample_artifacts/eslint.txt
             type: oneline
             # ignore the last two lines
             crop:
               start: 0
               end: 2
-          - label: rubocop
+          - label: ":rubocop: rubocop"
             artifact_path: spec/sample_artifacts/rubocop.txt
             type: oneline
         formatter:
