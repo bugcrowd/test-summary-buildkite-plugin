@@ -79,6 +79,12 @@ The plugin takes a list of input sources. Each input source has:
 * `type:` one of `junit`, `tap` or `oneline`.
 * `encoding:` The file encoding to use. Defaults to `UTF-8`.
 * `strip_colors:` Remove ANSI color escape sequences. Defaults to `false`.
+* `crop:` (`oneline` type only) Number of lines to crop from the start and end of the file,
+  to get around defaults headers and footers. Eg
+
+      crop:
+        start: 3
+        end: 2
 
 ### Formatter
 
