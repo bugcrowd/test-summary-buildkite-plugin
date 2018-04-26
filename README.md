@@ -47,7 +47,7 @@ Add a build step using the test-summary plugin:
 ```yaml
   - label: annotate
     plugins:
-      bugcrowd/test-summary#v0.1.0:
+      bugcrowd/test-summary#v0.2.0:
         inputs:
           - label: rspec
             artifact_path: artifacts/rspec*
@@ -111,7 +111,8 @@ To run the tests:
 
 1. Update [version.rb](lib/test_summary_buildkite_plugin/version.rb)
 2. Update version in README example
-3. `git tag --sign vx.x.x -m "Release vx.x.x"`
-4. `git push origin vx.x.x`
-5. `docker build -t tessereth/test-summary-buildkite-plugin:vx.x.x`
-6. `docker push tessereth/test-summary-buildkite-plugin:vx.x.x`
+3. Push to github and ensure tests pass
+4. `docker build -t tessereth/test-summary-buildkite-plugin:vx.x.x .`
+5. `git tag --sign vx.x.x -m "Release vx.x.x"`
+6. `git push origin vx.x.x`
+7. `docker push tessereth/test-summary-buildkite-plugin:vx.x.x`
