@@ -47,10 +47,6 @@ steps:
           - label: rubocop
             artifact_path: spec/sample_artifacts/rubocop.txt
             type: oneline
-#          - label: stylelint
-#            artifact_path: spec/sample_artifacts/stylelint.xml
-#            type: junit
-        # oneline or verbose annotation
         formatter:
           type: summary
           show_first: 3
@@ -79,10 +75,6 @@ steps:
           - label: rubocop
             artifact_path: spec/sample_artifacts/rubocop.txt
             type: oneline
-#          - label: stylelint
-#            artifact_path: spec/sample_artifacts/stylelint.xml
-#            type: junit
-        # oneline or verbose annotation
         formatter:
           type: details
           show_first: 3
