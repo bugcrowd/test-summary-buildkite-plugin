@@ -6,9 +6,9 @@ module TestSummaryBuildkitePlugin
   class Formatter
     attr_reader :options
 
-    def initialize(options)
-      @options = options
-      raise "Unknown type: #{options[:type]}" unless %w[summary details].include?(options[:type])
+    def initialize(options = {})
+      @options = options || {}
+      raise "Unknown type: #{type}" unless %w[summary details].include?(type)
     end
 
     def markdown(input)
@@ -28,7 +28,7 @@ module TestSummaryBuildkitePlugin
     end
 
     def failures_markdown(failures)
-      engine = Haml::Engine.new(File.read("templates/#{options[:type]}/failures.html.haml"))
+      engine = Haml::Engine.new(File.read("templates/#{type}/failures.html.haml"))
       engine.render(Object.new, failures: failures)
     end
 
@@ -43,6 +43,10 @@ module TestSummaryBuildkitePlugin
 
     def details(summary, contents)
       "<details><summary>#{summary}</summary>\n#{contents}\n</details>"
+    end
+
+    def type
+      options[:type] || 'details'
     end
   end
 end

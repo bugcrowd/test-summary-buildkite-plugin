@@ -30,6 +30,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
       it 'includes the label' do
         expect(markdown).to include('animals')
       end
+
       it 'includes the summary' do
         expect(markdown).to include('ponies are awesome')
       end
@@ -109,19 +110,13 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
       end
 
       it 'includes correct elements before details' do
-        expect(before_details).to include('dog')
-        expect(before_details).to include('cat')
-        expect(before_details).to include('pony')
-        expect(before_details).not_to include('horse')
-        expect(before_details).not_to include('unicorn')
+        expect(before_details).to include('dog', 'cat', 'pony')
+        expect(before_details).not_to include('horse', 'unicorn')
       end
 
       it 'includes correct elements after details' do
-        expect(after_details).not_to include('dog')
-        expect(after_details).not_to include('cat')
-        expect(after_details).not_to include('pony')
-        expect(after_details).to include('horse')
-        expect(after_details).to include('unicorn')
+        expect(after_details).not_to include('dog', 'cat', 'pony')
+        expect(after_details).to include('horse', 'unicorn')
       end
     end
 
@@ -133,19 +128,11 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
       end
 
       it 'includes no elements before details' do
-        expect(before_details).not_to include('dog')
-        expect(before_details).not_to include('cat')
-        expect(before_details).not_to include('pony')
-        expect(before_details).not_to include('horse')
-        expect(before_details).not_to include('unicorn')
+        expect(before_details).not_to include('dog', 'cat', 'pony', 'horse', 'unicorn')
       end
 
       it 'includes all elements after details' do
-        expect(after_details).to include('dog')
-        expect(after_details).to include('cat')
-        expect(after_details).to include('pony')
-        expect(after_details).to include('horse')
-        expect(after_details).to include('unicorn')
+        expect(after_details).to include('dog', 'cat', 'pony', 'horse', 'unicorn')
       end
     end
 
@@ -163,6 +150,20 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
 
     it 'raises an exception' do
       expect { markdown }.to raise_error(/Unknown type/)
+    end
+  end
+
+  describe 'with no formatter options' do
+    subject(:markdown) { described_class.new.markdown(input) }
+    let(:failures) do
+      [TestSummaryBuildkitePlugin::Failure::Structured.new(
+        name: 'ponies are awesome',
+        details: 'like, really awesome'
+      )]
+    end
+
+    it 'includes the details' do
+      expect(markdown).to include('like, really awesome')
     end
   end
 end
