@@ -10,14 +10,14 @@ module TestSummaryBuildkitePlugin
 
     class << self
       extend Forwardable
-      def_delegators :instance, :run, :stub, :stub=
+      def_delegators :instance, :run
     end
 
     attr_accessor :stub
 
     def run(*args, stdin: nil)
       log(args, stdin: stdin)
-      cmd = command(args)
+      cmd = %w[buildkite-agent] + args
       IO.popen(cmd, 'w+') do |io|
         io.write(stdin) if stdin
         io.close_write
@@ -33,14 +33,6 @@ module TestSummaryBuildkitePlugin
       if stdin
         puts('# with stdin:')
         puts(stdin)
-      end
-    end
-
-    def command(args)
-      if stub
-        %w[cat]
-      else
-        %w[buildkite-agent] + args
       end
     end
   end

@@ -8,14 +8,26 @@ $LOAD_PATH.unshift(Pathname.new(__FILE__).dirname.dirname.join('lib').to_s)
 require 'yaml'
 require 'test_summary_buildkite_plugin'
 
-TestSummaryBuildkitePlugin::Agent.stub = true
+# Stub out things that don't work in a development environment
 
+TestSummaryBuildkitePlugin::Input.send(:remove_const, 'WORKDIR')
+TestSummaryBuildkitePlugin::Input::WORKDIR = '.'
+
+module TestSummaryBuildkitePlugin
+  class Agent
+    def run(*args, stdin: nil)
+      log(args, stdin: stdin)
+    end
+  end
+end
+
+# Load test config from the pipeline
 pipeline_sample = YAML.load_file('.buildkite/pipeline.yml')
 
 pipeline_sample['steps'].each do |step|
   next unless step['plugins']&.find { |k, _| k.include?('test-summary') }
 
-  # Match the formatting that buildkite gives
+  # Roughly match the formatting that buildkite gives
   ENV['BUILDKITE_PLUGINS'] = [step['plugins']].to_json
   TestSummaryBuildkitePlugin.run
 end

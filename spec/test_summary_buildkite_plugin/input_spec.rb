@@ -15,6 +15,11 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
 
     it { is_expected.to be_a(TestSummaryBuildkitePlugin::Input::OneLine) }
 
+    it 'downloads artifacts' do
+      input.failures
+      expect(agent_commands).to include(%w[artifact download rubocop.txt spec/sample_artifacts])
+    end
+
     it 'has all failures' do
       expect(input.failures.count).to eq(3)
     end

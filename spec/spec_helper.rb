@@ -18,5 +18,3 @@ RSpec.configure do |config|
 
   config.include Stubs
 end
-
-TestSummaryBuildkitePlugin::Agent.stub = true

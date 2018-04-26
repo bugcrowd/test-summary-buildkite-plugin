@@ -2,13 +2,15 @@
 
 module Stubs
   def self.included(base)
-    base.before do
-      TestSummaryBuildkitePlugin::Agent.stub = true
-      stub_const('TestSummaryBuildkitePlugin::Input::WORKDIR', 'spec/sample_artifacts')
-    end
+    attr_accessor :agent_commands
 
-    base.after do
-      TestSummaryBuildkitePlugin::Agent.stub = false
+    base.before do
+      allow(TestSummaryBuildkitePlugin::Agent.instance).to receive(:run) do |*args|
+        @agent_commands ||= []
+        @agent_commands << args
+      end
+
+      stub_const('TestSummaryBuildkitePlugin::Input::WORKDIR', 'spec/sample_artifacts')
     end
   end
 end

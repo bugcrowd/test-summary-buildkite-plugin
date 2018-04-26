@@ -119,6 +119,15 @@ To run the tests:
 
     docker-compose run --rm test rspec
 
+If you have ruby set up, you can just run:
+
+    bundle install
+    rspec
+
+To generate sample markdown based on the files in `spec/sample_artifacts`:
+
+    bin/run-dev
+
 ### Release process
 
 1. Update [version.rb](lib/test_summary_buildkite_plugin/version.rb)
