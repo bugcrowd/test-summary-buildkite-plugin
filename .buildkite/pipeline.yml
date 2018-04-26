@@ -33,6 +33,7 @@ steps:
             artifact_path: spec/sample_artifacts/rspec*
             type: junit
             encoding: UTF-8
+            strip_colors: true
           - label: tap
             artifact_path: spec/sample_artifacts/example.tap
             type: tap
@@ -64,6 +65,7 @@ steps:
             artifact_path: spec/sample_artifacts/rspec*
             type: junit
             encoding: UTF-8
+            strip_colors: true
           - label: tap
             artifact_path: spec/sample_artifacts/example.tap
             type: tap

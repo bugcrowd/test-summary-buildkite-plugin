@@ -22,7 +22,11 @@ module TestSummaryBuildkitePlugin
       end
 
       def failures
-        @failures ||= failures_raw.sort_by(&:summary)
+        @failures ||= begin
+          f = failures_raw
+          f.each(&:strip_colors) if options[:strip_colors]
+          f.sort_by(&:summary)
+        end
       end
 
       protected

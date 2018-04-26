@@ -47,5 +47,17 @@ RSpec.describe TestSummaryBuildkitePlugin::Failure do
         it { expect(summary).to eq(name) }
       end
     end
+
+    describe 'strip_colors' do
+      let(:details) { 'Failure/Error: \\e[0m\\e[32mit\\e[0m { \\e[32mexpect\\e[0m(url).to be_nil }' }
+
+      subject(:failure) { described_class.new(params) }
+
+      before { failure.strip_colors }
+
+      it 'strips terminal color directives' do
+        expect(failure.details).to eq('Failure/Error: it { expect(url).to be_nil }')
+      end
+    end
   end
 end

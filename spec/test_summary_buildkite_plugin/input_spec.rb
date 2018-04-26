@@ -58,9 +58,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
     end
 
     it 'failures have details' do
-      expect(input.failures.first.details).to eq('Failure/Error: it { expect(url).to be_allowed_url }
-  expected http://example.com to be allowed by ["*.foo.example.com"] with resource_scheme http
-./spec/lib/url_whitelist_spec.rb:96:in `block (4 levels) in &lt;top (required)&gt;\'')
+      expect(input.failures.first.details).to start_with('Failure/Error: ')
     end
 
     it 'details escape html' do
@@ -81,6 +79,20 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
 
     it 'failures have no column' do
       expect(input.failures.first.column).to be_nil
+    end
+
+    context 'without strip_colors' do
+      it 'keeps color sequences' do
+        expect(input.failures.first.details).to include('\e[0m')
+      end
+    end
+
+    context 'with strip_colors' do
+      let(:additional_options) { { strip_colors: true } }
+
+      it 'removes color sequences' do
+        expect(input.failures.first.details).not_to include('\e[0m')
+      end
     end
   end
 

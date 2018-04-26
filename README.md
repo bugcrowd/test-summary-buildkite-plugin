@@ -78,6 +78,7 @@ The plugin takes a list of input sources. Each input source has:
 * `artifact_path:` a glob used to download one or more artifacts.
 * `type:` one of `junit`, `tap` or `oneline`.
 * `encoding:` The file encoding to use. Defaults to `UTF-8`.
+* `strip_colors:` Remove ANSI color escape sequences. Defaults to `false`.
 
 ### Formatter
 

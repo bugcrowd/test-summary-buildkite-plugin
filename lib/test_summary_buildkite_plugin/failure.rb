@@ -11,6 +11,13 @@ module TestSummaryBuildkitePlugin
       def details
         raise 'abstract method'
       end
+
+      def strip_colors
+        instance_variables.each do |var|
+          value = instance_variable_get(var)
+          instance_variable_set(var, value.gsub(/\\e\[[\d;]+m/, '')) if value.is_a?(String)
+        end
+      end
     end
 
     class Unstructured < Base
