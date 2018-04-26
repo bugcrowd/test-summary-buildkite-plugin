@@ -16,7 +16,7 @@ module TestSummaryBuildkitePlugin
     attr_accessor :stub
 
     def run(*args, stdin: nil)
-      log(args)
+      log(args, stdin: stdin)
       cmd = command(args)
       IO.popen(cmd, 'w+') do |io|
         io.write(stdin) if stdin
@@ -28,8 +28,12 @@ module TestSummaryBuildkitePlugin
       end
     end
 
-    def log(args)
+    def log(args, stdin: nil)
       puts('$ buildkite-agent ' + args.join(' '))
+      if stdin
+        puts('# with stdin:')
+        puts(stdin)
+      end
     end
 
     def command(args)
