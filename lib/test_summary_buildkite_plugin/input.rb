@@ -99,7 +99,8 @@ module TestSummaryBuildkitePlugin
              .flatten
       end
 
-      def tap_to_failures(tap)
+      # TODO: Factor this out into its own parser class
+      def tap_to_failures(tap) # rubocop:disable Metrics/MethodLength
         lines = tap.split("\n")
         raise 'Only TAP version 13 supported' unless lines.first.strip == 'TAP version 13'
         tests = []

@@ -20,10 +20,10 @@ module TestSummaryBuildkitePlugin
       if show_first.negative? || show_first >= input.failures.count
         failures_markdown(input.failures)
       elsif show_first.zero?
-        "<details><summary>Show failures</summary>\n#{failures_markdown(input.failures)}\n</details>"
+        details('Show failures', failures_markdown(input.failures))
       else
         failures_markdown(input.failures[0...show_first]) +
-          "\n\n<details><summary>Show additional failures</summary>\n#{failures_markdown(input.failures[show_first..-1])}\n</details>"
+          details('Show additional failures', failures_markdown(input.failures[show_first..-1]))
       end
     end
 
@@ -39,6 +39,10 @@ module TestSummaryBuildkitePlugin
 
     def show_first
       options[:show_first] || 20
+    end
+
+    def details(summary, contents)
+      "<details><summary>#{summary}</summary>\n#{contents}\n</details>"
     end
   end
 end

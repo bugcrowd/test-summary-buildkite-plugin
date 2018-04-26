@@ -41,13 +41,8 @@ module TestSummaryBuildkitePlugin
       private
 
       def location
-        if file && line && column
-          "#{file}:#{line}:#{column}: "
-        elsif file && line
-          "#{file}:#{line}: "
-        elsif file
-          "#{file}: "
-        end
+        reference = [file, line, column].compact.join(':')
+        "#{reference}: " unless reference.empty?
       end
     end
   end
