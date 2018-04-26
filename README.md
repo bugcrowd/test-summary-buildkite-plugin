@@ -7,8 +7,11 @@ for all your test failures using
 Supported formats:
 
 * JUnit
-* [TAP](https://testanything.org)
+* [TAP](https://testanything.org)^
 * Plain text files with one failure per line
+
+\^ Current TAP support is fairly limited. If you have an example TAP file that is not being interpreted correctly,
+feel free to open an issue or pull request.
 
 ## Example
 
