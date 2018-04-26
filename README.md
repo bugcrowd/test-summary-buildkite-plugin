@@ -50,7 +50,7 @@ Add a build step using the test-summary plugin:
 ```yaml
   - label: annotate
     plugins:
-      bugcrowd/test-summary#v0.3.0:
+      bugcrowd/test-summary#v1.0.0:
         inputs:
           - label: rspec
             artifact_path: artifacts/rspec*
