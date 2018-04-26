@@ -6,7 +6,7 @@ DOCKER_REPO=tessereth/test-summary-buildkite-plugin
 
 # cd to plugin directory
 cd "$( dirname "${BASH_SOURCE[0]}" )/.."
-TAG=$(git describe --tags --exact-match 2> /dev/null)
+TAG=$(git describe --tags --exact-match 2> /dev/null || true)
 
 if [[ -n "$TAG" ]]; then
     IMAGE="$DOCKER_REPO:$TAG"
