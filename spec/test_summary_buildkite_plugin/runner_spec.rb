@@ -33,7 +33,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Runner do
 
     it 'calls annotate with correct args' do
       run
-      expect(agent_annotate_commands.first).to include(*%w[annotate --context test-summary --style error])
+      expect(agent_annotate_commands.first).to include('annotate', '--context', 'test-summary', '--style', 'error')
     end
 
     context 'with custom style' do
@@ -41,7 +41,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Runner do
 
       it 'calls annotate with correct args' do
         run
-        expect(agent_annotate_commands.first).to include(*%w[annotate --context test-summary --style warning])
+        expect(agent_annotate_commands.first).to include('annotate', '--context', 'test-summary', '--style', 'warning')
       end
     end
 
@@ -50,7 +50,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Runner do
 
       it 'calls annotate with correct args' do
         run
-        expect(agent_annotate_commands.first).to include(*%w[annotate --context ponies --style error])
+        expect(agent_annotate_commands.first).to include('annotate', '--context', 'ponies', '--style', 'error')
       end
     end
   end
