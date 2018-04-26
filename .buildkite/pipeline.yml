@@ -13,12 +13,6 @@ steps:
       docker-compose#v2.1.0:
         run: test
 
-  - wait
-
-  - block: show sample
-
-  - wait
-
   - label: ":arrow_up: artifacts"
     command: buildkite-agent artifact upload spec/sample_artifacts/**/*
 
@@ -51,6 +45,7 @@ steps:
           type: summary
           show_first: 3
         context: simple-annotation
+        style: default
 
   # Add test summary, including failure details
   - label: ":pencil: details"
@@ -79,4 +74,4 @@ steps:
           type: details
           show_first: 3
         context: verbose-annotation
-        style: warning
+        style: info
