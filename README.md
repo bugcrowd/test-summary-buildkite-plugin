@@ -100,3 +100,18 @@ Other formatter options are:
 
 * `context:` The Buildkite annotation context. Defaults to `test-summary`.
 * `style:` Set the annotation style. Defaults to `error`.
+
+## Developing
+
+To run the tests:
+
+    docker-compose run --rm test rspec
+
+### Release process
+
+1. Update [version.rb](lib/test_summary_buildkite_plugin/version.rb)
+2. Update version in README example
+3. `git tag --sign vx.x.x -m "Release vx.x.x"`
+4. `git push origin vx.x.x`
+5. `docker build -t tessereth/test-summary-buildkite-plugin:vx.x.x`
+6. `docker push tessereth/test-summary-buildkite-plugin:vx.x.x`
