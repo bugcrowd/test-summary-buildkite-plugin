@@ -29,7 +29,7 @@ steps:
     artifact_paths: "artifacts/*"
 
   - label: ava
-    command: yarn test --tap -o artifacts/ava.tap
+    command: bash -c "yarn --silent test --tap > artifacts/ava.tap"
     artifact_paths: "artifacts/*"
 
   - label: rubocop
