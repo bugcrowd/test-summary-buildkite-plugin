@@ -1,14 +1,4 @@
 steps:
-  - label: ":docker: build"
-    timeout: 10
-    plugins:
-      docker-compose#v2.1.0:
-        build: test
-        image-repository: $DOCKER_REPO
-        image-name: $BUILDKITE_COMMIT
-
-  - wait
-
   - label: ":rspec: rspec"
     command: rspec
     timeout: 5

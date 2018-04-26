@@ -6,10 +6,17 @@ DOCKER_REPO=tessereth/test-summary-buildkite-plugin
 
 # cd to plugin directory
 cd "$( dirname "${BASH_SOURCE[0]}" )/.."
-COMMIT=$(git rev-parse HEAD)
+TAG=$(git describe --tags --exact-match 2> /dev/null)
 
-docker pull $DOCKER_REPO:$COMMIT
+if [[ -n "$TAG" ]]; then
+    IMAGE="$DOCKER_REPO:$TAG"
+    docker pull "$IMAGE"
+else
+    IMAGE=test-summary:$BUILDKITE_JOB_ID
+    docker build -t "$IMAGE" .
+fi
+
 docker run --rm \
   --mount type=bind,src=$(which buildkite-agent),dst=/usr/bin/buildkite-agent \
   -e BUILDKITE_BUILD_ID -e BUILDKITE_JOB_ID -e BUILDKITE_AGENT_ACCESS_TOKEN -e BUILDKITE_PLUGINS \
-  $DOCKER_REPO:$COMMIT
+  $IMAGE
