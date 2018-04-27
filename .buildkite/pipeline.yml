@@ -13,6 +13,11 @@ steps:
       docker-compose#v2.1.0:
         run: test
 
+  - label: ":sparkles: plugin lint"
+    plugins:
+      plugin-linter#v1.0.0:
+        name: test-summary
+
   - label: ":arrow_up: artifacts"
     command: buildkite-agent artifact upload spec/sample_artifacts/**/*
 
