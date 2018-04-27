@@ -1,0 +1,57 @@
+name: test-summary
+description: Collates test results as a buildkite annotation
+author: "@tessereth"
+requirements:
+  - docker
+configuration:
+  properties:
+    inputs:
+      type: array
+      items:
+        type: object
+        properties:
+          label:
+            type: string
+          artifact_path:
+            type: string
+          type:
+            type: string
+            enum:
+              - junit
+              - tap
+              - oneline
+          encoding:
+            type: string
+          strip_colors:
+            type: boolean
+          crop:
+            type: object
+            properties:
+              start:
+                type: number
+              end:
+                type: number
+            additionalProperties: false
+        required:
+          - label
+          - artifact_path
+          - type
+        additionalProperties: false
+    formatter:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - summary
+            - details
+        show_first:
+          type: number
+      additionalProperties: false
+    context:
+      type: string
+    style:
+      type: string
+  required:
+    - inputs
+  additionalProperties: false
