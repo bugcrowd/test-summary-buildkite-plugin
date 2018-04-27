@@ -66,10 +66,6 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
       expect(input.failures.first.details).to start_with('Failure/Error: ')
     end
 
-    it 'details escape html' do
-      expect(input.failures.first.details).to include('&lt;')
-    end
-
     it 'failures have file' do
       expect(input.failures.first.file).to eq('./spec/lib/url_whitelist_spec.rb')
     end
