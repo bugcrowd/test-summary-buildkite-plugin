@@ -1,4 +1,4 @@
-FROM ruby:2.5.1
+FROM ruby:2.5.1-alpine
 
 # Fetch/install gems
 RUN mkdir -p /opt/gems

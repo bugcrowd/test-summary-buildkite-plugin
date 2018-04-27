@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-require 'nokogiri'
+# We don't use nokogiri because we use an alpine-based docker image
+# And adding the required dependencies triples the size of the image
+require 'rexml/document'
 
 module TestSummaryBuildkitePlugin
   module Input
@@ -72,7 +74,7 @@ module TestSummaryBuildkitePlugin
 
     class JUnit < Base
       def failures_raw
-        files.map { |file| File.open(file) { |f| Nokogiri::XML(f, nil, encoding) } }
+        files.map { |file| REXML::Document.new(read(file)) }
              .map { |xml| xml_to_failures(xml) }
              .flatten
       end
@@ -80,12 +82,12 @@ module TestSummaryBuildkitePlugin
       private
 
       def xml_to_failures(xml)
-        xml.css('testcase').each_with_object([]) do |testcase, failures|
-          testcase.css('failure').each do |failure|
+        xml.elements.enum_for(:each, '*/testcase').each_with_object([]) do |testcase, failures|
+          testcase.elements.each('failure') do |failure|
             failures << Failure::Structured.new(
-              file: testcase['file'],
-              name: testcase['name'],
-              details: failure.inner_html
+              file: testcase.attributes['file'].to_s,
+              name: testcase.attributes['name'].to_s,
+              details: failure.text
             )
           end
         end
