@@ -7,6 +7,7 @@ require 'rexml/document'
 module TestSummaryBuildkitePlugin
   module Input
     WORKDIR = 'tmp/test-summary'
+    DEFAULT_JOB_ID_REGEX = /(?<job_id>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/
 
     def self.create(type:, **options)
       type = type.to_sym
@@ -25,7 +26,7 @@ module TestSummaryBuildkitePlugin
 
       def failures
         @failures ||= begin
-          f = failures_raw
+          f = files.map { |filename| filename_to_failures(filename) }.flatten
           f.each(&:strip_colors) if options[:strip_colors]
           f.sort_by(&:summary)
         end
@@ -41,10 +42,6 @@ module TestSummaryBuildkitePlugin
         end
       end
 
-      def failures_raw
-        raise 'abstract method'
-      end
-
       def read(filename)
         File.read(filename).force_encoding(encoding)
       end
@@ -52,14 +49,31 @@ module TestSummaryBuildkitePlugin
       def encoding
         @options[:encoding] || 'UTF-8'
       end
+
+      def filename_to_failures(filename)
+        file_contents_to_failures(read(filename)).each { |failure| failure.job_id = job_id(filename) }
+      end
+
+      def job_id(filename)
+        filename.match(job_id_regex)&.named_captures&.fetch('job_id', nil)
+      end
+
+      def job_id_regex
+        if @options[:job_id_regex]
+          r = Regexp.new(@options[:job_id_regex])
+          raise 'Job id regex must have a job_id named capture' unless r.names.include?('job_id')
+          r
+        else
+          DEFAULT_JOB_ID_REGEX
+        end
+      end
     end
 
     class OneLine < Base
-      def failures_raw
-        files.map { |file| read(file).split("\n")[crop.start..crop.end] }
-             .flatten
-             .reject(&:empty?)
-             .map { |line| Failure::Unstructured.new(line) }
+      def file_contents_to_failures(str)
+        str.split("\n")[crop.start..crop.end]
+           .reject(&:empty?)
+           .map { |line| Failure::Unstructured.new(line) }
       end
 
       private
@@ -73,15 +87,8 @@ module TestSummaryBuildkitePlugin
     end
 
     class JUnit < Base
-      def failures_raw
-        files.map { |file| REXML::Document.new(read(file)) }
-             .map { |xml| xml_to_failures(xml) }
-             .flatten
-      end
-
-      private
-
-      def xml_to_failures(xml)
+      def file_contents_to_failures(str)
+        xml = REXML::Document.new(str)
         xml.elements.enum_for(:each, '*/testcase').each_with_object([]) do |testcase, failures|
           testcase.elements.each('failure') do |failure|
             failures << Failure::Structured.new(
@@ -99,14 +106,8 @@ module TestSummaryBuildkitePlugin
       YAML_START = /^\s+---/
       YAML_END = /^\s+\.\.\./
 
-      def failures_raw
-        files.map { |file| read(file) }
-             .map { |tap| tap_to_failures(tap) }
-             .flatten
-      end
-
       # TODO: Factor this out into its own parser class
-      def tap_to_failures(tap) # rubocop:disable Metrics/MethodLength
+      def file_contents_to_failures(tap) # rubocop:disable Metrics/MethodLength
         lines = tap.split("\n")
         raise 'Only TAP version 13 supported' unless lines.first.strip == 'TAP version 13'
         tests = []

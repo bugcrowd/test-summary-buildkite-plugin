@@ -4,6 +4,8 @@ module TestSummaryBuildkitePlugin
   module Failure
     # All failure classes should have #summary and #details methods
     class Base
+      attr_accessor :job_id
+
       def summary
         raise 'abstract method'
       end

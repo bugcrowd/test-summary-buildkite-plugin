@@ -32,7 +32,7 @@ steps:
             artifact_path: spec/sample_artifacts/example.tap
             type: tap
           - label: ":eslint: eslint"
-            artifact_path: spec/sample_artifacts/eslint.txt
+            artifact_path: spec/sample_artifacts/eslint-*.txt
             type: oneline
             # ignore the last two lines
             crop:
@@ -61,7 +61,7 @@ steps:
             artifact_path: spec/sample_artifacts/example.tap
             type: tap
           - label: ":eslint: eslint"
-            artifact_path: spec/sample_artifacts/eslint.txt
+            artifact_path: spec/sample_artifacts/eslint-*.txt
             type: oneline
             # ignore the last two lines
             crop:

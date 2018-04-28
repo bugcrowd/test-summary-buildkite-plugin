@@ -44,7 +44,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
     end
 
     context 'with blank lines' do
-      let(:artifact_path) { 'eslint.txt' }
+      let(:artifact_path) { 'eslint-00112233-0011-0011-0011-00112233445566.txt' }
 
       it 'ignores blank lines' do
         expect(input.failures.count).to eq(2)
@@ -54,7 +54,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
 
   describe 'junit' do
     let(:type) { 'junit' }
-    let(:artifact_path) { 'rspec-0.xml' }
+    let(:artifact_path) { 'rspec-aabbccdd-0011-0011-0011-00112233445566.xml' }
 
     it { is_expected.to be_a(TestSummaryBuildkitePlugin::Input::JUnit) }
 
@@ -145,7 +145,7 @@ severity: fail')
 
   describe 'setting ascii encoding' do
     let(:type) { 'oneline' }
-    let(:artifact_path) { 'eslint.txt' }
+    let(:artifact_path) { 'eslint-00112233-0011-0011-0011-00112233445566.txt' }
     let(:additional_options) { { encoding: 'ascii' } }
 
     it 'tries to parse as ascii' do
