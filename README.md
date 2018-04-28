@@ -90,6 +90,10 @@ crop:
   end: 2
 ```
 
+* `job_id_regex`: Ruby regular expression to extract the `job_id` from the artifact path. It must contain
+  a named capture with the name `job_id`. Defaults to
+  `(?<job_id>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})`.
+
 ### Formatter
 
 There are two formatter types, `summary` and `details`.

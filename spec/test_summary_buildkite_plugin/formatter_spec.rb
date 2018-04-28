@@ -38,6 +38,14 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
       it 'has no <details> elements' do
         expect(markdown).not_to include('<details')
       end
+
+      context 'and job_id' do
+        before { failures.first.job_id = 'awesome_job' }
+
+        it 'includes the job_id' do
+          expect(markdown).to include('awesome_job')
+        end
+      end
     end
 
     context 'with details' do
@@ -58,6 +66,14 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
 
       it 'has a <details> element' do
         expect(markdown).to include('<details')
+      end
+
+      context 'and job_id' do
+        before { failures.first.job_id = 'awesome_job' }
+
+        it 'includes the job_id' do
+          expect(markdown).to include('awesome_job')
+        end
       end
     end
   end

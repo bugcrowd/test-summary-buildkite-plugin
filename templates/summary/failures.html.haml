@@ -1,10 +1,3 @@
 %pre
   %code
     = failures.map(&:summary).join("\n")
-
-- jobs = failures.map(&:job_id).uniq.reject { |job| job == nil }
-- unless jobs.empty?
-  Jobs:
-  - jobs.each do |job_id|
-    %a{href: "##{job_id}"}
-      = job_id

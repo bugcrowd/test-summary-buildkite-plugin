@@ -1,0 +1,11 @@
+-# Note: we need to use markdown links here rather than <a>'s otherwise the markdown renderer adds incorrect spacing
+- unless job_ids.empty?
+  See
+  - job_ids[0...-2].each do |job_id|
+    = "[job #{job_id}](##{job_id}),"
+
+  - if job_ids.count > 1
+    = "[job #{job_ids[-2]}](##{job_ids[-2]})"
+    and
+
+  = "[job #{job_ids.last}](##{job_ids.last})"
