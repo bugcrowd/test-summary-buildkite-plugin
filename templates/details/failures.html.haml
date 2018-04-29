@@ -13,7 +13,7 @@
           - if failure.job_id
             %p
               in
-              %a{href: "##{failure.job_id}"}
+              %a{href: "#job-component-#{failure.job_id}"}
                 job
                 = failure.job_id
       - else
