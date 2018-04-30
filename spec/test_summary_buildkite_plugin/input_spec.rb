@@ -44,17 +44,17 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
     end
 
     context 'with blank lines' do
-      let(:artifact_path) { 'eslint.txt' }
+      let(:artifact_path) { 'eslint-00112233-0011-0011-0011-001122334455.txt' }
 
       it 'ignores blank lines' do
-        expect(input.failures.count).to eq(2)
+        expect(input.failures.count).to eq(3)
       end
     end
   end
 
   describe 'junit' do
     let(:type) { 'junit' }
-    let(:artifact_path) { 'rspec-0.xml' }
+    let(:artifact_path) { 'rspec-aabbccdd-0011-0011-0011-001122334455.xml' }
 
     it { is_expected.to be_a(TestSummaryBuildkitePlugin::Input::JUnit) }
 
@@ -102,7 +102,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
     let(:artifact_path) { 'rspec*' }
 
     it 'has all failures' do
-      expect(input.failures.count).to eq(5)
+      expect(input.failures.count).to eq(6)
     end
 
     it 'sorts failures' do
@@ -145,11 +145,49 @@ severity: fail')
 
   describe 'setting ascii encoding' do
     let(:type) { 'oneline' }
-    let(:artifact_path) { 'eslint.txt' }
+    let(:artifact_path) { 'eslint-00112233-0011-0011-0011-001122334455.txt' }
     let(:additional_options) { { encoding: 'ascii' } }
 
     it 'tries to parse as ascii' do
       expect { input.failures }.to raise_error('invalid byte sequence in US-ASCII')
+    end
+  end
+
+  describe 'job_id' do
+    let(:type) { 'oneline' }
+
+    context 'with uuid in path' do
+      let(:artifact_path) { 'eslint-00112233-0011-0011-0011-001122334455.txt' }
+
+      it 'failures have job_id' do
+        expect(input.failures.first.job_id).to eq('00112233-0011-0011-0011-001122334455')
+      end
+    end
+
+    context 'without uuid in path' do
+      let(:artifact_path) { 'rubocop.txt' }
+
+      it 'failures have no job_id' do
+        expect(input.failures.first.job_id).to be_nil
+      end
+    end
+
+    context 'with custom job_id_regex' do
+      let(:additional_options) { { job_id_regex: '(?<job_id>eslint)' } }
+      let(:artifact_path) { 'eslint-00112233-0011-0011-0011-001122334455.txt' }
+
+      it 'uses the regex' do
+        expect(input.failures.first.job_id).to eq('eslint')
+      end
+    end
+
+    context 'with bad custom job_id_regex' do
+      let(:additional_options) { { job_id_regex: '(eslint)' } }
+      let(:artifact_path) { 'eslint-00112233-0011-0011-0011-001122334455.txt' }
+
+      it 'gives helpful error' do
+        expect { input.failures }.to raise_error(/must have a job_id named capture/)
+      end
     end
   end
 end

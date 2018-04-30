@@ -1,14 +1,21 @@
 %ul
   - failures.each do |failure|
     %li
-      - if failure.details
+      - if failure.details || failure.job_id
         %details
           %summary
             %code
               = failure.summary
-          %pre
-            %code
-              = failure.details
+          - if failure.details
+            %pre
+              %code
+                = failure.details
+          - if failure.job_id
+            %p
+              in
+              %a{href: "#job-component-#{failure.job_id}"}
+                job
+                = failure.job_id
       - else
         %code
           = failure.summary

@@ -1,0 +1,4 @@
+/usr/src/app/javascript/src/foo.js:8:25: Delete `⏎···` [Error/prettier/prettier]
+/usr/src/app/javascript/src/bar.js::4:10: 'List' is defined but never used. [Error/no-unused-vars]
+
+1 problem

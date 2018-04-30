@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="rspec" tests="1" skipped="0" failures="1" errors="0" time="9.658348" timestamp="2018-04-24T14:55:21+10:00" hostname="foo.local">
+<testcase classname="spec.features.test_things_spec" name="test all the things" file="./spec/features/test_things_spec.rb" time="2.068429"><failure message="broken" type="RuntimeError">Failure/Error: fail(&apos;whatever&apos;)
+
+RuntimeError:
+  whatever
+./spec/features/test_things_spec.rb:5:in `block (3 levels) in &lt;top (required)&gt;&apos;</failure></testcase>
+</testsuite>

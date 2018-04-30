@@ -15,7 +15,9 @@ feel free to open an issue or pull request.
 
 ## Example
 
-Upload test results as artifacts using any supported format. Some examples:
+Upload test results as artifacts using any supported format. If you include the `$BUILDKITE_JOB_ID` in the path,
+a link to the build will be included in the annotation.
+Some examples:
 
 ```yaml
 steps:
@@ -24,7 +26,7 @@ steps:
     parallelism: 10
     # With spec_helper.rb:
     # RSpec.configure do |config|
-    #   config.add_formatter('RspecJunitFormatter', "artifacts/rspec-#{ENV['BUILDKITE_PARALLEL_JOB']}.xml")
+    #   config.add_formatter('RspecJunitFormatter', "artifacts/rspec-#{ENV['BUILDKITE_JOB_JOB']}.xml")
     # end
     artifact_paths: "artifacts/*"
 
@@ -87,6 +89,10 @@ crop:
   start: 3
   end: 2
 ```
+
+* `job_id_regex`: Ruby regular expression to extract the `job_id` from the artifact path. It must contain
+  a named capture with the name `job_id`. Defaults to
+  `(?<job_id>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})`.
 
 ### Formatter
 
