@@ -26,7 +26,7 @@ steps:
     parallelism: 10
     # With spec_helper.rb:
     # RSpec.configure do |config|
-    #   config.add_formatter('RspecJunitFormatter', "artifacts/rspec-#{ENV['BUILDKITE_JOB_JOB']}.xml")
+    #   config.add_formatter('RspecJunitFormatter', "artifacts/rspec-#{ENV['BUILDKITE_JOB_ID']}.xml")
     # end
     artifact_paths: "artifacts/*"
 
