@@ -6,10 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [v1.1.0](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.0.0...v1.1.0) - 2018-06-20
+## [v1.1.0](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.0.0...v1.1.0) - 2018-05-01
 ### Added
-- plugin.yml (#2)
-- Links to the relevant jobs (#3)
+- plugin.yml [#2](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/2)
+- Links to the relevant jobs [#3](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/3)
 
 ### Changed
-- Remove nokogiri dependency and use ruby alpine (#1)
+- Remove nokogiri dependency and use ruby alpine [#1](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/1)

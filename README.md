@@ -52,7 +52,7 @@ Add a build step using the test-summary plugin:
 ```yaml
   - label: annotate
     plugins:
-      bugcrowd/test-summary#v1.0.0:
+      bugcrowd/test-summary#v1.1.0:
         inputs:
           - label: rspec
             artifact_path: artifacts/rspec*
@@ -144,3 +144,4 @@ To generate sample markdown based on the files in `spec/sample_artifacts`:
 6. `git tag --sign vx.x.x -m "Release vx.x.x"`
 7. `docker push tessereth/test-summary-buildkite-plugin:vx.x.x`
 8. `git push origin vx.x.x`
+9. Copy changelog entry to github release notes
