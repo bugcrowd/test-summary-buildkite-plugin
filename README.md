@@ -138,8 +138,9 @@ To generate sample markdown based on the files in `spec/sample_artifacts`:
 
 1. Update [version.rb](lib/test_summary_buildkite_plugin/version.rb)
 2. Update version in README example
-3. Push to github and ensure tests pass
-4. `docker build -t tessereth/test-summary-buildkite-plugin:vx.x.x .`
-5. `git tag --sign vx.x.x -m "Release vx.x.x"`
-6. `git push origin vx.x.x`
+3. Update [CHANGELOG.md](./CHANGELOG.md)
+4. Push to github and ensure tests pass
+5. `docker build -t tessereth/test-summary-buildkite-plugin:vx.x.x .`
+6. `git tag --sign vx.x.x -m "Release vx.x.x"`
 7. `docker push tessereth/test-summary-buildkite-plugin:vx.x.x`
+8. `git push origin vx.x.x`
