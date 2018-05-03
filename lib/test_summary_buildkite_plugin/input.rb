@@ -90,14 +90,20 @@ module TestSummaryBuildkitePlugin
       def file_contents_to_failures(str)
         xml = REXML::Document.new(str)
         xml.elements.enum_for(:each, '*/testcase').each_with_object([]) do |testcase, failures|
-          testcase.elements.each('failure') do |failure|
+          testcase.elements.each('failure | error') do |failure|
             failures << Failure::Structured.new(
               file: testcase.attributes['file'].to_s,
               name: testcase.attributes['name'].to_s,
-              details: failure.text
+              message: failure.attributes['message'].to_s,
+              details: details(failure)
             )
           end
         end
+      end
+
+      def details(failure)
+        # gets all text elements that are direct children (includes CDATA), and use the unescaped values
+        failure.texts.map(&:value).join('').strip
       end
     end
 
