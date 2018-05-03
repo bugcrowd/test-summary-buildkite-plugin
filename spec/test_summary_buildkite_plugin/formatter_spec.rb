@@ -49,10 +49,12 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
     end
 
     context 'with details' do
+      let(:name) { 'ponies are awesome' }
+      let(:details) { 'like, really awesome' }
       let(:failures) do
         [TestSummaryBuildkitePlugin::Failure::Structured.new(
-          name: 'ponies are awesome',
-          details: 'like, really awesome'
+          name: name,
+          details: details
         )]
       end
 
@@ -73,6 +75,30 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
 
         it 'includes the job_id' do
           expect(markdown).to include('awesome_job')
+        end
+      end
+
+      context 'with html chars in name' do
+        let(:name) { 'ponies are awesome <strong>&</strong> amazing' }
+
+        it 'escapes angle brackets' do
+          expect(markdown).to include('&lt;')
+        end
+
+        it 'escapes "&"' do
+          expect(markdown).to include('&amp;')
+        end
+      end
+
+      context 'with html chars in description' do
+        let(:details) { 'like, really awesome <strong>&</strong> amazing' }
+
+        it 'escapes angle brackets' do
+          expect(markdown).to include('&lt;')
+        end
+
+        it 'escapes "&"' do
+          expect(markdown).to include('&amp;')
         end
       end
     end

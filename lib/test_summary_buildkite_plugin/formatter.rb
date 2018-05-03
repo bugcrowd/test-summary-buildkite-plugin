@@ -57,7 +57,7 @@ module TestSummaryBuildkitePlugin
     def render_template(name, params)
       filename = %W[templates/#{type}/#{name}.html.haml templates/#{name}.html.haml].find { |f| File.exist?(f) }
       if filename
-        engine = Haml::Engine.new(File.read(filename))
+        engine = Haml::Engine.new(File.read(filename), escape_html: true)
         engine.render(Object.new, params)
       end
     end
