@@ -6,14 +6,6 @@ module TestSummaryBuildkitePlugin
     class Base
       attr_accessor :job_id
 
-      def summary
-        raise 'abstract method'
-      end
-
-      def details
-        raise 'abstract method'
-      end
-
       def strip_colors
         instance_variables.each do |var|
           value = instance_variable_get(var)
@@ -30,16 +22,17 @@ module TestSummaryBuildkitePlugin
       end
 
       def details; end
+
+      def message; end
     end
 
     class Structured < Base
-      attr_accessor :file, :line, :column, :name, :details
+      attr_accessor :file, :name, :message, :details
 
-      def initialize(name:, file: nil, line: nil, column: nil, details: nil)
+      def initialize(name:, file: nil, message: nil, details: nil)
         @file = file
-        @line = line
-        @column = column
         @name = name
+        @message = message
         @details = details
       end
 
@@ -50,8 +43,7 @@ module TestSummaryBuildkitePlugin
       private
 
       def location
-        reference = [file, line, column].compact.join(':')
-        "#{reference}: " unless reference.empty?
+        "#{file}: " if file
       end
     end
   end

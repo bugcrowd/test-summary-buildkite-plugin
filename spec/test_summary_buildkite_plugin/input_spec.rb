@@ -74,14 +74,6 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
       expect(input.failures.first.name).to eq('UrlWhitelist with domain wildcard should be allowed url')
     end
 
-    it 'failures have no line' do
-      expect(input.failures.first.line).to be_nil
-    end
-
-    it 'failures have no column' do
-      expect(input.failures.first.column).to be_nil
-    end
-
     context 'without strip_colors' do
       it 'keeps color sequences' do
         expect(input.failures.first.details).to include('\e[0m')
@@ -144,14 +136,6 @@ severity: fail')
 
     it 'failures have no file' do
       expect(input.failures.first.file).to be_nil
-    end
-
-    it 'failures have no line' do
-      expect(input.failures.first.line).to be_nil
-    end
-
-    it 'failures have no column' do
-      expect(input.failures.first.column).to be_nil
     end
   end
 

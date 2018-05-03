@@ -1,11 +1,14 @@
 %ul
   - failures.each do |failure|
     %li
-      - if failure.details || failure.job_id
+      - if failure.message || failure.details || failure.job_id
         %details
           %summary
             %code
               = failure.summary
+          - if failure.message
+            %p
+              = failure.message
           - if failure.details
             %pre
               %code
