@@ -43,7 +43,7 @@ module TestSummaryBuildkitePlugin
       private
 
       def location
-        "#{file}: " if file
+        "#{file}: " unless file.nil? || file.empty?
       end
     end
   end

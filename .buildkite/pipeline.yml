@@ -34,7 +34,7 @@ steps:
             type: junit
             encoding: UTF-8
             strip_colors: true
-          - label: ":speak_no_evil: xunit"
+          - label: ":female-technologist: xunit"
             artifact_path: spec/sample_artifacts/xunit.xml
             type: junit
           - label: ":camel: tap"
@@ -66,7 +66,7 @@ steps:
             type: junit
             encoding: UTF-8
             strip_colors: true
-          - label: ":speak_no_evil: xunit"
+          - label: ":female-technologist: xunit"
             artifact_path: spec/sample_artifacts/xunit.xml
             type: junit
           - label: ":camel: tap"

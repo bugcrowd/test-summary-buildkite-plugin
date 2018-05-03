@@ -21,14 +21,17 @@ RSpec.describe TestSummaryBuildkitePlugin::Failure do
       end
 
       context 'with file' do
-        let(:line) { nil }
-        let(:column) { nil }
-
         it { expect(summary).to start_with("#{file}: ") }
       end
 
-      context 'with no location information' do
+      context 'with no file' do
         let(:file) { nil }
+
+        it { expect(summary).to eq(name) }
+      end
+
+      context 'with empty file' do
+        let(:file) { '' }
 
         it { expect(summary).to eq(name) }
       end
