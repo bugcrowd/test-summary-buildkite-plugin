@@ -6,10 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v1.2.0](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.1.0...v1.2.0) - 2018-05-04
+- HTML escape output [#6](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/6)
+- Junit: Support `error` elements and include the message [#7](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/7)
+
 ## [v1.1.0](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.0.0...v1.1.0) - 2018-05-01
-### Added
+
+- Remove nokogiri dependency and use ruby alpine [#1](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/1)
 - plugin.yml [#2](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/2)
 - Links to the relevant jobs [#3](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/3)
-
-### Changed
-- Remove nokogiri dependency and use ruby alpine [#1](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/1)
