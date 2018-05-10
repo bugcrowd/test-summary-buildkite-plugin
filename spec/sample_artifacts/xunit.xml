@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="xunit" tests="2" skipped="1" failures="0" errors="1" time="9.658348" timestamp="2018-04-24T14:55:21+10:00" hostname="foo.local">
-  <testcase classname="Chrome 66.0" name="Unit | Component | autocomplete: shows default results when defaultCategory is set" time="0.070">
-    <error message="has results after focusing">
-      <![CDATA[
-at Object.<anonymous> (http://localhost:9001/assets/tests.js:2188:20) at runTest (http://localhost:9001/assets/test-support.js:15012:30) at Test.run (http://localhost:9001/assets/test-support.js:14998:6) at http://localhost:9001/assets/test-support.js:15210:12 at advanceTaskQueue (http://localhost:9001/assets/test-support.js:14611:6) at Object.advance (http://localhost:9001/assets/test-support.js:14592:4)
-]]>
-    </error>
-    <skipped message="not implemented">
-      <![CDATA[implementations are overrated]]>
-    </skipped>
-  </testcase>
-</testsuite>
+<testsuites name="jest tests" tests="3" failures="2" time="7.298">
+  <testsuite name="xunit" tests="2" skipped="1" failures="0" errors="1" time="9.658348" timestamp="2018-04-24T14:55:21+10:00" hostname="foo.local">
+    <testcase classname="Chrome 66.0" name="Unit | Component | autocomplete: shows default results when defaultCategory is set" time="0.070">
+      <error message="has results after focusing">
+        <![CDATA[
+  at Object.<anonymous> (http://localhost:9001/assets/tests.js:2188:20) at runTest (http://localhost:9001/assets/test-support.js:15012:30) at Test.run (http://localhost:9001/assets/test-support.js:14998:6) at http://localhost:9001/assets/test-support.js:15210:12 at advanceTaskQueue (http://localhost:9001/assets/test-support.js:14611:6) at Object.advance (http://localhost:9001/assets/test-support.js:14592:4)
+  ]]>
+      </error>
+      <skipped message="not implemented">
+        <![CDATA[implementations are overrated]]>
+      </skipped>
+    </testcase>
+  </testsuite>
+  <testsuite name="Login" errors="0" failures="1" skipped="0" timestamp="2018-05-08T23:03:15" time="7.298" tests="2">
+    <testcase classname="Login should load without error" name="Login should load without error" time="2.735">
+      <failure>
+        Error: Expected image to match or be a close match to snapshot but was 8.546910755148742% different from snapshot (6723 differing pixels)
+      </failure>
+    </testcase>
+    <testcase classname="Login should log in successfully" name="Login should log in successfully" time="0.028"></testcase>
+  </testsuite>
+</testsuites>
