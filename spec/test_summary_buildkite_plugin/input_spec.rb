@@ -88,15 +88,15 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
       end
     end
 
-    context 'with error and skip elements' do
+    context 'with error and skip elements and testsuites' do
       let(:artifact_path) { 'xunit.xml' }
 
       it 'includes the error' do
-        expect(input.failures.first.name).to include('shows default results when defaultCategory is set')
+        expect(input.failures.map(&:name)).to include(/shows default results when defaultCategory is set/)
       end
 
       it 'ignored skipped test' do
-        expect(input.failures.count).to eq(1)
+        expect(input.failures.count).to eq(2)
       end
     end
   end
