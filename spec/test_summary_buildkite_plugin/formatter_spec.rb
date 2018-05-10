@@ -7,7 +7,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
   let(:input) { double(TestSummaryBuildkitePlugin::Input::Base, label: 'animals') }
   let(:failures) { [] }
 
-  subject(:markdown) { described_class.new(type: type, show_first: show_first).markdown(input) }
+  subject(:markdown) { described_class.create(type: type, show_first: show_first).markdown(input) }
 
   before do
     allow(input).to receive(:failures).and_return(failures)
@@ -121,8 +121,37 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
       it 'includes the label' do
         expect(markdown).to include('animals')
       end
+
       it 'includes the summary' do
         expect(markdown).to include('ponies are awesome')
+      end
+    end
+  end
+
+  describe 'count_only' do
+    let(:type) { 'count_only' }
+
+    context 'with no failures' do
+      let(:failures) { [] }
+
+      it 'returns empty markdown' do
+        expect(markdown).to be_nil
+      end
+    end
+
+    context 'with failures' do
+      let(:failures) { [TestSummaryBuildkitePlugin::Failure::Unstructured.new('ponies are awesome')] }
+
+      it 'includes the label' do
+        expect(markdown).to include('animals')
+      end
+
+      it 'includes the count' do
+        expect(markdown).to include('1')
+      end
+
+      it 'does not include the summary' do
+        expect(markdown).not_to include('ponies are awesome')
       end
     end
   end
@@ -196,7 +225,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
   end
 
   describe 'with no formatter options' do
-    subject(:markdown) { described_class.new.markdown(input) }
+    subject(:markdown) { described_class.create.markdown(input) }
     let(:failures) do
       [TestSummaryBuildkitePlugin::Failure::Structured.new(
         name: 'ponies are awesome',

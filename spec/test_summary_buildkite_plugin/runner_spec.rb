@@ -75,7 +75,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Runner do
     let(:formatter) { spy }
 
     before do
-      allow(runner).to receive(:formatter).and_return(formatter)
+      allow(runner).to receive(:formatters).and_return([formatter])
       allow(formatter).to receive(:markdown).with(an_instance_of(TestSummaryBuildkitePlugin::Input::JUnit))
         .and_raise('life sucks')
       allow(formatter).to receive(:markdown).with(an_instance_of(TestSummaryBuildkitePlugin::Input::OneLine))
@@ -98,6 +98,37 @@ RSpec.describe TestSummaryBuildkitePlugin::Runner do
 
       it 'raises error' do
         expect { run }.to raise_error('life sucks')
+      end
+    end
+  end
+
+  context 'markdown is too large' do
+    let(:inputs) do
+      [
+        label: 'rspec',
+        type: 'junit',
+        artifact_path: 'rspec*'
+      ]
+    end
+
+    context 'for requested formatter' do
+      before do
+        stub_const('TestSummaryBuildkitePlugin::Runner::MAX_MARKDOWN_SIZE', 100)
+      end
+
+      it 'falls back to count_only formatter' do
+        run
+        expect(agent_annotate_commands.first).to include(stdin: '##### rspec: 6 failures')
+      end
+    end
+
+    context 'for all formatters' do
+      before do
+        stub_const('TestSummaryBuildkitePlugin::Runner::MAX_MARKDOWN_SIZE', 1)
+      end
+
+      it 'raises an exception' do
+        expect { run }.to raise_error(/Failed to generate annotation/)
       end
     end
   end

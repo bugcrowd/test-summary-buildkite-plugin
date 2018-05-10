@@ -2,6 +2,8 @@
 
 module TestSummaryBuildkitePlugin
   class Runner
+    MAX_MARKDOWN_SIZE = 50_000
+
     attr_reader :options
 
     def initialize(options)
@@ -9,15 +11,25 @@ module TestSummaryBuildkitePlugin
     end
 
     def run
-      markdown = inputs.map { |input| input_to_markdown(input) }.compact.join("\n\n")
-      if markdown.empty?
-        puts('No errors found! 🎉')
-      else
-        annotate(markdown)
+      handled = formatters.any? do |formatter|
+        puts("Using #{formatter.type} formatter")
+        markdown = inputs.map { |input| input_to_markdown(formatter, input) }.compact.join("\n\n")
+
+        if markdown.bytesize > MAX_MARKDOWN_SIZE
+          puts("Markdown is too large (#{markdown.bytesize}B > #{MAX_MARKDOWN_SIZE}B)")
+          false
+        elsif markdown.empty?
+          puts('No errors found! 🎉')
+          true
+        else
+          annotate(markdown)
+          true
+        end
       end
+      raise 'Failed to generate annotation' unless handled
     end
 
-    def input_to_markdown(input)
+    def input_to_markdown(formatter, input)
       formatter.markdown(input)
     rescue StandardError => e
       if fail_on_error
@@ -32,12 +44,22 @@ module TestSummaryBuildkitePlugin
       Agent.run('annotate', '--context', context, '--style', style, stdin: markdown)
     end
 
-    def formatter
-      @formatter ||= Formatter.new(options[:formatter])
+    def formatters
+      @formatters ||= begin
+        # Try and do what people requested but fallback to simpler versions if we can't
+        requested = Formatter.create(options[:formatter] || {})
+        summary = Formatter.create((options[:formatter] || {}).merge(type: 'summary'))
+        count_only = Formatter.create(type: :count_only)
+        if requested.type == 'details'
+          [requested, summary, count_only]
+        else
+          [requested, count_only]
+        end
+      end
     end
 
     def inputs
-      options[:inputs].map { |opts| Input.create(opts) }
+      @inputs ||= options[:inputs].map { |opts| Input.create(opts) }
     end
 
     def context
