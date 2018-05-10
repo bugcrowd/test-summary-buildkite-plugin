@@ -9,11 +9,22 @@ module TestSummaryBuildkitePlugin
     end
 
     def run
-      markdown = inputs.map { |input| formatter.markdown(input) }.compact.join("\n\n")
+      markdown = inputs.map { |input| input_to_markdown(input) }.compact.join("\n\n")
       if markdown.empty?
         puts('No errors found! 🎉')
       else
         annotate(markdown)
+      end
+    end
+
+    def input_to_markdown(input)
+      formatter.markdown(input)
+    rescue StandardError => e
+      if fail_on_error
+        raise
+      else
+        log_error(e)
+        nil
       end
     end
 
@@ -35,6 +46,14 @@ module TestSummaryBuildkitePlugin
 
     def style
       options[:style] || 'error'
+    end
+
+    def fail_on_error
+      options[:fail_on_error] || false
+    end
+
+    def log_error(err)
+      puts "#{err.class}: #{err.message}\n\n#{err.backtrace.join("\n")}"
     end
   end
 end

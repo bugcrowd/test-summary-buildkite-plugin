@@ -72,8 +72,8 @@ module TestSummaryBuildkitePlugin
     class OneLine < Base
       def file_contents_to_failures(str)
         str.split("\n")[crop.start..crop.end]
-           .reject(&:empty?)
-           .map { |line| Failure::Unstructured.new(line) }
+          .reject(&:empty?)
+          .map { |line| Failure::Unstructured.new(line) }
       end
 
       private

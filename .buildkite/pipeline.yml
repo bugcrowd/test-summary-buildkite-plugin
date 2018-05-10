@@ -55,6 +55,7 @@ steps:
           show_first: 3
         context: simple-annotation
         style: default
+        fail_on_error: true
 
   # Add test summary, including failure details
   - label: ":pencil: details"
@@ -87,3 +88,4 @@ steps:
           show_first: 3
         context: verbose-annotation
         style: info
+        fail_on_error: false

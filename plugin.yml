@@ -52,6 +52,8 @@ configuration:
       type: string
     style:
       type: string
+    fail_on_error:
+      type: boolean
   required:
     - inputs
   additionalProperties: false

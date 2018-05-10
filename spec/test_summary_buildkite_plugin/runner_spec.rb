@@ -4,8 +4,9 @@ require 'spec_helper'
 
 RSpec.describe TestSummaryBuildkitePlugin::Runner do
   let(:params) { { inputs: inputs } }
+  let(:runner) { described_class.new(params) }
 
-  subject(:run) { described_class.new(params).run }
+  subject(:run) { runner.run }
 
   context 'with no failures' do
     let(:inputs) do
@@ -51,6 +52,52 @@ RSpec.describe TestSummaryBuildkitePlugin::Runner do
       it 'calls annotate with correct args' do
         run
         expect(agent_annotate_commands.first).to include('annotate', '--context', 'ponies', '--style', 'error')
+      end
+    end
+  end
+
+  context 'formatter raises exceptions' do
+    let(:inputs) do
+      [
+        {
+          label: 'rspec',
+          type: 'junit',
+          artifact_path: 'rspec*'
+        },
+        {
+          label: 'eslint',
+          type: 'oneline',
+          artifact_path: 'eslint*'
+        }
+      ]
+    end
+
+    let(:formatter) { spy }
+
+    before do
+      allow(runner).to receive(:formatter).and_return(formatter)
+      allow(formatter).to receive(:markdown).with(an_instance_of(TestSummaryBuildkitePlugin::Input::JUnit))
+        .and_raise('life sucks')
+      allow(formatter).to receive(:markdown).with(an_instance_of(TestSummaryBuildkitePlugin::Input::OneLine))
+        .and_return('awesome markdown')
+    end
+
+    context 'without fail_on_error' do
+      it 'continues' do
+        run
+        expect(agent_annotate_commands.first).to include(stdin: 'awesome markdown')
+      end
+
+      it 'logs the error' do
+        expect { run }.to output(/life sucks/).to_stdout
+      end
+    end
+
+    context 'with fail_on_error' do
+      let(:params) { { inputs: inputs, fail_on_error: true } }
+
+      it 'raises error' do
+        expect { run }.to raise_error('life sucks')
       end
     end
   end
