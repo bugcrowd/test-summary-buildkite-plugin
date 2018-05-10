@@ -118,6 +118,8 @@ Other formatter options are:
 
 * `context:` The Buildkite annotation context. Defaults to `test-summary`.
 * `style:` Set the annotation style. Defaults to `error`.
+* `fail_on_error:` Whether the command should return non-zero exit status on failure. Defaults to `false` so failing
+  to annotate a build does not cause the entire pipeline to fail.
 
 ## Developing
 
