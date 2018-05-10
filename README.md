@@ -114,6 +114,9 @@ Other formatter options are:
   If set to zero, all failures will be hidden by default. If set to a negative number, all failures
   will be shown. Defaults to 20.
 
+**Note**: If the generated annotation exceeds the maximum allowed size, it will fallback from the `details` formatter
+to the `summary` formatter and then to only displaying the failure count for each input source.
+
 ### Other options
 
 * `context:` The Buildkite annotation context. Defaults to `test-summary`.
