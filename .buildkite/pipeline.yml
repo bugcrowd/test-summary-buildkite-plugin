@@ -13,11 +13,10 @@ steps:
       docker-compose#v2.1.0:
         run: test
 
-  # Add this back once either the linter can find the readme example or we can suppress that test
-  #- label: ":sparkles: plugin lint"
-  #  plugins:
-  #    plugin-linter#v1.0.0:
-  #      name: test-summary
+  - label: ":sparkles: plugin lint"
+    plugins:
+      plugin-linter#v2.0.0:
+        id: bugcrowd/test-summary
 
   - label: ":arrow_up: artifacts"
     command: buildkite-agent artifact upload spec/sample_artifacts/**/*
