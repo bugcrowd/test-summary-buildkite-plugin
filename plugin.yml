@@ -1,4 +1,4 @@
-name: test-summary
+name: Test Summary
 description: Collates test results as a buildkite annotation
 author: "@tessereth"
 requirements:
