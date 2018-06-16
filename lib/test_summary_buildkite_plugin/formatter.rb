@@ -43,7 +43,7 @@ module TestSummaryBuildkitePlugin
         show_count = show_failures(input).count
         s = "##### #{input.label}: #{count} failure#{'s' unless count == 1}"
         if show_count < count
-          s += "\n\n_Showing first #{show_count}_"
+          s += "\n\n_Showing first #{show_count} failures_"
         end
         s
       end
@@ -68,11 +68,15 @@ module TestSummaryBuildkitePlugin
       end
 
       def truncate
-        options[:truncate] || -1
+        options[:truncate]
       end
 
       def show_failures(input)
-        input.failures[0..truncate]
+        if truncate
+          input.failures[0...truncate]
+        else
+          input.failures
+        end
       end
 
       def render_template(name, params)

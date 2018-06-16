@@ -4,10 +4,12 @@ require 'spec_helper'
 
 RSpec.describe TestSummaryBuildkitePlugin::Formatter do
   let(:show_first) { nil }
+  let(:truncate) { nil }
   let(:input) { double(TestSummaryBuildkitePlugin::Input::Base, label: 'animals') }
   let(:failures) { [] }
+  let(:options) { { type: type, show_first: show_first, truncate: truncate } }
 
-  subject(:markdown) { described_class.create(type: type, show_first: show_first).markdown(input) }
+  subject(:markdown) { described_class.create(options).markdown(input) }
 
   before do
     allow(input).to receive(:failures).and_return(failures)
@@ -212,6 +214,36 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
 
       it 'has no details element' do
         expect(markdown).not_to include('<details')
+      end
+    end
+  end
+
+  describe 'truncation' do
+    let(:type) { 'summary' }
+    let(:failures) do
+      %w[dog cat pony horse unicorn].map { |x| TestSummaryBuildkitePlugin::Failure::Unstructured.new(x) }
+    end
+
+    context 'with truncation' do
+      let(:truncate) { 3 }
+
+      it 'reports to total count' do
+        expect(markdown).to include('5 failures')
+      end
+
+      it 'reports the included count' do
+        expect(markdown).to include('Showing first 3 failures')
+      end
+
+      it 'includes the correct elements' do
+        expect(markdown).to include('dog', 'cat', 'pony')
+        expect(markdown).not_to include('horse', 'unicorn')
+      end
+    end
+
+    context 'without truncation' do
+      it 'does not report the included count' do
+        expect(markdown).not_to include('Showing')
       end
     end
   end
