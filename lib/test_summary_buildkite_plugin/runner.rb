@@ -11,51 +11,21 @@ module TestSummaryBuildkitePlugin
     end
 
     def run
-      handled = formatters.any? do |formatter|
-        puts("Using #{formatter.type} formatter")
-        markdown = inputs.map { |input| input_to_markdown(formatter, input) }.compact.join("\n\n")
-
-        if markdown.bytesize > MAX_MARKDOWN_SIZE
-          puts("Markdown is too large (#{markdown.bytesize}B > #{MAX_MARKDOWN_SIZE}B)")
-          false
-        elsif markdown.empty?
-          puts('No errors found! 🎉')
-          true
-        else
-          annotate(markdown)
-          true
-        end
-      end
-      raise 'Failed to generate annotation' unless handled
-    end
-
-    def input_to_markdown(formatter, input)
-      formatter.markdown(input)
-    rescue StandardError => e
-      if fail_on_error
-        raise
+      markdown = Truncater.new(
+        max_size: MAX_MARKDOWN_SIZE,
+        inputs: inputs,
+        formatter_opts: options[:formatter],
+        fail_on_error: fail_on_error
+      ).markdown
+      if markdown.nil? || markdown.empty?
+        puts('No errors found! 🎉')
       else
-        log_error(e)
-        nil
+        annotate(markdown)
       end
     end
 
     def annotate(markdown)
       Agent.run('annotate', '--context', context, '--style', style, stdin: markdown)
-    end
-
-    def formatters
-      @formatters ||= begin
-        # Try and do what people requested but fallback to simpler versions if we can't
-        requested = Formatter.create(options[:formatter] || {})
-        summary = Formatter.create((options[:formatter] || {}).merge(type: 'summary'))
-        count_only = Formatter.create(type: :count_only)
-        if requested.type == 'details'
-          [requested, summary, count_only]
-        else
-          [requested, count_only]
-        end
-      end
     end
 
     def inputs
@@ -72,10 +42,6 @@ module TestSummaryBuildkitePlugin
 
     def fail_on_error
       options[:fail_on_error] || false
-    end
-
-    def log_error(err)
-      puts "#{err.class}: #{err.message}\n\n#{err.backtrace.join("\n")}"
     end
   end
 end

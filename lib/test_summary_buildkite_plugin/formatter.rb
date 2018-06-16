@@ -24,13 +24,13 @@ module TestSummaryBuildkitePlugin
       end
 
       def input_markdown(input)
-        if show_first.negative? || show_first >= input.failures.count
-          failures_markdown(input.failures)
+        if show_first.negative? || show_first >= show_failures(input).count
+          failures_markdown(show_failures(input))
         elsif show_first.zero?
-          details('Show failures', failures_markdown(input.failures))
+          details('Show failures', failures_markdown(show_failures(input)))
         else
-          failures_markdown(input.failures[0...show_first]) +
-            details('Show additional failures', failures_markdown(input.failures[show_first..-1]))
+          failures_markdown(show_failures(input)[0...show_first]) +
+            details('Show additional failures', failures_markdown(show_failures(input)[show_first..-1]))
         end
       end
 
@@ -40,7 +40,12 @@ module TestSummaryBuildkitePlugin
 
       def heading(input)
         count = input.failures.count
-        "##### #{input.label}: #{count} failure#{'s' unless count == 1}"
+        show_count = show_failures(input).count
+        s = "##### #{input.label}: #{count} failure#{'s' unless count == 1}"
+        if show_count < count
+          s += "\n\n_Showing first #{show_count}_"
+        end
+        s
       end
 
       def footer(input)
@@ -62,12 +67,16 @@ module TestSummaryBuildkitePlugin
         options[:type] || 'details'
       end
 
+      def truncate
+        options[:truncate] || -1
+      end
+
+      def show_failures(input)
+        input.failures[0..truncate]
+      end
+
       def render_template(name, params)
-        filename = %W[templates/#{type}/#{name}.html.haml templates/#{name}.html.haml].find { |f| File.exist?(f) }
-        if filename
-          engine = Haml::Engine.new(File.read(filename), escape_html: true)
-          engine.render(Object.new, params)
-        end
+        HamlRender.render(name, params, folder: type)
       end
     end
 
