@@ -1,14 +1,16 @@
 steps:
   - label: ":rspec: rspec"
-    command: bundle exec rspec
+    command: bundle exec rspec --format progress --format RspecJunitFormatter --out artifacts/rspec.xml
     timeout: 5
+    artifact_paths: "artifacts/*"
     plugins:
       docker-compose#v2.4.0:
         run: test
 
   - label: ":rubocop: rubocop"
-    command: bundle exec rubocop
+    command: bundle exec rubocop --format progress --format emacs --out artifacts/rubocop.txt
     timeout: 5
+    artifact_paths: "artifacts/*"
     plugins:
       docker-compose#v2.4.0:
         run: test
@@ -23,6 +25,21 @@ steps:
 
   - wait: ~
     continue_on_failure: true
+
+  - label: ":pencil: annotate"
+    plugins:
+      bugcrowd/test-summary#@VERSION@:
+        inputs:
+          - label: ":rspec: rspec"
+            artifact_path: artifacts/rspec.xml
+            type: junit
+            strip_colors: true
+          - label: ":rubocop: rubocop"
+            artifact_path: artifacts/rubocop.txt
+            type: oneline
+        formatter:
+          type: details
+        context: failures
 
   - label: ":pencil: summary"
     plugins:
