@@ -5,6 +5,7 @@ require 'bundler/setup'
 require 'pathname'
 $LOAD_PATH.unshift(Pathname.new(__FILE__).dirname.dirname.join('lib').to_s)
 
+require 'redcarpet'
 require 'yaml'
 require 'test_summary_buildkite_plugin'
 
@@ -17,6 +18,15 @@ module TestSummaryBuildkitePlugin
   class Agent
     def run(*args, stdin: nil)
       log(args, stdin: stdin)
+      if args.first == 'annotate'
+        context = args[2]
+        content = Redcarpet::Markdown.new(Redcarpet::Render::HTML, fenced_code_blocks: true).render(stdin)
+        html = HamlRender.render('test_layout', content: content)
+        FileUtils.mkdir_p('tmp')
+        out = Pathname.new('tmp').join(context + '.html')
+        out.open('w') { |file| file.write(html) }
+        puts("Sample HTML written to file://#{out.realdirpath}")
+      end
     end
   end
 end

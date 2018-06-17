@@ -14,6 +14,7 @@ GEM
     powerpack (0.1.1)
     rainbow (3.0.0)
     rake (10.5.0)
+    redcarpet (3.4.0)
     rspec (3.7.0)
       rspec-core (~> 3.7.0)
       rspec-expectations (~> 3.7.0)
@@ -53,6 +54,7 @@ DEPENDENCIES
   bundler (~> 1.16)
   haml
   rake (~> 10.0)
+  redcarpet
   rspec (~> 3.0)
   rspec_junit_formatter
   rubocop

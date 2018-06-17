@@ -1,0 +1,23 @@
+!!!
+%html.tiny-kitemoji{lang: "en"}
+  %head
+    %meta{content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{charset: "utf-8"}/
+    %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}/
+    %title Test markdown
+    %link{href: "https://buildkiteassets.com/assets/vendor-db6715eb432e97e75e96d7f9daf1836e3fba33f941a73503d4a17ef23007a382.css", media: "screen", rel: "stylesheet"}/
+    %link{href: "https://buildkiteassets.com/assets/application-e36dfd37301763b9c80dd8ce6264754d5aec8564ec65a374e1dafed2b969a5f0.css", media: "screen", rel: "stylesheet"}/
+    %link{href: "https://buildkiteassets.com/frontend/99b298583caaa3dae11f4b23e140f1a3fad57a42/app-b96827579a6b81e418d5e0c36c81ed5e.css", rel: "stylesheet"}/
+    %meta{content: "origin-when-cross-origin", name: "referrer"}/
+  %body.new-nav
+    .twbs-container
+      #build
+        %div
+          %div
+            .rounded.flex.items-stretch.border-red.border.mb4
+              .bg-red.flex-none.flex.pt3{style: "width: 30px;"}
+                .center.flex-auto
+                  %i.fa.fa-times.white
+              .flex-auto
+                .m3.annotation-body
+                  != content
