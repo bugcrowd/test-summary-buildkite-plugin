@@ -21,7 +21,7 @@ module TestSummaryBuildkitePlugin
       end
       puts "Markdown is too large (#{requested.bytesize} B > #{max_size} B), truncating"
 
-      # See http://ruby-doc.org/core/Range.html#method-i-bsearch
+      # See http://ruby-doc.org/core/Array.html#method-i-bsearch
       #
       # The block must return false for every value before the result
       # and true for the result and every value after

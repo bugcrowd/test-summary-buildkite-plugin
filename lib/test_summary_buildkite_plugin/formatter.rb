@@ -24,13 +24,13 @@ module TestSummaryBuildkitePlugin
       end
 
       def input_markdown(input)
-        if show_first.negative? || show_first >= show_failures(input).count
-          failures_markdown(show_failures(input))
+        if show_first.negative? || show_first >= include_failures(input).count
+          failures_markdown(include_failures(input))
         elsif show_first.zero?
-          details('Show failures', failures_markdown(show_failures(input)))
+          details('Show failures', failures_markdown(include_failures(input)))
         else
-          failures_markdown(show_failures(input)[0...show_first]) +
-            details('Show additional failures', failures_markdown(show_failures(input)[show_first..-1]))
+          failures_markdown(include_failures(input)[0...show_first]) +
+            details('Show additional failures', failures_markdown(include_failures(input)[show_first..-1]))
         end
       end
 
@@ -40,7 +40,7 @@ module TestSummaryBuildkitePlugin
 
       def heading(input)
         count = input.failures.count
-        show_count = show_failures(input).count
+        show_count = include_failures(input).count
         s = "##### #{input.label}: #{count} failure#{'s' unless count == 1}"
         s += "\n\n_Including first #{show_count} failures_" if show_count < count
         s
@@ -69,7 +69,7 @@ module TestSummaryBuildkitePlugin
         options[:truncate]
       end
 
-      def show_failures(input)
+      def include_failures(input)
         if truncate
           input.failures[0...truncate]
         else
