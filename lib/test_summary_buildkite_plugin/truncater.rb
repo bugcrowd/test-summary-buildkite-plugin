@@ -19,20 +19,23 @@ module TestSummaryBuildkitePlugin
         # we can use it as-is, no need to truncate
         return requested
       end
+      puts "Markdown is too large (#{requested.bytesize} B > #{max_size} B), truncating"
 
       # See http://ruby-doc.org/core/Range.html#method-i-bsearch
       #
       # The block must return false for every value before the result
       # and true for the result and every value after
-      best_truncate = (max_truncate..0).bsearch do |truncate|
+      best_truncate = (0..max_truncate).to_a.reverse.bsearch do |truncate|
+        puts "Test truncating to #{truncate}: bytesize=#{markdown_with_truncation(truncate).bytesize}"
         markdown_with_truncation(truncate).bytesize <= max_size
       end
       if best_truncate.nil?
         # If we end up here, we failed to find a valid truncation value
         # ASAICT this should never happen but if it does, something is very wrong
         # so ask the user to let us know
-        bug_report_message
+        return bug_report_message
       end
+      puts "Optimal truncation: #{best_truncate}"
       markdown_with_truncation(best_truncate)
     end
 
@@ -62,18 +65,26 @@ module TestSummaryBuildkitePlugin
     end
 
     def bug_report_message
-      diagnostics = {
+      puts
+      puts 'Optimization failed 😱'
+      puts 'Please report this to https://github.com/bugcrowd/test-summary-buildkite-plugin/issues'
+      puts 'with the test log above and the details below.'
+      puts JSON.pretty_generate(diagnostics)
+      HamlRender.render('truncater_exception', {})
+    end
+
+    def diagnostics
+      {
         max_size: max_size,
         formatter: formatter_opts,
         inputs: inputs.map do |input|
-                  {
-                    type: input.class,
-                    failure_count: input.failures.count,
-                    markdown_bytesize: input_markdown(input, nil)&.bytesize
-                  }
-                end
+          {
+            type: input.class,
+            failure_count: input.failures.count,
+            markdown_bytesize: input_markdown(input, nil)&.bytesize
+          }
+        end
       }
-      HamlRender.render('truncater_exception', diagnostics: diagnostics)
     end
 
     def log_error(err)
