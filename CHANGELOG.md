@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v1.4.0](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.3.0...v1.4.0) - 2018-06-17
+- Update plugin.yml and re-enable plugin-linter [#14](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/14) (@toolmantim)
+- Workaround redcarpet formatting issues [#17](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/17)
+- Truncate failures when markdown is too large [#18](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/18)
+
 ## [v1.3.0](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.2.0...v1.3.0) - 2018-05-10
 - Return zero exit status on error [#11](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/11)
 - Junit: Handle testsuite objects nested inside testsuites [#12](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/12)
