@@ -51,7 +51,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Truncater do
     end
 
     it 'optimally truncates' do
-      is_expected.to include('Showing first 4')
+      is_expected.to include('Including first 4')
     end
   end
 

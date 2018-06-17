@@ -232,7 +232,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
       end
 
       it 'reports the included count' do
-        expect(markdown).to include('Showing first 3 failures')
+        expect(markdown).to include('Including first 3 failures')
       end
 
       it 'includes the correct elements' do

@@ -42,7 +42,7 @@ module TestSummaryBuildkitePlugin
         count = input.failures.count
         show_count = show_failures(input).count
         s = "##### #{input.label}: #{count} failure#{'s' unless count == 1}"
-        s += "\n\n_Showing first #{show_count} failures_" if show_count < count
+        s += "\n\n_Including first #{show_count} failures_" if show_count < count
         s
       end
 
