@@ -64,4 +64,32 @@ RSpec.describe TestSummaryBuildkitePlugin::Truncater do
       is_expected.to include('ANNOTATION ERROR')
     end
   end
+
+  context 'formatter raises exceptions' do
+    let(:formatter) { spy }
+
+    before do
+      allow(truncater).to receive(:formatter).and_return(formatter)
+      allow(formatter).to receive(:markdown).with(input1).and_raise('life sucks')
+      allow(formatter).to receive(:markdown).with(input2).and_return('awesome markdown')
+    end
+
+    context 'without fail_on_error' do
+      it 'continues' do
+        expect(truncated).to include('awesome markdown')
+      end
+
+      it 'logs the error' do
+        expect { truncated }.to output(/life sucks/).to_stdout
+      end
+    end
+
+    context 'with fail_on_error' do
+      let(:fail_on_error) { true }
+
+      it 'raises error' do
+        expect { truncated }.to raise_error('life sucks')
+      end
+    end
+  end
 end
