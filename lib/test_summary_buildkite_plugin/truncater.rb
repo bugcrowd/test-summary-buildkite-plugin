@@ -69,7 +69,7 @@ module TestSummaryBuildkitePlugin
                   {
                     type: input.class,
                     failure_count: input.failures.count,
-                    markdown_bytesize: input_markdown(input, nil).bytesize
+                    markdown_bytesize: input_markdown(input, nil)&.bytesize
                   }
                 end
       }
