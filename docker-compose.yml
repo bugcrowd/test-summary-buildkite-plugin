@@ -2,3 +2,5 @@ version: '3'
 services:
   test:
     build: .
+    volumes:
+      - ./artifacts:/usr/src/app/artifacts

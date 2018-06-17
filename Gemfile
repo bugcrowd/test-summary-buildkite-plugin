@@ -8,8 +8,10 @@ gem 'bundler', '~> 1.16'
 gem 'haml'
 
 group :development, :test do
+  gem 'kramdown'
   gem 'rake', '~> 10.0'
   gem 'rspec', '~> 3.0'
+  gem 'rspec_junit_formatter'
   gem 'rubocop'
 end
 

@@ -123,6 +123,11 @@ to the `summary` formatter and then to only displaying the failure count for eac
 * `style:` Set the annotation style. Defaults to `error`.
 * `fail_on_error:` Whether the command should return non-zero exit status on failure. Defaults to `false` so failing
   to annotate a build does not cause the entire pipeline to fail.
+  
+## Truncation
+
+Buildkite has a maximum annotation size of 50 kilobytes. If there are too many failures to fit within this limit, the
+plugin will truncate the failures for each input.
 
 ## Developing
 
@@ -135,6 +140,6 @@ If you have ruby set up, you can just run:
     bundle install
     rspec
 
-To generate sample markdown based on the files in `spec/sample_artifacts`:
+To generate sample markdown and HTML based on the files in `spec/sample_artifacts`:
 
     bin/run-dev

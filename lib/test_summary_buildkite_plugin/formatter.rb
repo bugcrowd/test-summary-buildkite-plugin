@@ -24,13 +24,13 @@ module TestSummaryBuildkitePlugin
       end
 
       def input_markdown(input)
-        if show_first.negative? || show_first >= input.failures.count
-          failures_markdown(input.failures)
+        if show_first.negative? || show_first >= include_failures(input).count
+          failures_markdown(include_failures(input))
         elsif show_first.zero?
-          details('Show failures', failures_markdown(input.failures))
+          details('Show failures', failures_markdown(include_failures(input)))
         else
-          failures_markdown(input.failures[0...show_first]) +
-            details('Show additional failures', failures_markdown(input.failures[show_first..-1]))
+          failures_markdown(include_failures(input)[0...show_first]) +
+            details('Show additional failures', failures_markdown(include_failures(input)[show_first..-1]))
         end
       end
 
@@ -40,7 +40,10 @@ module TestSummaryBuildkitePlugin
 
       def heading(input)
         count = input.failures.count
-        "##### #{input.label}: #{count} failure#{'s' unless count == 1}"
+        show_count = include_failures(input).count
+        s = "##### #{input.label}: #{count} failure#{'s' unless count == 1}"
+        s += "\n\n_Including first #{show_count} failures_" if show_count < count
+        s
       end
 
       def footer(input)
@@ -62,12 +65,20 @@ module TestSummaryBuildkitePlugin
         options[:type] || 'details'
       end
 
-      def render_template(name, params)
-        filename = %W[templates/#{type}/#{name}.html.haml templates/#{name}.html.haml].find { |f| File.exist?(f) }
-        if filename
-          engine = Haml::Engine.new(File.read(filename), escape_html: true)
-          engine.render(Object.new, params)
+      def truncate
+        options[:truncate]
+      end
+
+      def include_failures(input)
+        if truncate
+          input.failures[0...truncate]
+        else
+          input.failures
         end
+      end
+
+      def render_template(name, params)
+        HamlRender.render(name, params, folder: type)
       end
     end
 

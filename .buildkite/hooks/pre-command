@@ -1,0 +1,7 @@
+#!/bin/bash
+set -eu
+
+# Make a world-writable directory for managing artifacts inside and outside a container
+echo 'Creating artifacts directory'
+mkdir -p artifacts
+chmod 0777 artifacts
