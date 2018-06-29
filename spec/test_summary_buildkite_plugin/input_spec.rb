@@ -95,8 +95,12 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
         expect(input.failures.map(&:name)).to include(/shows default results when defaultCategory is set/)
       end
 
-      it 'ignored skipped test' do
+      it 'ignores skipped test' do
         expect(input.failures.count).to eq(2)
+      end
+
+      it 'when message is not present has a nil message' do
+        expect(input.failures).to include(have_attributes(message: nil))
       end
     end
   end
