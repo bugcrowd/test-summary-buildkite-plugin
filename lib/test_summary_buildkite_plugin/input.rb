@@ -92,9 +92,9 @@ module TestSummaryBuildkitePlugin
         xml.elements.enum_for(:each, '//testcase').each_with_object([]) do |testcase, failures|
           testcase.elements.each('failure | error') do |failure|
             failures << Failure::Structured.new(
-              file: testcase.attributes['file'].to_s,
-              name: testcase.attributes['name'].to_s,
-              message: failure.attributes['message'].to_s,
+              file: testcase.attributes['file']&.to_s,
+              name: testcase.attributes['name']&.to_s,
+              message: failure.attributes['message']&.to_s,
               details: details(failure)
             )
           end
