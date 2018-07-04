@@ -56,9 +56,7 @@ module TestSummaryBuildkitePlugin
       end
 
       def details(summary, contents)
-        # This indents the close tag of nested <details> elements to work around a bug in redcarpet
-        # See https://github.com/vmg/redcarpet/issues/652
-        "<details>\n<summary>#{summary}</summary>\n#{contents.gsub(%r{^</details>}, '  </details>')}\n</details>"
+        "<details>\n<summary>#{summary}</summary>\n#{contents}\n</details>"
       end
 
       def type
