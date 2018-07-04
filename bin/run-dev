@@ -20,8 +20,7 @@ module TestSummaryBuildkitePlugin
       log(args, stdin: stdin)
       if args.first == 'annotate'
         context = args[2]
-        # Buildkite uses Redcarpet but that requires native extensions that don't (easily) work in alpine
-        # so we use Kramdown for testing purposes
+        # Buildkite uses a different rendering engine but Kramdown is close enough
         content = Kramdown::Document.new(stdin).to_html
         html = HamlRender.render('test_layout', content: content)
         FileUtils.mkdir_p('tmp')
