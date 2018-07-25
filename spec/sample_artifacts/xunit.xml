@@ -20,4 +20,36 @@
     </testcase>
     <testcase classname="Login should log in successfully" name="Login should log in successfully" time="0.028"></testcase>
   </testsuite>
+  <testsuite name="HeaderStore" errors="0" failures="1" skipped="0" timestamp="2018-07-25T03:01:53" time="0.678" tests="7">
+    <testcase classname="Header › matches snapshot" name="Header › matches snapshot" time="0.03">
+      <failure>Error: expect(value).toMatchSnapshot()
+
+Received value does not match stored snapshot &quot;Header matches snapshot 1&quot;.
+
+- Snapshot
++ Received
+
+@@ -3,11 +3,11 @@
+  &gt;
+    &lt;nav
+      class=&quot;startGroup&quot;
+    &gt;
+      &lt;a
+-       class=&quot;base anchor button booo homeLink&quot;
++       class=&quot;base anchor button linkButton homeLink&quot;
+        href=&quot;/&quot;
+      &gt;
+        &lt;span
+          class=&quot;text&quot;
+        &gt;
+    at Object.toMatchRenderedSnapshot (/build/web/tools/jest/matchers/to_match_rendered_snapshot.ts:9:25)
+    at Object.throwingMatcher [as toMatchRenderedSnapshot] (/build/web/node_modules/expect/build/index.js:316:33)
+    at Object.it (/build/web/src/pages/editor/header/tests/header.tests.tsx:76:9)
+    at Object.asyncFn (/build/web/node_modules/jest-jasmine2/build/jasmine_async.js:108:37)
+    at resolve (/build/web/node_modules/jest-jasmine2/build/queue_runner.js:56:12)
+    at new Promise (&lt;anonymous&gt;)
+    at mapper (/build/web/node_modules/jest-jasmine2/build/queue_runner.js:43:19)
+    at promise.then (/build/web/node_modules/jest-jasmine2/build/queue_runner.js:87:41)</failure>
+    </testcase>
+  </testsuite>
 </testsuites>
