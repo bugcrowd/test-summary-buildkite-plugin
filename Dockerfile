@@ -4,7 +4,7 @@ FROM ruby:2.5.1-alpine
 RUN mkdir -p /opt/gems
 COPY Gemfile Gemfile.lock /opt/gems/
 WORKDIR /opt/gems
-RUN bundle install --deployment
+RUN bundle install --deployment --without development
 
 ENV APP_DIR=/usr/src/app
 
