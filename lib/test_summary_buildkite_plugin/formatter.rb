@@ -76,7 +76,11 @@ module TestSummaryBuildkitePlugin
       end
 
       def render_template(name, params)
-        HamlRender.render(name, params, folder: type)
+        # In CommonMark (used by buildkite), most html block elements are terminated by a blank line
+        # So we need to ensure we don't have any of those in the middle of our html
+        #
+        # See https://spec.commonmark.org/0.28/#html-blocks
+        HamlRender.render(name, params, folder: type)&.gsub(/\n\n/, "\n&nbsp;\n")
       end
     end
 

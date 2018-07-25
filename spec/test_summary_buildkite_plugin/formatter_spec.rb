@@ -103,6 +103,14 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
           expect(markdown).to include('&amp;')
         end
       end
+
+      context 'with blank lines in description' do
+        let(:details) { "one\n\ntwo" }
+
+        it 'adds nbsp so CommonMark does not terminate the block' do
+          expect(markdown).to include("one\n&nbsp;\ntwo")
+        end
+      end
     end
   end
 

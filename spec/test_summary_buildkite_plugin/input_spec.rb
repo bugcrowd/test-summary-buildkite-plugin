@@ -96,7 +96,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
       end
 
       it 'ignores skipped test' do
-        expect(input.failures.count).to eq(2)
+        expect(input.failures.count).to eq(3)
       end
 
       it 'when message is not present has a nil message' do
