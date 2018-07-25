@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v1.5.0](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.4.0...v1.5.0) - 2018-07-25
+- JUnit: Don't show an empty message when it's not provided [#21](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/21)
+- Remove redcarpet workarounds [#22](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/22)
+- Avoid blank lines in html details because CommonMark [#25](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/25)
+    (thanks for the bug report by @joscha)
+
 ## [v1.4.0](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.3.0...v1.4.0) - 2018-06-17
 - Update plugin.yml and re-enable plugin-linter [#14](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/14) (@toolmantim)
 - Workaround redcarpet formatting issues [#17](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/17)
