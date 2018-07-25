@@ -24,6 +24,7 @@
     <testcase classname="Header › matches snapshot" name="Header › matches snapshot" time="0.03">
       <failure>Error: expect(value).toMatchSnapshot()
 
+
 Received value does not match stored snapshot &quot;Header matches snapshot 1&quot;.
 
 - Snapshot

@@ -80,7 +80,7 @@ module TestSummaryBuildkitePlugin
         # So we need to ensure we don't have any of those in the middle of our html
         #
         # See https://spec.commonmark.org/0.28/#html-blocks
-        HamlRender.render(name, params, folder: type)&.gsub(/\n\n/, "\n&nbsp;\n")
+        HamlRender.render(name, params, folder: type)&.gsub(/\n\n+/, "\n&nbsp;\n")
       end
     end
 
