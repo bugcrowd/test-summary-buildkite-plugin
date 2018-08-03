@@ -146,34 +146,6 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
     end
   end
 
-  describe 'count_only' do
-    let(:type) { 'count_only' }
-
-    context 'with no failures' do
-      let(:failures) { [] }
-
-      it 'returns empty markdown' do
-        expect(markdown).to be_nil
-      end
-    end
-
-    context 'with failures' do
-      let(:failures) { [TestSummaryBuildkitePlugin::Failure::Unstructured.new('ponies are awesome')] }
-
-      it 'includes the label' do
-        expect(markdown).to include('animals')
-      end
-
-      it 'includes the count' do
-        expect(markdown).to include('1')
-      end
-
-      it 'does not include the summary' do
-        expect(markdown).not_to include('ponies are awesome')
-      end
-    end
-  end
-
   describe 'show_first' do
     let(:type) { 'summary' }
     let(:show_first) { 2 }

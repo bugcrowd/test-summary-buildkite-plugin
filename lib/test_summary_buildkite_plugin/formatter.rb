@@ -23,6 +23,8 @@ module TestSummaryBuildkitePlugin
         [heading(input), input_markdown(input), footer(input)].compact.join("\n\n")
       end
 
+      protected
+
       def input_markdown(input)
         if show_first.negative? || show_first >= include_failures(input).count
           failures_markdown(include_failures(input))
@@ -88,17 +90,9 @@ module TestSummaryBuildkitePlugin
 
     class Details < Base; end
 
-    class CountOnly < Base
-      def markdown(input)
-        return nil if input.failures.count.zero?
-        heading(input)
-      end
-    end
-
     TYPES = {
       summary: Formatter::Summary,
-      details: Formatter::Details,
-      count_only: Formatter::CountOnly
+      details: Formatter::Details
     }.freeze
   end
 end
