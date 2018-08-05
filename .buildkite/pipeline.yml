@@ -83,6 +83,9 @@ steps:
             type: junit
             encoding: UTF-8
             strip_colors: true
+            summary:
+              format: '%{location}: %{testcase.name}'
+              details_regex: '(?<location>\S+:\d+)'
           - label: ":female-technologist: xunit"
             artifact_path: spec/sample_artifacts/xunit.xml
             type: junit

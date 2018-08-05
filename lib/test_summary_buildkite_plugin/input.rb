@@ -122,7 +122,15 @@ module TestSummaryBuildkitePlugin
           end
           elem = elem.parent
         end
-        acc
+        acc.merge(detail_attributes(failure))
+      end
+
+      def detail_attributes(failure)
+        matches = details_regex&.match(details(failure))&.named_captures || {}
+        # need to symbolize keys
+        matches.each_with_object({}) do |(key, value), acc|
+          acc[key.to_sym] = value
+        end
       end
 
       def details(failure)
@@ -131,7 +139,14 @@ module TestSummaryBuildkitePlugin
       end
 
       def summary_format
-        @summary_format ||= options[:summary_format]
+        @summary_format ||= options.dig(:summary, :format)
+      end
+
+      def details_regex
+        @details_regex ||= begin
+          regex_str = options.dig(:summary, :details_regex)
+          Regexp.new(regex_str) if regex_str
+        end
       end
     end
 

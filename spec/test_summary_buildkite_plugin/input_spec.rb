@@ -107,18 +107,34 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
     context 'with summary_format' do
       let(:artifact_path) { 'xunit.xml' }
       let(:additional_options) do
-        { summary_format: '%{testsuites.name}: %{testsuite.name}: %{testcase.classname} (%{error.message})' }
+        { summary: { format: '%{testsuites.name}: %{testsuite.name}: %{testcase.classname} (%{error.message})' } }
       end
 
       it 'sets summary based on format' do
         expect(input.failures.map(&:summary)).to(
-          match_array(
-            [
-              'jest tests: xunit: Chrome 66.0 (has results after focusing)',
-              'jest tests: Login: Login should load without error ()'
-            ]
+          include(
+            'jest tests: xunit: Chrome 66.0 (has results after focusing)',
+            'jest tests: Login: Login should load without error ()'
           )
         )
+      end
+
+      context 'with details regex' do
+        let(:artifact_path) { 'rspec-01234567-0011-0011-0011-001122334455.xml' }
+        let(:additional_options) do
+          { summary: {
+            format: '%{location}: %{testcase.name}',
+            details_regex: '(?<location>\S+:\d+)'
+          } }
+        end
+
+        it 'sets summary based on format' do
+          expect(input.failures.map(&:summary)).to(
+            include(
+              './spec/features/sign_in_out_spec.rb:27: signing in and out sign_in reset password'
+            )
+          )
+        end
       end
     end
   end
