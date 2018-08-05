@@ -27,23 +27,12 @@ module TestSummaryBuildkitePlugin
     end
 
     class Structured < Base
-      attr_accessor :file, :name, :message, :details
+      attr_accessor :summary, :message, :details
 
-      def initialize(name:, file: nil, message: nil, details: nil)
-        @file = file
-        @name = name
+      def initialize(summary:, message: nil, details: nil)
+        @summary = summary
         @message = message
         @details = details
-      end
-
-      def summary
-        "#{location}#{name}"
-      end
-
-      private
-
-      def location
-        "#{file}: " unless file.nil? || file.empty?
       end
     end
   end

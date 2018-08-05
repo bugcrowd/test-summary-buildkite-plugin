@@ -90,9 +90,12 @@ crop:
   end: 2
 ```
 
-* `job_id_regex`: Ruby regular expression to extract the `job_id` from the artifact path. It must contain
+* `job_id_regex:` Ruby regular expression to extract the `job_id` from the artifact path. It must contain
   a named capture with the name `job_id`. Defaults to
   `(?<job_id>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})`.
+* `summary_format:` (`junit` type only) An optional format string for converting the junit xml attributes
+  into the summary used in the markdown. All attributes are available in `<element>.<attr-name>` format, eg
+  `%{testsuites.name}: %{testsuite.name}: %{testcase.name}: %{failure.message}%{error.message}`.
 
 ### Formatter
 

@@ -92,8 +92,7 @@ module TestSummaryBuildkitePlugin
         xml.elements.enum_for(:each, '//testcase').each_with_object([]) do |testcase, failures|
           testcase.elements.each('failure | error') do |failure|
             failures << Failure::Structured.new(
-              file: testcase.attributes['file']&.to_s,
-              name: testcase.attributes['name']&.to_s,
+              summary: summary(failure),
               message: failure.attributes['message']&.to_s,
               details: details(failure)
             )
@@ -101,9 +100,38 @@ module TestSummaryBuildkitePlugin
         end
       end
 
+      def summary(failure)
+        data = attributes(failure)
+        if summary_format
+          summary_format % data
+        else
+          name = data[:'testcase.name']
+          file = data[:'testcase.file']
+          location = "#{file}: " unless file.nil? || file.empty?
+          "#{location}#{name}"
+        end
+      end
+
+      def attributes(failure)
+        # If elements are used in the format string but don't exist in the map, pretend they're blank
+        acc = Hash.new('')
+        elem = failure
+        until elem.parent.nil?
+          elem.attributes.each do |attr_name, attr_value|
+            acc["#{elem.name}.#{attr_name}".to_sym] = attr_value
+          end
+          elem = elem.parent
+        end
+        acc
+      end
+
       def details(failure)
         # gets all text elements that are direct children (includes CDATA), and use the unescaped values
         failure.texts.map(&:value).join('').strip
+      end
+
+      def summary_format
+        @summary_format ||= options[:summary_format]
       end
     end
 
@@ -125,7 +153,7 @@ module TestSummaryBuildkitePlugin
               # start of a failing test
               in_failure = true
               tests << Failure::Structured.new(
-                name: name(matchdata)
+                summary: summary(matchdata)
               )
             else
               # we're in a successful test, ignore subsequent lines until we hit a failure
@@ -143,7 +171,7 @@ module TestSummaryBuildkitePlugin
         tests
       end
 
-      def name(matchdata)
+      def summary(matchdata)
         # There's a convention to put a ' - ' between the test number and the description
         # We strip that for better readability
         matchdata['description'].strip.gsub(/^- /, '')
