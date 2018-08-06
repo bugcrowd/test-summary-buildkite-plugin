@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v1.6.0](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.5.0...v1.6.0) - 2018-08-06
+- Remove undocumented count-only formatter [#28](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/28)
+- JUnit: support custom summary formats [#29](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/29)
+
 ## [v1.5.0](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.4.0...v1.5.0) - 2018-07-25
 - JUnit: Don't show an empty message when it's not provided [#21](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/21)
 - Remove redcarpet workarounds [#22](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/22)
