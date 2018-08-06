@@ -31,6 +31,13 @@ configuration:
                 type: number
               end:
                 type: number
+          summary:
+            type: object
+            properties:
+              format:
+                type: string
+              details_regex:
+                type: string
             additionalProperties: false
         required:
           - label
