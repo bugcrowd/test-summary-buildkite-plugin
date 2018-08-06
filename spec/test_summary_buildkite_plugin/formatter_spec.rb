@@ -51,11 +51,11 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
     end
 
     context 'with details' do
-      let(:name) { 'ponies are awesome' }
+      let(:summary) { 'ponies are awesome' }
       let(:details) { 'like, really awesome' }
       let(:failures) do
         [TestSummaryBuildkitePlugin::Failure::Structured.new(
-          name: name,
+          summary: summary,
           details: details
         )]
       end
@@ -81,7 +81,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
       end
 
       context 'with html chars in name' do
-        let(:name) { 'ponies are awesome <strong>&</strong> amazing' }
+        let(:summary) { 'ponies are awesome <strong>&</strong> amazing' }
 
         it 'escapes angle brackets' do
           expect(markdown).to include('&lt;')
@@ -248,7 +248,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
     subject(:markdown) { described_class.create.markdown(input) }
     let(:failures) do
       [TestSummaryBuildkitePlugin::Failure::Structured.new(
-        name: 'ponies are awesome',
+        summary: 'ponies are awesome',
         details: 'like, really awesome'
       )]
     end

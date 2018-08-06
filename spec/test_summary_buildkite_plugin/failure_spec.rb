@@ -4,38 +4,9 @@ require 'spec_helper'
 
 RSpec.describe TestSummaryBuildkitePlugin::Failure do
   describe TestSummaryBuildkitePlugin::Failure::Structured do
-    let(:file) { 'foo.rb' }
-    let(:name) { 'unicorns are\'t real' }
+    let(:summary) { 'foo.rb: unicorns are\'t real' }
     let(:details) { 'This is a failure of great proportions' }
-    let(:params) { { file: file, name: name, details: details } }
-
-    describe 'summary' do
-      subject(:summary) { described_class.new(params).summary }
-
-      it 'includes name' do
-        expect(summary).to include(name)
-      end
-
-      it 'does not include details' do
-        expect(summary).not_to include(details)
-      end
-
-      context 'with file' do
-        it { expect(summary).to start_with("#{file}: ") }
-      end
-
-      context 'with no file' do
-        let(:file) { nil }
-
-        it { expect(summary).to eq(name) }
-      end
-
-      context 'with empty file' do
-        let(:file) { '' }
-
-        it { expect(summary).to eq(name) }
-      end
-    end
+    let(:params) { { summary: summary, details: details } }
 
     describe 'strip_colors' do
       let(:details) { 'Failure/Error: \\e[0m\\e[32mit\\e[0m { \\e[32mexpect\\e[0m(url).to be_nil }' }

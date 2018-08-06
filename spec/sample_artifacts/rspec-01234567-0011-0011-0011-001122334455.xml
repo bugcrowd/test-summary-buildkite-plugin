@@ -9,6 +9,7 @@
 
 RuntimeError:
   awesomesauce
-./spec/features/sign_in_out_spec.rb:27:in `block (3 levels) in &lt;top (required)&gt;&apos;</failure></testcase>
+./spec/features/sign_in_out_spec.rb:27:in `block (3 levels) in &lt;top (required)&gt;&apos;
+./spec/features/sign_in_out_spec.rb:41:in `block (3 levels) in &lt;top (required)&gt;&apos;</failure></testcase>
 <testcase classname="spec.features.sign_in_out_spec" name="signing in and out sign_in when user is external it signs in" file="./spec/features/sign_in_out_spec.rb" time="1.398856"></testcase>
 </testsuite>

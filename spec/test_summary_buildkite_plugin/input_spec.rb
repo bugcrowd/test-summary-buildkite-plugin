@@ -67,11 +67,11 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
     end
 
     it 'failures have file' do
-      expect(input.failures.first.file).to eq('./spec/lib/url_whitelist_spec.rb')
+      expect(input.failures.first.summary).to include('./spec/lib/url_whitelist_spec.rb')
     end
 
     it 'failures have name' do
-      expect(input.failures.first.name).to eq('UrlWhitelist with domain wildcard should be allowed url')
+      expect(input.failures.first.summary).to include('UrlWhitelist with domain wildcard should be allowed url')
     end
 
     context 'without strip_colors' do
@@ -92,7 +92,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
       let(:artifact_path) { 'xunit.xml' }
 
       it 'includes the error' do
-        expect(input.failures.map(&:name)).to include(/shows default results when defaultCategory is set/)
+        expect(input.failures.map(&:summary)).to include(/shows default results when defaultCategory is set/)
       end
 
       it 'ignores skipped test' do
@@ -101,6 +101,40 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
 
       it 'when message is not present has a nil message' do
         expect(input.failures).to include(have_attributes(message: nil))
+      end
+    end
+
+    context 'with summary_format' do
+      let(:artifact_path) { 'xunit.xml' }
+      let(:additional_options) do
+        { summary: { format: '%{testsuites.name}: %{testsuite.name}: %{testcase.classname} (%{error.message})' } }
+      end
+
+      it 'sets summary based on format' do
+        expect(input.failures.map(&:summary)).to(
+          include(
+            'jest tests: xunit: Chrome 66.0 (has results after focusing)',
+            'jest tests: Login: Login should load without error ()'
+          )
+        )
+      end
+
+      context 'with details regex' do
+        let(:artifact_path) { 'rspec-01234567-0011-0011-0011-001122334455.xml' }
+        let(:additional_options) do
+          { summary: {
+            format: '%{location}: %{testcase.name}',
+            details_regex: '(?<location>\S+:\d+)'
+          } }
+        end
+
+        it 'sets summary based on format' do
+          expect(input.failures.map(&:summary)).to(
+            include(
+              './spec/features/sign_in_out_spec.rb:27: signing in and out sign_in reset password'
+            )
+          )
+        end
       end
     end
   end
@@ -114,8 +148,8 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
     end
 
     it 'sorts failures' do
-      expect(input.failures.first.file).to eq('./spec/features/sign_in_out_spec.rb')
-      expect(input.failures.last.file).to eq('./spec/lib/url_whitelist_spec.rb')
+      expect(input.failures.first.summary).to include('./spec/features/sign_in_out_spec.rb')
+      expect(input.failures.last.summary).to include('./spec/lib/url_whitelist_spec.rb')
     end
   end
 
@@ -134,12 +168,8 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
 severity: fail')
     end
 
-    it 'failures have name' do
-      expect(input.failures.first.name).to eq('pinged quartz')
-    end
-
-    it 'failures have no file' do
-      expect(input.failures.first.file).to be_nil
+    it 'failures have summary' do
+      expect(input.failures.first.summary).to eq('pinged quartz')
     end
   end
 
