@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<checkstyle version="8.0">
+	<file name="src/main/java/io/timnew/sol/Sol.kt">
+		<error line="106" column="1" severity="error" message="Needless blank line(s)" source="no-consecutive-blank-lines" />
+	</file>
+</checkstyle>
