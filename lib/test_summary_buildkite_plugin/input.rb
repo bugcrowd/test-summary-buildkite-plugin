@@ -211,34 +211,6 @@ module TestSummaryBuildkitePlugin
         end
       end
 
-      # <issue
-      #   id="GradleDependency"
-      #   severity="Warning"
-      #   message="A newer version of com.android.support.constraint:constraint-layout than 1.1.2 is available: 1.1.3"
-      #   category="Correctness"
-      #   priority="4"
-      #   summary="Obsolete Gradle Dependency"
-      #   explanation="This detector looks for usages of libraries where the version you are using is not the current stable release. Using older versions is fine, and there are cases where you deliberately want to stick with an older version. However, you may simply not be aware that a more recent version is available, and that is what this lint check helps find."
-      #   errorLine1="    implementation &quot;com.android.support.constraint:constraint-layout:$rootProject.ext.constraint_layout_version&quot;"
-      #   errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-      #   quickfix="studio">
-      #   <location
-      #       file="/Users/timnew/Workspace/jora/sol-sdk-android/demo/build.gradle"
-      #       line="32"
-      #       column="5"/>
-      # </issue>
-
-      #   /Users/timnew/Workspace/jora/sol-sdk-android/demo/build.gradle:32: Warning: A newer version of com.android.support.constraint:constraint-layout than 1.1.2 is available: 1.1.3 [GradleDependency]
-      #   implementation "com.android.support.constraint:constraint-layout:$rootProject.ext.constraint_layout_version"
-      #   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-      #  Explanation for issues of type "GradleDependency":
-      #  This detector looks for usages of libraries where the version you are using
-      #  is not the current stable release. Using older versions is fine, and there
-      #  are cases where you deliberately want to stick with an older version.
-      #  However, you may simply not be aware that a more recent version is
-      #  available, and that is what this lint check helps find.
-
       def summary(issue)
         category = issue.attribute('category').value
         id = issue.attribute('id').value
