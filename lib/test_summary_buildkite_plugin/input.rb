@@ -107,7 +107,12 @@ module TestSummaryBuildkitePlugin
         else
           name = data[:'testcase.name']
           file = data[:'testcase.file']
-          location = "#{file}: " unless file.nil? || file.empty?
+          class_name = data[:'testcase.classname']
+          location = case
+                     when !file.nil? && !file.empty? then "#{file}: "
+                     when !class_name.nil? && !class_name.empty? then "#{class_name}: "
+                     else nil
+                     end
           "#{location}#{name}"
         end
       end
