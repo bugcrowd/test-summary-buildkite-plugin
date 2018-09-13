@@ -199,10 +199,48 @@ module TestSummaryBuildkitePlugin
       end
     end
 
+    class AndroidLint < Base
+      def file_contents_to_failures(str)
+        xml = REXML::Document.new(str)
+        xml.elements.enum_for(:each, '//issue').map do |issue|
+          Failure::Structured.new(
+            summary: summary(issue),
+            message: message(issue),
+            details: details(issue)
+          )
+        end
+      end
+
+      def summary(issue)
+        category = issue.attribute('category').value
+        id = issue.attribute('id').value
+
+        severity = issue.attribute('severity').value
+
+        summary = issue.attribute('summary').value
+
+        location = issue.elements['location']
+        file = location.attribute('file').value
+        line_num = location.attribute('line').value
+
+        "[#{category}: #{id}] #{severity}: #{summary} @ #{file}:#{line_num}"
+      end
+
+      def message(issue)
+        issue.attribute('message').value
+      end
+
+      def details(issue)
+        issue.attribute('explanation').value
+      end
+
+    end
+
     TYPES = {
       oneline: Input::OneLine,
       junit: Input::JUnit,
-      tap: Input::Tap
+      tap: Input::Tap,
+      androidLint: Input::AndroidLint
     }.freeze
   end
 end

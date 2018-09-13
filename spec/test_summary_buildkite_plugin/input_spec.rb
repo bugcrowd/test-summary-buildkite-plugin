@@ -139,6 +139,34 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
     end
   end
 
+  describe 'androidLint' do
+    let(:type) { 'androidLint' }
+    let(:artifact_path) { 'android-lint-results.xml' }
+
+    it { is_expected.to be_a(TestSummaryBuildkitePlugin::Input::AndroidLint) }
+
+    it 'has all failures' do
+      expect(input.failures.count).to eq(1)
+    end
+
+    it 'has summary' do
+      summary = input.failures.first.summary
+
+      expect(summary).to include '[Correctness: GradleDependency]'
+      expect(summary).to include 'Warning:'
+      expect(summary).to include 'Obsolete Gradle Dependency'
+      expect(summary).to include '/Users/timnew/Workspace/jora/sol-sdk-android/demo/build.gradle:32'
+    end
+
+    it 'has message' do
+      expect(input.failures.first.message).to eq 'A newer version of com.android.support.constraint:constraint-layout than 1.1.2 is available: 1.1.3'
+    end
+
+    it 'has summary' do
+      expect(input.failures.first.details).to eq 'This detector looks for usages of libraries where the version you are using is not the current stable release. Using older versions is fine, and there are cases where you deliberately want to stick with an older version. However, you may simply not be aware that a more recent version is available, and that is what this lint check helps find.'
+    end
+  end
+
   describe 'with glob path' do
     let(:type) { 'junit' }
     let(:artifact_path) { 'rspec*' }
