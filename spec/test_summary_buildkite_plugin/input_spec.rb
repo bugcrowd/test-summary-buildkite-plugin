@@ -105,7 +105,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
     end
 
     context 'without filename but with classname' do
-      let(:artifact_path) { 'rspec-no-file.xml' }
+      let(:artifact_path) { 'junit-no-file.xml' }
 
       it 'includes the classname' do
         expect(input.failures.first.summary).to include('spec.features.test_things_spec')
