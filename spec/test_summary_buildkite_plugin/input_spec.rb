@@ -174,27 +174,23 @@ severity: fail')
   end
 
   describe 'checkstyle' do
-    let(:type) { 'checkStyle' }
+    let(:type) { 'checkstyle' }
     let(:artifact_path) { 'checkstyle.xml' }
 
-    it { is_expected.to be_a(TestSummaryBuildkitePlugin::Input::CheckStyle) }
+    it { is_expected.to be_a(TestSummaryBuildkitePlugin::Input::Checkstyle) }
 
     it 'has all failures' do
       expect(input.failures.count).to eq(1)
     end
 
     it 'failures have summary' do
-      expect(input.failures.first.summary).to include '[error]'
-      expect(input.failures.first.summary).to include 'no-consecutive-blank-lines'
-      expect(input.failures.first.summary).to include 'src/main/java/io/timnew/sol/Sol.kt:106'
-    end
-
-    it 'failures have message' do
-      expect(input.failures.first.message).to include 'Needless blank line(s)'
+      expect(input.failures.first.summary).to eq(
+        '[error] src/main/java/io/timnew/sol/Sol.kt:106:1: Needless blank line(s)'
+      )
     end
 
     it 'failures have details' do
-      expect(input.failures.first.details).to include 'src/main/java/io/timnew/sol/Sol.kt:106'
+      expect(input.failures.first.details).to include 'no-consecutive-blank-lines'
     end
   end
 

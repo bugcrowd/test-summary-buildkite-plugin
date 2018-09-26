@@ -66,6 +66,9 @@ steps:
           - label: ":rubocop: rubocop"
             artifact_path: spec/sample_artifacts/rubocop.txt
             type: oneline
+          - label: ":greencheck: checkstyle"
+            artifact_path: spec/sample_artifacts/checkstyle.xml
+            type: checkstyle
         formatter:
           type: summary
           show_first: 3
@@ -102,6 +105,9 @@ steps:
           - label: ":rubocop: rubocop"
             artifact_path: spec/sample_artifacts/rubocop.txt
             type: oneline
+          - label: ":greencheck: checkstyle"
+            artifact_path: spec/sample_artifacts/checkstyle.xml
+            type: checkstyle
         formatter:
           type: details
           show_first: 3
