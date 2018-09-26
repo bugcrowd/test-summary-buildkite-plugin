@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v1.7.0](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.6.0...v1.7.0) - 2018-09-26
+- JUnit: Expose classname if file attribute does not exist
+  [#33](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/33)/[#35](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/35) (thanks @timnew)
+- Add support for checkstyle
+  [#34](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/34)/[#36](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/36) (thanks @timnew)
+
 ## [v1.6.0](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.5.0...v1.6.0) - 2018-08-06
 - Remove undocumented count-only formatter [#28](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/28)
 - JUnit: support custom summary formats [#29](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/29)
