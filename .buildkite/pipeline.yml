@@ -51,7 +51,7 @@ steps:
             encoding: UTF-8
             strip_colors: true
           - label: ":female-technologist: xunit"
-            artifact_path: spec/sample_artifacts/xunit.xml
+            artifact_path: spec/sample_artifacts/xunit*.xml
             type: junit
           - label: ":camel: tap"
             artifact_path: spec/sample_artifacts/example.tap
@@ -87,7 +87,7 @@ steps:
               format: '%{location}: %{testcase.name}'
               details_regex: '(?<location>\S+:\d+)[^\n]*\z'
           - label: ":female-technologist: xunit"
-            artifact_path: spec/sample_artifacts/xunit.xml
+            artifact_path: spec/sample_artifacts/xunit*.xml
             type: junit
           - label: ":camel: tap"
             artifact_path: spec/sample_artifacts/example.tap

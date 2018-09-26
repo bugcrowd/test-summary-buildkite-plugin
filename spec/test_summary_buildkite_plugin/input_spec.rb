@@ -104,6 +104,22 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
       end
     end
 
+    context 'without filename but with classname' do
+      let(:artifact_path) { 'xunit-no-file.xml' }
+
+      it 'includes the classname' do
+        expect(input.failures.first.summary).to include('spec.features.test_things_spec')
+      end
+
+      context 'that matches name' do
+        let(:artifact_path) { 'xunit.xml' }
+
+        it 'does not repeat the name' do
+          expect(input.failures.map(&:summary)).to include('Header › matches snapshot')
+        end
+      end
+    end
+
     context 'with summary_format' do
       let(:artifact_path) { 'xunit.xml' }
       let(:additional_options) do
