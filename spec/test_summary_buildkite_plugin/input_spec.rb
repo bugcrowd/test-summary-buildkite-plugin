@@ -189,6 +189,27 @@ severity: fail')
     end
   end
 
+  describe 'checkstyle' do
+    let(:type) { 'checkstyle' }
+    let(:artifact_path) { 'checkstyle.xml' }
+
+    it { is_expected.to be_a(TestSummaryBuildkitePlugin::Input::Checkstyle) }
+
+    it 'has all failures' do
+      expect(input.failures.count).to eq(1)
+    end
+
+    it 'failures have summary' do
+      expect(input.failures.first.summary).to eq(
+        '[error] src/main/java/io/timnew/sol/Sol.kt:106:1: Needless blank line(s)'
+      )
+    end
+
+    it 'failures have details' do
+      expect(input.failures.first.details).to include 'no-consecutive-blank-lines'
+    end
+  end
+
   describe 'setting ascii encoding' do
     let(:type) { 'oneline' }
     let(:artifact_path) { 'eslint-00112233-0011-0011-0011-001122334455.txt' }

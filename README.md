@@ -7,6 +7,7 @@ for all your test failures using
 Supported formats:
 
 * JUnit
+* Checkstyle
 * [TAP](https://testanything.org)^
 * Plain text files with one failure per line
 
@@ -28,6 +29,10 @@ steps:
     # RSpec.configure do |config|
     #   config.add_formatter('RspecJunitFormatter', "artifacts/rspec-#{ENV['BUILDKITE_JOB_ID']}.xml")
     # end
+    artifact_paths: "artifacts/*"
+
+  - label: eslint
+    command: yarn run eslint -f checkstyle -o artifacts/eslint.xml
     artifact_paths: "artifacts/*"
 
   - label: ava
@@ -57,6 +62,9 @@ Add a build step using the test-summary plugin:
           - label: rspec
             artifact_path: artifacts/rspec*
             type: junit
+          - label: eslint
+            artifact_path: artifacts/eslint.xml
+            type: checkstyle
           - label: ava
             artifact_path: artifacts/ava.tap
             type: tap
@@ -78,7 +86,7 @@ The plugin takes a list of input sources. Each input source has:
 
 * `label:` the name used in the heading to identify the test group.
 * `artifact_path:` a glob used to download one or more artifacts.
-* `type:` one of `junit`, `tap` or `oneline`.
+* `type:` one of `junit`, `checkstyle`, `tap` or `oneline`.
 * `encoding:` The file encoding to use. Defaults to `UTF-8`.
 * `strip_colors:` Remove ANSI color escape sequences. Defaults to `false`.
 * `crop:` (`oneline` type only) Number of lines to crop from the start and end of the file,

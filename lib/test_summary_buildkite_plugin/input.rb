@@ -204,10 +204,37 @@ module TestSummaryBuildkitePlugin
       end
     end
 
+    class Checkstyle < Base
+      def file_contents_to_failures(str)
+        xml = REXML::Document.new(str)
+        xml.elements.enum_for(:each, '//file').flat_map do |file|
+          filename = file.attribute('name').value
+
+          file.elements.map do |error|
+            Failure::Structured.new(
+              summary: summary(filename, error),
+              details: error.attribute('source').value
+            )
+          end
+        end
+      end
+
+      def summary(filename, error)
+        severity = error.attribute('severity').value
+        line = error.attribute('line').value
+        column = error.attribute('column').value
+        location = "#{filename}:#{line}:#{column}"
+        message = error.attribute('message').value
+
+        "[#{severity}] #{location}: #{message}"
+      end
+    end
+
     TYPES = {
       oneline: Input::OneLine,
       junit: Input::JUnit,
-      tap: Input::Tap
+      tap: Input::Tap,
+      checkstyle: Input::Checkstyle
     }.freeze
   end
 end

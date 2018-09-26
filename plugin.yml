@@ -18,6 +18,7 @@ configuration:
             type: string
             enum:
               - junit
+              - checkstyle
               - tap
               - oneline
           encoding:
