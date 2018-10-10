@@ -24,7 +24,7 @@ module TestSummaryBuildkitePlugin
         puts io.read
       end
       if $CHILD_STATUS.exitstatus != 0
-        raise "Command '#{cmd.join(' ')}' failed (exit status: #{$CHILD_STATUS.exitstatus})"
+        raise CommandFailed, "Command '#{cmd.join(' ')}' failed (exit status: #{$CHILD_STATUS.exitstatus})"
       end
     end
 
@@ -35,5 +35,7 @@ module TestSummaryBuildkitePlugin
         puts(stdin)
       end
     end
+
+    class CommandFailed < StandardError; end
   end
 end

@@ -108,6 +108,9 @@ steps:
           - label: ":greencheck: checkstyle"
             artifact_path: spec/sample_artifacts/checkstyle.xml
             type: checkstyle
+          - label: "missing"
+            artifact_path: spec/sample_artifacts/does_not_exist
+            type: oneline
         formatter:
           type: details
           show_first: 3

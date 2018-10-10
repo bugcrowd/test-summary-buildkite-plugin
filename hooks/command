@@ -6,7 +6,7 @@ DOCKER_REPO=tessereth/test-summary-buildkite-plugin
 
 on_failure() {
     echo "Command failed with exit status: $?"
-    if [[ "$BUILDKITE_PLUGIN_TEST_SUMMARY_FAIL_ON_ERROR" != "true" ]]; then
+    if [[ "${BUILDKITE_PLUGIN_TEST_SUMMARY_FAIL_ON_ERROR:-false}" != "true" ]]; then
         echo "Suppressing failure so pipeline can continue (if you do not want this behaviour, set fail_on_error to true)"
         exit 0
     fi

@@ -39,6 +39,13 @@ module TestSummaryBuildkitePlugin
           FileUtils.mkpath(WORKDIR)
           Agent.run('artifact', 'download', artifact_path, WORKDIR)
           Dir.glob("#{WORKDIR}/#{artifact_path}")
+        rescue Agent::CommandFailed => err
+          if fail_on_error
+            raise
+          else
+            Utils.log_error(err)
+            []
+          end
         end
       end
 
@@ -48,6 +55,10 @@ module TestSummaryBuildkitePlugin
 
       def encoding
         @options[:encoding] || 'UTF-8'
+      end
+
+      def fail_on_error
+        @options[:fail_on_error] || false
       end
 
       def filename_to_failures(filename)
