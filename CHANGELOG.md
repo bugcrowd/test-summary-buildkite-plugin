@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v1.7.1](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.7.0...v1.7.1) - 2018-10-11
+- Fix error handling when truncating and an input fails to download [#38](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/38)
+
 ## [v1.7.0](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.6.0...v1.7.0) - 2018-09-26
 - JUnit: Expose classname if file attribute does not exist
   [#33](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/33)/[#35](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/35) (thanks @timnew)
