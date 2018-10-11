@@ -257,4 +257,33 @@ severity: fail')
       end
     end
   end
+
+  describe 'agent exceptions' do
+    let(:type) { 'oneline' }
+    let(:artifact_path) { 'rubocop.txt' }
+
+    before do
+      allow(TestSummaryBuildkitePlugin::Agent).to receive(:run).and_raise(
+        TestSummaryBuildkitePlugin::Agent::CommandFailed.new('life sucks')
+      )
+    end
+
+    context 'without fail_on_error' do
+      it 'returns no failures' do
+        expect(input.failures).to eq([])
+      end
+
+      it 'logs the error' do
+        expect { input.failures }.to output(/life sucks/).to_stdout
+      end
+    end
+
+    context 'with fail_on_error' do
+      let(:additional_options) { { fail_on_error: true } }
+
+      it 'raises error' do
+        expect { input.failures }.to raise_error(TestSummaryBuildkitePlugin::Agent::CommandFailed)
+      end
+    end
+  end
 end

@@ -9,6 +9,7 @@ require 'test_summary_buildkite_plugin/haml_render'
 require 'test_summary_buildkite_plugin/input'
 require 'test_summary_buildkite_plugin/runner'
 require 'test_summary_buildkite_plugin/truncater'
+require 'test_summary_buildkite_plugin/utils'
 require 'test_summary_buildkite_plugin/version'
 
 module TestSummaryBuildkitePlugin

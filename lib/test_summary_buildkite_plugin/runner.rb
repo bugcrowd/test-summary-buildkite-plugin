@@ -29,7 +29,7 @@ module TestSummaryBuildkitePlugin
     end
 
     def inputs
-      @inputs ||= options[:inputs].map { |opts| Input.create(opts) }
+      @inputs ||= options[:inputs].map { |opts| Input.create(opts.merge(fail_on_error: fail_on_error)) }
     end
 
     def context

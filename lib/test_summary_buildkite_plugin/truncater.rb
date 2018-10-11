@@ -51,7 +51,7 @@ module TestSummaryBuildkitePlugin
       if fail_on_error
         raise
       else
-        log_error(e)
+        Utils.log_error(e)
         nil
       end
     end
@@ -85,10 +85,6 @@ module TestSummaryBuildkitePlugin
           }
         end
       }
-    end
-
-    def log_error(err)
-      puts "#{err.class}: #{err.message}\n\n#{err.backtrace.join("\n")}"
     end
   end
 end
