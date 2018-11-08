@@ -4,21 +4,21 @@ steps:
     timeout: 5
     artifact_paths: "artifacts/*"
     plugins:
-      docker-compose#v2.4.0:
-        run: test
+      - docker-compose#v2.4.0:
+          run: test
 
   - label: ":rubocop: rubocop"
     command: bundle exec rubocop --format progress --format emacs --out artifacts/rubocop.txt
     timeout: 5
     artifact_paths: "artifacts/*"
     plugins:
-      docker-compose#v2.4.0:
-        run: test
+      - docker-compose#v2.4.0:
+          run: test
 
   - label: ":sparkles: plugin lint"
     plugins:
-      plugin-linter#v2.0.0:
-        id: bugcrowd/test-summary
+      - plugin-linter#v2.0.0:
+          id: bugcrowd/test-summary
 
   - label: ":arrow_up: artifacts"
     command: buildkite-agent artifact upload spec/sample_artifacts/**/*
@@ -28,92 +28,92 @@ steps:
 
   - label: ":pencil: annotate"
     plugins:
-      bugcrowd/test-summary#@VERSION@:
-        inputs:
-          - label: ":rspec: rspec"
-            artifact_path: artifacts/rspec.xml
-            type: junit
-            strip_colors: true
-          - label: ":rubocop: rubocop"
-            artifact_path: artifacts/rubocop.txt
-            type: oneline
-        formatter:
-          type: details
-        context: failures
+      - bugcrowd/test-summary#@VERSION@:
+          inputs:
+            - label: ":rspec: rspec"
+              artifact_path: artifacts/rspec.xml
+              type: junit
+              strip_colors: true
+            - label: ":rubocop: rubocop"
+              artifact_path: artifacts/rubocop.txt
+              type: oneline
+          formatter:
+            type: details
+          context: failures
 
   - label: ":pencil: summary"
     plugins:
-      bugcrowd/test-summary#@VERSION@:
-        inputs:
-          - label: ":rspec: rspec"
-            artifact_path: spec/sample_artifacts/rspec*
-            type: junit
-            encoding: UTF-8
-            strip_colors: true
-          - label: ":female-technologist: xunit"
-            artifact_path: spec/sample_artifacts/xunit*.xml
-            type: junit
-          - label: ":camel: tap"
-            artifact_path: spec/sample_artifacts/example.tap
-            type: tap
-          - label: ":eslint: eslint"
-            artifact_path: spec/sample_artifacts/eslint-*.txt
-            type: oneline
-            # ignore the last two lines
-            crop:
-              start: 0
-              end: 2
-          - label: ":rubocop: rubocop"
-            artifact_path: spec/sample_artifacts/rubocop.txt
-            type: oneline
-          - label: ":greencheck: checkstyle"
-            artifact_path: spec/sample_artifacts/checkstyle.xml
-            type: checkstyle
-        formatter:
-          type: summary
-          show_first: 3
-        context: simple-annotation
-        style: default
-        fail_on_error: true
+      - bugcrowd/test-summary#@VERSION@:
+          inputs:
+            - label: ":rspec: rspec"
+              artifact_path: spec/sample_artifacts/rspec*
+              type: junit
+              encoding: UTF-8
+              strip_colors: true
+            - label: ":female-technologist: xunit"
+              artifact_path: spec/sample_artifacts/xunit*.xml
+              type: junit
+            - label: ":camel: tap"
+              artifact_path: spec/sample_artifacts/example.tap
+              type: tap
+            - label: ":eslint: eslint"
+              artifact_path: spec/sample_artifacts/eslint-*.txt
+              type: oneline
+              # ignore the last two lines
+              crop:
+                start: 0
+                end: 2
+            - label: ":rubocop: rubocop"
+              artifact_path: spec/sample_artifacts/rubocop.txt
+              type: oneline
+            - label: ":greencheck: checkstyle"
+              artifact_path: spec/sample_artifacts/checkstyle.xml
+              type: checkstyle
+          formatter:
+            type: summary
+            show_first: 3
+          context: simple-annotation
+          style: default
+          fail_on_error: true
 
   # Add test summary, including failure details
   - label: ":pencil: details"
     plugins:
-      bugcrowd/test-summary#@VERSION@:
-        inputs:
-          - label: ":rspec: rspec"
-            artifact_path: spec/sample_artifacts/rspec*
-            type: junit
-            encoding: UTF-8
-            strip_colors: true
-            summary:
-              format: '%{location}: %{testcase.name}'
-              details_regex: '(?<location>\S+:\d+)[^\n]*\z'
-          - label: ":female-technologist: xunit"
-            artifact_path: spec/sample_artifacts/xunit*.xml
-            type: junit
-          - label: ":camel: tap"
-            artifact_path: spec/sample_artifacts/example.tap
-            type: tap
-          - label: ":eslint: eslint"
-            artifact_path: spec/sample_artifacts/eslint-*.txt
-            type: oneline
-            # ignore the last two lines
-            crop:
-              start: 0
-              end: 2
-          - label: ":rubocop: rubocop"
-            artifact_path: spec/sample_artifacts/rubocop.txt
-            type: oneline
-          - label: ":greencheck: checkstyle"
-            artifact_path: spec/sample_artifacts/checkstyle.xml
-            type: checkstyle
-          - label: "missing"
-            artifact_path: spec/sample_artifacts/does_not_exist
-            type: oneline
-        formatter:
-          type: details
-          show_first: 3
-        context: verbose-annotation
-        style: info
-        fail_on_error: false
+      - bugcrowd/test-summary#@VERSION@:
+          inputs:
+            - label: ":rspec: rspec"
+              artifact_path: spec/sample_artifacts/rspec*
+              type: junit
+              encoding: UTF-8
+              strip_colors: true
+              summary:
+                format: '%{location}: %{testcase.name}'
+                details_regex: '(?<location>\S+:\d+)[^\n]*\z'
+            - label: ":female-technologist: xunit"
+              artifact_path: spec/sample_artifacts/xunit*.xml
+              type: junit
+            - label: ":camel: tap"
+              artifact_path: spec/sample_artifacts/example.tap
+              type: tap
+            - label: ":eslint: eslint"
+              artifact_path: spec/sample_artifacts/eslint-*.txt
+              type: oneline
+              # ignore the last two lines
+              crop:
+                start: 0
+                end: 2
+            - label: ":rubocop: rubocop"
+              artifact_path: spec/sample_artifacts/rubocop.txt
+              type: oneline
+            - label: ":greencheck: checkstyle"
+              artifact_path: spec/sample_artifacts/checkstyle.xml
+              type: checkstyle
+            - label: "missing"
+              artifact_path: spec/sample_artifacts/does_not_exist
+              type: oneline
+          formatter:
+            type: details
+            show_first: 3
+          context: verbose-annotation
+          style: info
+          fail_on_error: false

@@ -57,23 +57,23 @@ Add a build step using the test-summary plugin:
 ```yaml
   - label: annotate
     plugins:
-      bugcrowd/test-summary#v1.7.1:
-        inputs:
-          - label: rspec
-            artifact_path: artifacts/rspec*
-            type: junit
-          - label: eslint
-            artifact_path: artifacts/eslint.xml
-            type: checkstyle
-          - label: ava
-            artifact_path: artifacts/ava.tap
-            type: tap
-          - label: rubocop
-            artifact_path: artifacts/rubocop.txt
-            type: oneline
-        formatter:
-          type: details
-        context: test-summary
+      - bugcrowd/test-summary#v1.7.1:
+          inputs:
+            - label: rspec
+              artifact_path: artifacts/rspec*
+              type: junit
+            - label: eslint
+              artifact_path: artifacts/eslint.xml
+              type: checkstyle
+            - label: ava
+              artifact_path: artifacts/ava.tap
+              type: tap
+            - label: rubocop
+              artifact_path: artifacts/rubocop.txt
+              type: oneline
+          formatter:
+            type: details
+          context: test-summary
 ```
 
 See buildkite annotation of all the failures. There are some example annotations included below.
