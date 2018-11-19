@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v1.7.2](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.7.1...v1.7.2) - 2018-11-20
+- Mount `/tmp` into the container to support `agent-socket` experimental feature [#40](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/40) (thanks @dreyks)
+- Update README example to use plugin array syntax [#41](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/41)
+
 ## [v1.7.1](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.7.0...v1.7.1) - 2018-10-11
 - Fix error handling when truncating and an input fails to download [#38](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/38)
 
