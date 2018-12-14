@@ -22,7 +22,7 @@
             - if failure.job_id
               %dt Job
               %dd
-                %a{href: "#job-component-#{failure.job_id}"}
+                %a{href: "##{failure.job_id}"}
                   = failure.job_id
       - else
         %code

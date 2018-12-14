@@ -2,10 +2,10 @@
 - unless job_ids.empty?
   See
   - job_ids[0...-2].each do |job_id|
-    = "[job #{job_id}](#job-component-#{job_id}),"
+    = "[job #{job_id}](##{job_id}),"
 
   - if job_ids.count > 1
-    = "[job #{job_ids[-2]}](#job-component-#{job_ids[-2]})"
+    = "[job #{job_ids[-2]}](##{job_ids[-2]})"
     and
 
-  = "[job #{job_ids.last}](#job-component-#{job_ids.last})"
+  = "[job #{job_ids.last}](##{job_ids.last})"
