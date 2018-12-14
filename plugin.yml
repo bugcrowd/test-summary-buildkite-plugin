@@ -25,6 +25,10 @@ configuration:
             type: string
           strip_colors:
             type: boolean
+          message:
+            type: boolean
+          details:
+            type: boolean
           crop:
             type: object
             properties:

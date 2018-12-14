@@ -66,6 +66,10 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
       expect(input.failures.first.details).to start_with('Failure/Error: ')
     end
 
+    it 'failures have message' do
+      expect(input.failures.first.message).to start_with('expected http://')
+    end
+
     it 'failures have file' do
       expect(input.failures.first.summary).to include('./spec/lib/url_whitelist_spec.rb')
     end
@@ -151,6 +155,26 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
             )
           )
         end
+      end
+    end
+
+    context 'disabling message' do
+      let(:additional_options) do
+        { message: false }
+      end
+
+      it 'ignores the message' do
+        expect(input.failures.first.message).to be_nil
+      end
+    end
+
+    context 'disabling details' do
+      let(:additional_options) do
+        { details: false }
+      end
+
+      it 'ignores the details' do
+        expect(input.failures.first.details).to be_nil
       end
     end
   end

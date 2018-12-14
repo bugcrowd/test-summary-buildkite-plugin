@@ -101,7 +101,10 @@ crop:
 * `job_id_regex:` Ruby regular expression to extract the `job_id` from the artifact path. It must contain
   a named capture with the name `job_id`. Defaults to
   `(?<job_id>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})`.
-* `summary:` (`junit` type only) Customise how the summary is generated. Includes:
+
+#### Junit specific options:
+
+* `summary:` Customise how the summary is generated. Includes:
     * `format:` A ruby format string for converting the junit xml attributes
       into a summary. All attributes are available in `<element>.<attr-name>` format.
     * `details_regex:` A ruby regular expression, run over the body text of each failure. Any named captures
@@ -118,6 +121,9 @@ summary:
   format: '%{location}: %{testcase.name}'
   details_regex: '(?<location>\S+:\d+)'
 ```
+
+* `message:` Set this to false if the failure `message` attribute is not worth showing in the annotation. Defaults to `true`.
+* `details:` Set this to false if the body of the failure is not worth showing in the annotation. Defaults to `true`.
 
 ### Formatter
 

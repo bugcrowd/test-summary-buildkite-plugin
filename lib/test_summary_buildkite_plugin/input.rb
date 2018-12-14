@@ -104,7 +104,7 @@ module TestSummaryBuildkitePlugin
           testcase.elements.each('failure | error') do |failure|
             failures << Failure::Structured.new(
               summary: summary(failure),
-              message: failure.attributes['message']&.to_s,
+              message: message(failure),
               details: details(failure)
             )
           end
@@ -150,8 +150,14 @@ module TestSummaryBuildkitePlugin
       end
 
       def details(failure)
-        # gets all text elements that are direct children (includes CDATA), and use the unescaped values
-        failure.texts.map(&:value).join('').strip
+        if options.fetch(:details, true)
+          # gets all text elements that are direct children (includes CDATA), and use the unescaped values
+          failure.texts.map(&:value).join('').strip
+        end
+      end
+
+      def message(failure)
+        failure.attributes['message']&.to_s if options.fetch(:message, true)
       end
 
       def summary_format
