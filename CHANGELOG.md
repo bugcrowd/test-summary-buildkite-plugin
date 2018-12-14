@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v1.8.0](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.7.2...v1.8.0) - 2018-12-14
+- Correctly link to jobs post buildkite update [#43](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/43)
+- JUnit: Allow disabling the message or details if they aren't relevant [#44](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/44)
+
 ## [v1.7.2](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.7.1...v1.7.2) - 2018-11-20
 - Mount `/tmp` into the container to support `agent-socket` experimental feature [#40](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/40) (thanks @dreyks)
 - Update README example to use plugin array syntax [#41](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/41)
