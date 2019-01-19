@@ -35,9 +35,9 @@ end
 pipeline_sample = YAML.load_file('.buildkite/pipeline.yml')
 
 pipeline_sample['steps'].each do |step|
-  next unless step['plugins']&.find { |k, _| k.include?('test-summary') }
+  next unless step['plugins']&.any? { |plugin| plugin.find { |k, _| k.include?('test-summary') } }
 
   # Roughly match the formatting that buildkite gives
-  ENV['BUILDKITE_PLUGINS'] = [step['plugins']].to_json
+  ENV['BUILDKITE_PLUGINS'] = step['plugins'].to_json
   TestSummaryBuildkitePlugin.run
 end
