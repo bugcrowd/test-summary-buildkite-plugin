@@ -171,3 +171,7 @@ If you have ruby set up, you can just run:
 To generate sample markdown and HTML based on the files in `spec/sample_artifacts`:
 
     bin/run-dev
+
+Note: The sample HTML files use hardcoded references to buildkite assets. If the page is not displaying correctly,
+try updating the css files in [templates/test_layout.html.haml](templates/test_layout.html.haml) based on what
+buildkite is currently serving.
