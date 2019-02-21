@@ -154,7 +154,7 @@ Other formatter options are:
   
 ## Truncation
 
-Buildkite has a maximum annotation size of 50 kilobytes. If there are too many failures to fit within this limit, the
+Buildkite has a maximum annotation size of 100 kilobytes. If there are too many failures to fit within this limit, the
 plugin will truncate the failures for each input.
 
 ## Developing

@@ -2,7 +2,7 @@
 
 module TestSummaryBuildkitePlugin
   class Runner
-    MAX_MARKDOWN_SIZE = 50_000
+    MAX_MARKDOWN_SIZE = 100_000
 
     attr_reader :options
 
