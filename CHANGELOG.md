@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v1.9.0](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.8.0...v1.9.0) - 2019-02-21
+- Fix bin/run-dev to work with the new array syntax [#45](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/45) (thanks @philwo)
+- Update buildkite css files in test layout [#46](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/46)
+- Update `MAX_MARKDOWN_SIZE` to 100kb [#47](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/47) (thanks @ticky)
+- Move docker images to the bugcrowd organisation [#48](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/48)
+
 ## [v1.8.0](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.7.2...v1.8.0) - 2018-12-14
 - Correctly link to jobs post buildkite update [#43](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/43)
 - JUnit: Allow disabling the message or details if they aren't relevant [#44](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/44)
