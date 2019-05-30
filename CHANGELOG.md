@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v1.9.1](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.9.0...v1.9.1) - 2019-05-30
+- Fix Checkstyle formatter to be more tolerant of optional attributes [#52](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/52)
+
 ## [v1.9.0](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.8.0...v1.9.0) - 2019-02-21
 - Fix bin/run-dev to work with the new array syntax [#45](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/45) (thanks @philwo)
 - Update buildkite css files in test layout [#46](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/46)
