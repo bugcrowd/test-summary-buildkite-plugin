@@ -220,12 +220,18 @@ severity: fail')
     it { is_expected.to be_a(TestSummaryBuildkitePlugin::Input::Checkstyle) }
 
     it 'has all failures' do
-      expect(input.failures.count).to eq(1)
+      expect(input.failures.count).to eq(3)
     end
 
     it 'failures have summary' do
-      expect(input.failures.first.summary).to eq(
+      expect(input.failures[0].summary).to eq(
+        '[error] src/main/java/io/timnew/sol/Sol.kt: Without column or line'
+      )
+      expect(input.failures[1].summary).to eq(
         '[error] src/main/java/io/timnew/sol/Sol.kt:106:1: Needless blank line(s)'
+      )
+      expect(input.failures[2].summary).to eq(
+        '[error] src/main/java/io/timnew/sol/Sol.kt:109: Without column'
       )
     end
 
