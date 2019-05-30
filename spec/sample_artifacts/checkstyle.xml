@@ -2,5 +2,7 @@
 <checkstyle version="8.0">
 	<file name="src/main/java/io/timnew/sol/Sol.kt">
 		<error line="106" column="1" severity="error" message="Needless blank line(s)" source="no-consecutive-blank-lines" />
+		<error line="109" severity="error" message="Without column" source="no-consecutive-blank-lines" />
+		<error severity="error" message="Without column or line" source="no-consecutive-blank-lines" />
 	</file>
 </checkstyle>
