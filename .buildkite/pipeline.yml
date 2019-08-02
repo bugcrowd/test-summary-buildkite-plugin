@@ -69,6 +69,9 @@ steps:
             - label: ":greencheck: checkstyle"
               artifact_path: spec/sample_artifacts/checkstyle.xml
               type: checkstyle
+            - label: "nunit"
+              artifact_path: spec/sample_artifacts/nunit*.xml
+              type: nunit
           formatter:
             type: summary
             show_first: 3
@@ -112,6 +115,9 @@ steps:
             - label: "missing"
               artifact_path: spec/sample_artifacts/does_not_exist
               type: oneline
+            - label: "nunit"
+              artifact_path: spec/sample_artifacts/nunit*.xml
+              type: nunit
           formatter:
             type: details
             show_first: 3

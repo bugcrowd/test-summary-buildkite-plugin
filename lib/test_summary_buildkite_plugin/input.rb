@@ -247,11 +247,57 @@ module TestSummaryBuildkitePlugin
       end
     end
 
+    class NUnit < Base
+      def file_contents_to_failures(str)
+        failures = []
+        xml = REXML::Document.new(str)
+        xml.elements.enum_for(:each '//testcase') do |testcase| 
+          testcase.elements.each('failure') do |failure|
+            failures << Failure::Structured.new(
+              summary: summary(failure),
+              message: message(failure),
+              details: details(failure)
+            )
+          end
+        end
+      end
+
+      def summary(failure)
+        data = attributes(failure)
+        name = data[:'testcase.fullname']
+        message = failure.elements['message']
+        "#{name}"
+      end
+
+      def message(failure)
+        message = failure.elements['message']
+        "#{message}"
+      end
+
+      def details(failure)
+        stack_trace = failure.elements['stack-trace']
+        "#{stack_trace}"
+      end
+
+      def attributes(failure)
+        # If elements are used in the format string but don't exist in the map, pretend they're blank
+        acc = Hash.new('')
+        elem = failure
+        until elem.parent.nil?
+          elem.attributes.each do |attr_name, attr_value|
+            acc["#{elem.name}.#{attr_name}".to_sym] = attr_value
+          end
+          elem = elem.parent
+        end
+        # acc.merge(detail_attributes(failure))
+      end
+
     TYPES = {
       oneline: Input::OneLine,
       junit: Input::JUnit,
       tap: Input::Tap,
-      checkstyle: Input::Checkstyle
+      checkstyle: Input::Checkstyle,
+      nunit: Input::NUnit
     }.freeze
   end
 end
