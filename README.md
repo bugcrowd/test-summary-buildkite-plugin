@@ -10,6 +10,7 @@ Supported formats:
 * Checkstyle
 * [TAP](https://testanything.org)^
 * Plain text files with one failure per line
+* NUnit
 
 \^ Current TAP support is fairly limited. If you have an example TAP file that is not being interpreted correctly,
 feel free to open an issue or pull request.
@@ -71,6 +72,9 @@ Add a build step using the test-summary plugin:
             - label: rubocop
               artifact_path: artifacts/rubocop.txt
               type: oneline
+            - label: nunit
+              artifact_path: artifacts/nunit.xml
+              type: nunit
           formatter:
             type: details
           context: test-summary
