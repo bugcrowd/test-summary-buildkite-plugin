@@ -298,9 +298,8 @@ module TestSummaryBuildkitePlugin
       def testcases(doc)
         test_suites = []
         test_cases = []
-        test_run = doc.elements['test-run']
 
-        test_run.elements.each('test-suite') do |testsuite|
+        doc.elements['test-run'].elements.each('test-suite') do |testsuite|
           test_suites << testsuite
         end
 
@@ -313,7 +312,6 @@ module TestSummaryBuildkitePlugin
             test_cases << testcase
           end
         end
-        puts(test_cases.length)
         test_cases
       end
     end
