@@ -251,7 +251,7 @@ module TestSummaryBuildkitePlugin
       def file_contents_to_failures(str)
         failures = []
         xml = REXML::Document.new(str)
-        xml.elements.enum_for(:each '//testcase') do |testcase| 
+        testcases(xml).each do |testcase|
           testcase.elements.each('failure') do |failure|
             failures << Failure::Structured.new(
               summary: summary(failure),
@@ -260,23 +260,26 @@ module TestSummaryBuildkitePlugin
             )
           end
         end
+
+        failures
       end
 
       def summary(failure)
         data = attributes(failure)
-        name = data[:'testcase.fullname']
-        message = failure.elements['message']
+        name = data[:'test-case.fullname']
         "#{name}"
       end
 
       def message(failure)
-        message = failure.elements['message']
+        message = failure.elements['message'].text
         "#{message}"
       end
 
       def details(failure)
+        message = failure.elements['message'].text
         stack_trace = failure.elements['stack-trace']
-        "#{stack_trace}"
+        detail = if !stack_trace.nil? then "#{stack_trace.text}" else "" end
+        "#{message}\n#{detail}"
       end
 
       def attributes(failure)
@@ -289,8 +292,31 @@ module TestSummaryBuildkitePlugin
           end
           elem = elem.parent
         end
-        # acc.merge(detail_attributes(failure))
+        acc
       end
+
+      def testcases(doc)
+        test_suites = []
+        test_cases = []
+        test_run = doc.elements['test-run']
+
+        test_run.elements.each('test-suite') do |testsuite|
+          test_suites << testsuite
+        end
+
+        while test_suites.length != 0 do
+          testsuite = test_suites.shift()
+          testsuite.elements.each('test-suite') do |child_testsuite| 
+            test_suites << child_testsuite
+          end
+          testsuite.elements.each('test-case') do |testcase| 
+            test_cases << testcase
+          end
+        end
+        puts(test_cases.length)
+        test_cases
+      end
+    end
 
     TYPES = {
       oneline: Input::OneLine,
