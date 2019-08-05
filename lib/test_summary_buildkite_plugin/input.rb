@@ -173,51 +173,14 @@ module TestSummaryBuildkitePlugin
     end
 
     class Tap < Base
-      TEST_LINE = /^(?<not>not )?ok(?<test_number> \d+)?(?<description>[^#]*)(#(?<directive>.*))?/
-      YAML_START = /^\s+---/
-      YAML_END = /^\s+\.\.\./
-
-      # TODO: Factor this out into its own parser class
-      def file_contents_to_failures(tap) # rubocop:disable Metrics/MethodLength
-        lines = tap.split("\n")
-        raise 'Only TAP version 13 supported' unless lines.first.strip == 'TAP version 13'
-        tests = []
-        in_failure = false
-        yaml_lines = nil
-        lines.each do |line|
-          if (matchdata = line.match(TEST_LINE))
-            if matchdata['not']
-              # start of a failing test
-              in_failure = true
-              tests << Failure::Structured.new(
-                summary: summary(matchdata)
-              )
-            else
-              # we're in a successful test, ignore subsequent lines until we hit a failure
-              in_failure = false
-            end
-          elsif line.match?(YAML_START)
-            yaml_lines = []
-          elsif line.match?(YAML_END)
-            tests.last.details = details(yaml_lines)
-            yaml_lines = nil
-          elsif in_failure && yaml_lines
-            yaml_lines << line
-          end
+      def file_contents_to_failures(tap)
+        suite = ::TestSummaryBuildkitePlugin::Tap::Parser.new(tap).parse
+        suite.tests.select { |x| !x.passed && !x.todo && !x.skipped }.map do |x|
+          Failure::Structured.new(
+            summary: x.description,
+            details: x.yaml || x.diagnostic
+          )
         end
-        tests
-      end
-
-      def summary(matchdata)
-        # There's a convention to put a ' - ' between the test number and the description
-        # We strip that for better readability
-        matchdata['description'].strip.gsub(/^- /, '')
-      end
-
-      def details(yaml_lines)
-        # strip indent
-        indent = yaml_lines.first.match(/(\s*)/)[1].length
-        yaml_lines.map { |line| line[indent..-1] }.join("\n")
       end
     end
 

@@ -56,6 +56,9 @@ steps:
             - label: ":camel: tap"
               artifact_path: spec/sample_artifacts/example.tap
               type: tap
+            - label: ":camel: tap v12"
+              artifact_path: spec/sample_artifacts/version_12.tap
+              type: tap
             - label: ":eslint: eslint"
               artifact_path: spec/sample_artifacts/eslint-*.txt
               type: oneline
@@ -95,6 +98,9 @@ steps:
               type: junit
             - label: ":camel: tap"
               artifact_path: spec/sample_artifacts/example.tap
+              type: tap
+            - label: ":camel: tap v12"
+              artifact_path: spec/sample_artifacts/version_12.tap
               type: tap
             - label: ":eslint: eslint"
               artifact_path: spec/sample_artifacts/eslint-*.txt

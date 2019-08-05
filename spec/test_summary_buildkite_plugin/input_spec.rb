@@ -211,6 +211,28 @@ severity: fail')
     it 'failures have summary' do
       expect(input.failures.first.summary).to eq('pinged quartz')
     end
+
+    context 'version 12' do
+      let(:artifact_path) { 'version_12.tap' }
+
+      it { is_expected.to be_a(TestSummaryBuildkitePlugin::Input::Tap) }
+
+      it 'has all failures' do
+        expect(input.failures.count).to eq(14)
+      end
+
+      it 'ignores TODOs' do
+        expect(input.failures.map(&:summary)).not_to include(include('expected fail'))
+      end
+
+      it 'failures have summary' do
+        expect(input.failures.first.summary).to eq('3PIDs are unbound after account deactivation')
+      end
+
+      it 'failures have details' do
+        expect(input.failures.first.details).to include('500 Internal Server Error')
+      end
+    end
   end
 
   describe 'checkstyle' do
