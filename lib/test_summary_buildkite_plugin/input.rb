@@ -237,11 +237,11 @@ module TestSummaryBuildkitePlugin
       end
 
       def summary(filename, error)
-        severity = error.attribute('severity')&.value
-        line = error.attribute('line')&.value
-        column = error.attribute('column')&.value
-        location = [filename, line, column].compact.join(':')
-        message = error.attribute('message')&.value
+        severity = error.attribute('severity').value
+        line = error.attribute('line').value
+        column = error.attribute('column').value
+        location = "#{filename}:#{line}:#{column}"
+        message = error.attribute('message').value
 
         "[#{severity}] #{location}: #{message}"
       end
