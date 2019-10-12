@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v1.10.0](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.9.1...v1.10.0) - 2019-10-12
+- Support TAP version 12 plus skipped and TODO tests [#54](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/54)
+
 ## [v1.9.1](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.9.0...v1.9.1) - 2019-05-30
 - Fix Checkstyle formatter to be more tolerant of optional attributes [#52](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/52)
 
