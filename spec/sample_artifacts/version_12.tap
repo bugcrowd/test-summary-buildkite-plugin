@@ -1,0 +1,1456 @@
+# Started test HTTPS Server at localhost:36369
+# Starting Homeserver using SyTest::HomeserverFactory::Synapse=HASH(0x562459254088)
+# Starting server-0
+# Clearing Pg database pg1 on 'localhost'
+#** DBI connect('dbname=sytest_template;host=localhost','postgres',...) failed: FATAL:  database "sytest_template" does not exist at lib/SyTest/Homeserver.pm line 371.
+# Generating config for port 8800
+# Creating config for server 0 with command /venv/bin/python -m coverage run --rcfile=/src/.coveragerc -m synapse.app.homeserver --config-path /work/server-0/config.yaml --server-name localhost:8800 --generate-config --report-stats=no
+Config file '/work/server-0/config.yaml' already exists. Generating any missing config files.
+Generating signing key file /work/server-0/localhost:8800.signing.key
+# Starting server 0 for port 8800 with command /venv/bin/python -m coverage run --rcfile=/src/.coveragerc -m synapse.app.homeserver --config-path /work/server-0/config.yaml --server-name localhost:8800
+# Connecting to server 8800
+# Connected to server 8800
+# Started server-0
+ok 1 GET /register yields a set of flows
+ok 2 POST /register can create a user
+ok 3 POST /register downcases capitals in usernames
+ok 4 POST /register returns the same device_id as that in the request
+ok 5 POST /register rejects registration of usernames with '!'
+ok 6 POST /register rejects registration of usernames with '"'
+ok 7 POST /register rejects registration of usernames with ':'
+ok 8 POST /register rejects registration of usernames with '?'
+ok 9 POST /register rejects registration of usernames with '\'
+ok 10 POST /register rejects registration of usernames with '@'
+ok 11 POST /register rejects registration of usernames with '['
+ok 12 POST /register rejects registration of usernames with ']'
+ok 13 POST /register rejects registration of usernames with '{'
+ok 14 POST /register rejects registration of usernames with '|'
+ok 15 POST /register rejects registration of usernames with '}'
+ok 16 POST /register rejects registration of usernames with '£'
+ok 17 POST /register rejects registration of usernames with 'é'
+ok 18 POST /register rejects registration of usernames with '\n'
+ok 19 POST /register rejects registration of usernames with '''
+ok 20 POST /r0/admin/register with shared secret
+ok 21 POST /r0/admin/register admin with shared secret
+ok 22 POST /r0/admin/register with shared secret downcases capitals
+ok 23 POST /r0/admin/register with shared secret disallows symbols
+ok 24 POST rejects invalid utf-8 in JSON
+ok 25 GET /login yields a set of flows
+ok 26 POST /login can log in as a user
+ok 27 POST /login returns the same device_id as that in the request
+ok 28 POST /login can log in as a user with just the local part of the id
+ok 29 POST /login as non-existing user is rejected
+ok 30 POST /login wrong password is rejected
+ok 31 GET /events initially
+ok 32 GET /initialSync initially
+ok 33 Version responds 200 OK with valid structure
+ok 34 PUT /profile/:user_id/displayname sets my name
+ok 35 GET /profile/:user_id/displayname publicly accessible
+ok 36 PUT /profile/:user_id/avatar_url sets my avatar
+ok 37 GET /profile/:user_id/avatar_url publicly accessible
+ok 38 GET /device/{deviceId}
+ok 39 GET /device/{deviceId} gives a 404 for unknown devices
+ok 40 GET /devices
+ok 41 PUT /device/{deviceId} updates device fields
+ok 42 PUT /device/{deviceId} gives a 404 for unknown devices
+not ok 43 DELETE /device/{deviceId}
+# Started: 2019-07-31 19:41:12.645
+# Ended: 2019-07-31 19:41:12.730
+# HTTP Request failed ( 500 Internal Server Error https://localhost:8800/_matrix/client/r0/devices/login_device?access_token=MDAxY2xvY2F0aW9uIGxvY2FsaG9zdDo4ODAwCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAzYWNpZCB1c2VyX2lkID0gQGFub24tMjAxOTA3MzFfMTk0MTA1LTExOmxvY2FsaG9zdDo4ODAwCjAwMTZjaWQgdHlwZSA9IGFjY2VzcwowMDIxY2lkIG5vbmNlID0gNzZ6Jk5EUSZFJmlidS5HUAowMDJmc2lnbmF0dXJlICuiqWxlyiv84gkjMdsHH8MTIBhIEXd42CUfRBw7BwQSCg ) from DELETE https://localhost:8800/_matrix/client/r0/devices/login_device?...
+# {"errcode":"M_UNKNOWN","error":"Internal server error"}
+# 0.021123: Registered new user @anon-20190731_194105-11:localhost:8800
+# 0.067986: Response to empty body
+# {
+#   flows   => [{ stages => ["m.login.password"] }],
+#   params  => {},
+#   session => "YLsIpaqBsQnFEvyukVgoLmPW",
+# }
+# 0.075230: Response to wrong password
+# {
+#   completed => [],
+#   errcode   => "M_FORBIDDEN",
+#   error     => "Invalid password",
+#   flows     => [{ stages => ["m.login.password"] }],
+#   params    => {},
+#   session   => "aMvuULWahaoHBbyXHFBoczOu",
+# }
+not ok 44 DELETE /device/{deviceId} requires UI auth user to match device owner
+# Started: 2019-07-31 19:41:12.730
+# Ended: 2019-07-31 19:41:12.803
+# HTTP Request failed ( 500 Internal Server Error https://localhost:8800/_matrix/client/r0/devices/login_device?access_token=MDAxY2xvY2F0aW9uIGxvY2FsaG9zdDo4ODAwCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAzYWNpZCB1c2VyX2lkID0gQGFub24tMjAxOTA3MzFfMTk0MTA1LTEyOmxvY2FsaG9zdDo4ODAwCjAwMTZjaWQgdHlwZSA9IGFjY2VzcwowMDIxY2lkIG5vbmNlID0gSlFQJjp2T0R6I3RPZER3dQowMDJmc2lnbmF0dXJlIKMb-dZYNYl3PfDCyN7x0xZZRqDRAZBt39r86Qo9EBKuCg ) from DELETE https://localhost:8800/_matrix/client/r0/devices/login_device?...
+# {"errcode":"M_UNKNOWN","error":"Internal server error"}
+# 0.035620: Registered new user @anon-20190731_194105-12:localhost:8800
+# 0.038542: Registered new user @anon-20190731_194105-13:localhost:8800
+ok 45 DELETE /device/{deviceId} with no body gives a 401
+ok 46 GET /presence/:user_id/status fetches initial status
+ok 47 PUT /presence/:user_id/status updates my presence
+ok 48 POST /createRoom makes a public room
+ok 49 POST /createRoom makes a private room
+ok 50 POST /createRoom makes a private room with invites
+ok 51 POST /createRoom makes a room with a name
+ok 52 POST /createRoom makes a room with a topic
+ok 53 Can /sync newly created room
+ok 54 POST /createRoom creates a room with the given version
+ok 55 POST /createRoom rejects attempts to create rooms with numeric versions
+ok 56 POST /createRoom rejects attempts to create rooms with unknown versions
+ok 57 POST /createRoom ignores attempts to set the room version via creation_content
+ok 58 GET /rooms/:room_id/state/m.room.member/:user_id fetches my membership
+ok 59 GET /rooms/:room_id/state/m.room.member/:user_id?format=event fetches my membership event
+ok 60 GET /rooms/:room_id/state/m.room.power_levels fetches powerlevels
+ok 61 GET /rooms/:room_id/joined_members fetches my membership
+ok 62 GET /rooms/:room_id/initialSync fetches initial sync state
+ok 63 GET /publicRooms lists newly-created room
+ok 64 GET /directory/room/:room_alias yields room ID
+ok 65 GET /joined_rooms lists newly-created room
+ok 66 POST /rooms/:room_id/state/m.room.name sets name
+ok 67 GET /rooms/:room_id/state/m.room.name gets name
+ok 68 POST /rooms/:room_id/state/m.room.topic sets topic
+ok 69 GET /rooms/:room_id/state/m.room.topic gets topic
+ok 70 GET /rooms/:room_id/state fetches entire room state
+ok 71 POST /createRoom with creation content
+ok 72 PUT /directory/room/:room_alias creates alias
+ok 73 POST /rooms/:room_id/join can join a room
+ok 74 POST /join/:room_alias can join a room
+ok 75 POST /join/:room_id can join a room
+ok 76 POST /join/:room_id can join a room with custom content
+ok 77 POST /join/:room_alias can join a room with custom content
+ok 78 POST /rooms/:room_id/leave can leave a room
+ok 79 POST /rooms/:room_id/invite can send an invite
+ok 80 POST /rooms/:room_id/ban can ban a user
+ok 81 POST /rooms/:room_id/send/:event_type sends a message
+ok 82 PUT /rooms/:room_id/send/:event_type/:txn_id sends a message
+ok 83 PUT /rooms/:room_id/send/:event_type/:txn_id deduplicates the same txn id
+ok 84 GET /rooms/:room_id/messages returns a message
+ok 85 GET /rooms/:room_id/messages lazy loads members correctly
+ok 86 PUT /rooms/:room_id/typing/:user_id sets typing notification
+ok 87 GET /rooms/:room_id/state/m.room.power_levels can fetch levels
+ok 88 PUT /rooms/:room_id/state/m.room.power_levels can set levels
+ok 89 PUT power_levels should not explode if the old power levels were empty
+ok 90 Both GET and PUT work
+ok 91 POST /rooms/:room_id/receipt can create receipts
+ok 92 POST /rooms/:room_id/read_markers can create read marker
+ok 93 POST /media/v1/upload can create an upload
+ok 94 GET /media/v1/download can fetch the value again
+ok 95 GET /capabilities is present and well formed for registered user
+ok 96 GET /r0/capabilities is not public
+  ok 1 Got recaptcha verify request (Register with a recaptcha)
+  ok 2 Passed captcha validation (Register with a recaptcha)
+  1..2
+ok 97 Register with a recaptcha (2 subtests)
+ok 98 registration is idempotent, without username specified
+ok 99 registration is idempotent, with username specified
+ok 100 registration remembers parameters
+ok 101 registration accepts non-ascii passwords
+ok 102 registration with inhibit_login inhibits login
+ok 103 User signups are forbidden from starting with '_'
+ok 104 Can login with 3pid and password using m.login.password
+ok 105 login types include SSO
+ok 106 /login/cas/redirect redirects if the old m.login.cas login type is listed
+ok 107 Can login with new user via CAS
+not ok 108 Can logout current device
+# Started: 2019-07-31 19:41:20.171
+# Ended: 2019-07-31 19:41:20.221
+# HTTP Request failed ( 500 Internal Server Error https://localhost:8800/_matrix/client/r0/logout?access_token=MDAxY2xvY2F0aW9uIGxvY2FsaG9zdDo4ODAwCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAzYWNpZCB1c2VyX2lkID0gQGFub24tMjAxOTA3MzFfMTk0MTA1LTQ4OmxvY2FsaG9zdDo4ODAwCjAwMTZjaWQgdHlwZSA9IGFjY2VzcwowMDIxY2lkIG5vbmNlID0gTiZYNmRQJmgzWFBfQkd3NQowMDJmc2lnbmF0dXJlINHsHnb5BEozvwyLcitvxYSR6I1i-wPq09qWHv8b0itbCg ) from POST https://localhost:8800/_matrix/client/r0/logout?...
+# {"errcode":"M_UNKNOWN","error":"Internal server error"}
+# 0.021577: Registered new user @anon-20190731_194105-48:localhost:8800
+# 0.041590: /devices response (1): 
+# {
+#   devices => [
+#     {
+#       device_id    => "HWXSOAPOUR",
+#       display_name => undef,
+#       last_seen_ip => undef,
+#       last_seen_ts => undef,
+#       user_id      => "\@anon-20190731_194105-48:localhost:8800",
+#     },
+#     {
+#       device_id    => "BRGVNRVUPB",
+#       display_name => undef,
+#       last_seen_ip => undef,
+#       last_seen_ts => undef,
+#       user_id      => "\@anon-20190731_194105-48:localhost:8800",
+#     },
+#   ],
+# }
+not ok 109 Can logout all devices
+# Started: 2019-07-31 19:41:20.221
+# Ended: 2019-07-31 19:41:20.264
+# HTTP Request failed ( 500 Internal Server Error https://localhost:8800/_matrix/client/r0/logout/all?access_token=MDAxY2xvY2F0aW9uIGxvY2FsaG9zdDo4ODAwCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAzYWNpZCB1c2VyX2lkID0gQGFub24tMjAxOTA3MzFfMTk0MTA1LTQ5OmxvY2FsaG9zdDo4ODAwCjAwMTZjaWQgdHlwZSA9IGFjY2VzcwowMDIxY2lkIG5vbmNlID0gVXlrQiM0cjRyWC4uVUhGMAowMDJmc2lnbmF0dXJlIKF3x1tXC8rP6SPwtxofi9tbAcWllehcPzOHwBGRIGAyCg ) from POST https://localhost:8800/_matrix/client/r0/logout/all?...
+# {"errcode":"M_UNKNOWN","error":"Internal server error"}
+# 0.021659: Registered new user @anon-20190731_194105-49:localhost:8800
+ok 110 Request to logout with invalid an access token is rejected
+ok 111 Request to logout without an access token is rejected
+ok 112 After changing password, can't log in with old password
+ok 113 After changing password, can log in with new password
+ok 114 After changing password, existing session still works
+not ok 115 After changing password, a different session no longer works
+# Started: 2019-07-31 19:41:20.492
+# Ended: 2019-07-31 19:41:20.571
+# HTTP Request failed ( 500 Internal Server Error https://localhost:8800/_matrix/client/r0/account/password?access_token=MDAxY2xvY2F0aW9uIGxvY2FsaG9zdDo4ODAwCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAzYWNpZCB1c2VyX2lkID0gQGFub24tMjAxOTA3MzFfMTk0MTA1LTUzOmxvY2FsaG9zdDo4ODAwCjAwMTZjaWQgdHlwZSA9IGFjY2VzcwowMDIxY2lkIG5vbmNlID0gR1VEJixrT2xnO0h3cy1sbwowMDJmc2lnbmF0dXJlIOuGtDRvQvgcD4O6l90Pt-rtushqdjb1uTI7ox6ZGu1SCg ) from POST https://localhost:8800/_matrix/client/r0/account/password?...
+# {"errcode":"M_UNKNOWN","error":"Internal server error"}
+# 0.022931: Registered new user @anon-20190731_194105-53:localhost:8800
+not ok 116 Pushers created with a different access token are deleted on password change
+# Started: 2019-07-31 19:41:20.571
+# Ended: 2019-07-31 19:41:20.637
+# HTTP Request failed ( 500 Internal Server Error https://localhost:8800/_matrix/client/r0/account/password?access_token=MDAxY2xvY2F0aW9uIGxvY2FsaG9zdDo4ODAwCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAzYWNpZCB1c2VyX2lkID0gQGFub24tMjAxOTA3MzFfMTk0MTA1LTU0OmxvY2FsaG9zdDo4ODAwCjAwMTZjaWQgdHlwZSA9IGFjY2VzcwowMDIxY2lkIG5vbmNlID0gWmE6UHFrI25oOlZDTzpVSwowMDJmc2lnbmF0dXJlIIBbptXk2dhRPTtezOXgLzarHK6nAjoTIcD-0FZ4pFzYCg ) from POST https://localhost:8800/_matrix/client/r0/account/password?...
+# {"errcode":"M_UNKNOWN","error":"Internal server error"}
+# 0.022429: Registered new user @anon-20190731_194105-54:localhost:8800
+ok 117 Pushers created with a the same access token are not deleted on password change
+not ok 118 Can deactivate account
+# Started: 2019-07-31 19:41:20.699
+# Ended: 2019-07-31 19:41:20.736
+# HTTP Request failed ( 500 Internal Server Error https://localhost:8800/_matrix/client/r0/account/deactivate?access_token=MDAxY2xvY2F0aW9uIGxvY2FsaG9zdDo4ODAwCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAzYWNpZCB1c2VyX2lkID0gQGFub24tMjAxOTA3MzFfMTk0MTA1LTU2OmxvY2FsaG9zdDo4ODAwCjAwMTZjaWQgdHlwZSA9IGFjY2VzcwowMDIxY2lkIG5vbmNlID0gdzdsdGJ-Njo6cWg1cGhJaQowMDJmc2lnbmF0dXJlILkWRf05KSGJG6sYCBE6MIafNGg4XcBqr69J1qk5Ca4UCg ) from POST https://localhost:8800/_matrix/client/r0/account/deactivate?...
+# {"errcode":"M_UNKNOWN","error":"Internal server error"}
+# 0.022338: Registered new user @anon-20190731_194105-56:localhost:8800
+ok 119 Can't deactivate account with wrong password
+not ok 120 After deactivating account, can't log in with password
+# Started: 2019-07-31 19:41:20.769
+# Ended: 2019-07-31 19:41:20.805
+# HTTP Request failed ( 500 Internal Server Error https://localhost:8800/_matrix/client/r0/account/deactivate?access_token=MDAxY2xvY2F0aW9uIGxvY2FsaG9zdDo4ODAwCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAzYWNpZCB1c2VyX2lkID0gQGFub24tMjAxOTA3MzFfMTk0MTA1LTU4OmxvY2FsaG9zdDo4ODAwCjAwMTZjaWQgdHlwZSA9IGFjY2VzcwowMDIxY2lkIG5vbmNlID0gdE86VlE4XjExQE5YQjkxIwowMDJmc2lnbmF0dXJlIOXb-ojaU3s-hXwyxG1L6llXJ_y0IfsIWwvi_DwXMNyuCg ) from POST https://localhost:8800/_matrix/client/r0/account/deactivate?...
+# {"errcode":"M_UNKNOWN","error":"Internal server error"}
+# 0.022742: Registered new user @anon-20190731_194105-58:localhost:8800
+ok 121 initialSync sees my presence status
+ok 122 Presence change reports an event to myself
+ok 123 Friends presence changes reports events # skip lack of can_invite_presence
+ok 124 Room creation reports m.room.create to myself
+ok 125 Room creation reports m.room.member to myself
+ok 126 Setting room topic reports m.room.topic to myself
+ok 127 Global initialSync
+ok 128 Global initialSync with limit=0 gives no messages
+ok 129 Room initialSync
+ok 130 Room initialSync with limit=0 gives no messages
+ok 131 Setting state twice is idempotent
+ok 132 Joining room twice is idempotent
+ok 133 New room members see their own join event
+ok 134 New room members see existing users' presence in room initialSync
+ok 135 Existing members see new members' join events
+ok 136 Existing members see new members' presence
+ok 137 All room members see all room members' presence in global initialSync
+# Starting Homeserver using SyTest::HomeserverFactory::Synapse=HASH(0x562459254088)
+# Starting server-1
+# Clearing Pg database pg2 on 'localhost'
+#** DBI connect('dbname=sytest_template;host=localhost','postgres',...) failed: FATAL:  database "sytest_template" does not exist at lib/SyTest/Homeserver.pm line 371.
+# Generating config for port 8829
+# Creating config for server 1 with command /venv/bin/python -m coverage run --rcfile=/src/.coveragerc -m synapse.app.homeserver --config-path /work/server-1/config.yaml --server-name localhost:8829 --generate-config --report-stats=no
+Config file '/work/server-1/config.yaml' already exists. Generating any missing config files.
+Generating signing key file /work/server-1/localhost:8829.signing.key
+# Starting server 1 for port 8829 with command /venv/bin/python -m coverage run --rcfile=/src/.coveragerc -m synapse.app.homeserver --config-path /work/server-1/config.yaml --server-name localhost:8829
+# Connecting to server 8829
+# Connected to server 8829
+# Started server-1
+ok 138 Remote users can join room by alias
+ok 139 New room members see their own join event
+ok 140 New room members see existing members' presence in room initialSync
+ok 141 Existing members see new members' join events
+ok 142 Existing members see new member's presence
+ok 143 New room members see first user's profile information in global initialSync
+ok 144 New room members see first user's profile information in per-room initialSync
+ok 145 Remote users may not join unfederated rooms
+ok 146 Local room members see posted message events
+ok 147 Fetching eventstream a second time doesn't yield the message again
+ok 148 Local non-members don't see posted message events
+ok 149 Local room members can get room messages
+ok 150 (expected fail) Remote room members also see posted message events # TODO passed but expected fail
+ok 151 Remote room members can get room messages
+ok 152 Message history can be paginated
+ok 153 Message history can be paginated over federation
+ok 154 Room aliases can contain Unicode
+ok 155 Remote room alias queries can handle Unicode
+  ok 1 m.room.canonical_alias accepts present aliases (Canonical alias can be set)
+  ok 2 m.room.canonical_alias rejects missing aliases (Canonical alias can be set)
+  1..2
+ok 156 Canonical alias can be set (2 subtests)
+ok 157 Creators can delete alias
+ok 158 Deleting a non-existent alias should return a 404
+ok 159 Users can't delete other's aliases
+ok 160 Can delete canonical alias
+ok 161 Alias creators can delete alias with no ops
+ok 162 Alias creators can delete canonical alias with no ops
+  ok 1 Sent invite (Can invite users to invite-only rooms)
+  ok 2 Joined room (Can invite users to invite-only rooms)
+  1..2
+ok 163 Can invite users to invite-only rooms (2 subtests)
+ok 164 Uninvited users cannot join the room
+ok 165 Invited user can reject invite
+ok 166 Invited user can reject invite over federation
+ok 167 Invited user can reject invite over federation several times
+ok 168 Invited user can reject invite for empty room
+ok 169 Invited user can reject invite over federation for empty room
+ok 170 Invited user can reject local invite after originator leaves
+ok 171 Invited user can see room metadata
+ok 172 Remote invited user can see room metadata
+ok 173 Users cannot invite themselves to a room
+ok 174 Users cannot invite a user that is already in the room
+ok 175 Banned user is kicked and may not rejoin until unbanned
+ok 176 Remote banned user is kicked and may not rejoin until unbanned
+  ok 1 Fails at powerlevel 0 ('ban' event respects room powerlevel)
+  ok 2 Succeeds at powerlevel 100 ('ban' event respects room powerlevel)
+  1..2
+ok 177 'ban' event respects room powerlevel (2 subtests)
+  ok 1 Fails at powerlevel 0 (setting 'm.room.name' respects room powerlevel)
+  ok 2 Succeeds at powerlevel 100 (setting 'm.room.name' respects room powerlevel)
+  1..2
+ok 178 setting 'm.room.name' respects room powerlevel (2 subtests)
+  ok 1 Fails at powerlevel 0 (setting 'm.room.power_levels' respects room powerlevel)
+  ok 2 Succeeds at powerlevel 100 (setting 'm.room.power_levels' respects room powerlevel)
+  1..2
+ok 179 setting 'm.room.power_levels' respects room powerlevel (2 subtests)
+ok 180 Unprivileged users can set m.room.topic if it only needs level 0
+  ok 1 Succeeds at setting 25 (Users cannot set ban powerlevel higher than their own)
+  ok 2 Fails at setting 75 (Users cannot set ban powerlevel higher than their own)
+  1..2
+ok 181 Users cannot set ban powerlevel higher than their own (2 subtests)
+  ok 1 Succeeds at setting 25 (Users cannot set kick powerlevel higher than their own)
+  ok 2 Fails at setting 75 (Users cannot set kick powerlevel higher than their own)
+  1..2
+ok 182 Users cannot set kick powerlevel higher than their own (2 subtests)
+  ok 1 Succeeds at setting 25 (Users cannot set redact powerlevel higher than their own)
+  ok 2 Fails at setting 75 (Users cannot set redact powerlevel higher than their own)
+  1..2
+ok 183 Users cannot set redact powerlevel higher than their own (2 subtests)
+  ok 1 Created a room (Check that event streams started after a client joined a room work (SYT-1))
+  ok 2 Alice saw her message (Check that event streams started after a client joined a room work (SYT-1))
+  1..2
+ok 184 Check that event streams started after a client joined a room work (SYT-1) (2 subtests)
+ok 185 Event stream catches up fully after many messages
+ok 186 POST /rooms/:room_id/redact/:event_id as power user redacts message
+ok 187 POST /rooms/:room_id/redact/:event_id as original message sender redacts message
+ok 188 POST /rooms/:room_id/redact/:event_id as random user does not redact message
+ok 189 A departed room is still included in /initialSync (SPEC-216)
+ok 190 Can get rooms/{roomId}/initialSync for a departed room (SPEC-216)
+ok 191 Can get rooms/{roomId}/state for a departed room (SPEC-216)
+ok 192 Can get rooms/{roomId}/members for a departed room (SPEC-216)
+ok 193 Can get rooms/{roomId}/messages for a departed room (SPEC-216)
+ok 194 Can get 'm.room.name' state for a departed room (SPEC-216)
+ok 195 Getting messages going forward is limited for a departed room (SPEC-216)
+ok 196 Can invite existing 3pid
+ok 197 Can invite existing 3pid with no ops
+ok 198 Can invite existing 3pid in createRoom
+ok 199 Can invite unbound 3pid
+ok 200 Can invite unbound 3pid over federation
+ok 201 Can invite unbound 3pid with no ops
+ok 202 Can invite unbound 3pid over federation with no ops
+ok 203 Can invite unbound 3pid over federation with users from both servers
+ok 204 Can accept unbound 3pid invite after inviter leaves
+ok 205 Can accept third party invite with /join
+ok 206 3pid invite join with wrong but valid signature are rejected
+ok 207 3pid invite join valid signature but revoked keys are rejected
+ok 208 3pid invite join valid signature but unreachable ID server are rejected
+ok 209 Guest user cannot call /events globally
+ok 210 Guest users can join guest_access rooms
+ok 211 Guest users can send messages to guest_access rooms if joined
+ok 212 Guest user calling /events doesn't tightloop
+ok 213 Guest users are kicked from guest_access rooms on revocation of guest_access
+ok 214 Guest user can set display names
+ok 215 Guest users are kicked from guest_access rooms on revocation of guest_access over federation
+ok 216 Guest user can upgrade to fully featured user
+ok 217 Guest user cannot upgrade other users
+ok 218 GET /publicRooms lists rooms
+ok 219 GET /publicRooms includes avatar URLs
+not ok 220 (expected fail) Guest users can accept invites to private rooms over federation # TODO expected fail
+# Started: 2019-07-31 19:42:04.658
+# Ended: 2019-07-31 19:42:05.049
+# HTTP Request failed ( 403 Forbidden https://localhost:8800/_matrix/client/r0/join/!SMWSqgDDbLjXdwwXNE:localhost:8829?access_token=MDAxY2xvY2F0aW9uIGxvY2FsaG9zdDo4ODAwCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAyNWNpZCB1c2VyX2lkID0gQDExOmxvY2FsaG9zdDo4ODAwCjAwMTZjaWQgdHlwZSA9IGFjY2VzcwowMDIxY2lkIG5vbmNlID0gNjd4elhoSEdJVyxjODtrZwowMDE1Y2lkIGd1ZXN0ID0gdHJ1ZQowMDJmc2lnbmF0dXJlIFiubrZR_2oAB3CCJgEU20M6iQ3bA02oX2_4GOJA2CZ5Cg ) from POST https://localhost:8800/_matrix/client/r0/join/!SMWSqgDDbLjXdwwXNE:localhost:8829?...
+# {"errcode":"M_FORBIDDEN","error":"Guest access not allowed"}
+# 0.032304: Registered new user @anon-20190731_194105-167:localhost:8829
+# 0.375427: Invited user @11:localhost:8800 to !SMWSqgDDbLjXdwwXNE:localhost:8829
+# {}
+ok 221 Guest users denied access over federation if guest access prohibited
+ok 222 Room members can override their displayname on a room-specific basis
+ok 223 Room members can join a room with an overridden displayname
+ok 224 Users cannot kick users from a room they are not in
+ok 225 Users cannot kick users who have already left a room
+ok 226 Typing notification sent to local room members
+ok 227 Typing notifications also sent to remote room members
+ok 228 Typing can be explicitly stopped
+  ok 1 First m.read receipt is available (Read receipts are visible to /initialSync)
+  ok 2 Updated m.read receipt is available (Read receipts are visible to /initialSync)
+  1..2
+ok 229 Read receipts are visible to /initialSync (2 subtests)
+ok 230 Read receipts are sent as events
+ok 231 Receipts must be m.read
+ok 232 displayname updates affect room member events
+ok 233 avatar_url updates affect room member events
+ok 234 m.room.history_visibility == "world_readable" allows/forbids appropriately for Guest users
+ok 235 m.room.history_visibility == "shared" allows/forbids appropriately for Guest users
+ok 236 m.room.history_visibility == "invited" allows/forbids appropriately for Guest users
+ok 237 m.room.history_visibility == "joined" allows/forbids appropriately for Guest users
+ok 238 m.room.history_visibility == "default" allows/forbids appropriately for Guest users
+ok 239 Guest non-joined user cannot call /events on shared room
+ok 240 Guest non-joined user cannot call /events on invited room
+ok 241 Guest non-joined user cannot call /events on joined room
+ok 242 Guest non-joined user cannot call /events on default room
+ok 243 Guest non-joined user can call /events on world_readable room
+ok 244 Guest non-joined user doesn't get events before room made world_readable
+ok 245 Guest non-joined users can get state for world_readable rooms
+ok 246 Guest non-joined users can get individual state for world_readable rooms
+ok 247 Guest non-joined users cannot room initalSync for non-world_readable rooms
+ok 248 Guest non-joined users can room initialSync for world_readable rooms
+ok 249 Guest non-joined users can get individual state for world_readable rooms after leaving
+ok 250 Guest non-joined users cannot send messages to guest_access rooms if not joined
+ok 251 Guest users can sync from world_readable guest_access rooms if joined
+ok 252 Guest users can sync from shared guest_access rooms if joined
+ok 253 Guest users can sync from invited guest_access rooms if joined
+ok 254 Guest users can sync from joined guest_access rooms if joined
+ok 255 Guest users can sync from default guest_access rooms if joined
+ok 256 m.room.history_visibility == "world_readable" allows/forbids appropriately for Real users
+ok 257 m.room.history_visibility == "shared" allows/forbids appropriately for Real users
+ok 258 m.room.history_visibility == "invited" allows/forbids appropriately for Real users
+ok 259 m.room.history_visibility == "joined" allows/forbids appropriately for Real users
+ok 260 m.room.history_visibility == "default" allows/forbids appropriately for Real users
+ok 261 Real non-joined user cannot call /events on shared room
+ok 262 Real non-joined user cannot call /events on invited room
+ok 263 Real non-joined user cannot call /events on joined room
+ok 264 Real non-joined user cannot call /events on default room
+ok 265 Real non-joined user can call /events on world_readable room
+ok 266 Real non-joined user doesn't get events before room made world_readable
+ok 267 Real non-joined users can get state for world_readable rooms
+ok 268 Real non-joined users can get individual state for world_readable rooms
+ok 269 Real non-joined users cannot room initalSync for non-world_readable rooms
+ok 270 Real non-joined users can room initialSync for world_readable rooms
+ok 271 Real non-joined users can get individual state for world_readable rooms after leaving
+ok 272 Real non-joined users cannot send messages to guest_access rooms if not joined
+ok 273 Real users can sync from world_readable guest_access rooms if joined
+ok 274 Real users can sync from shared guest_access rooms if joined
+ok 275 Real users can sync from invited guest_access rooms if joined
+ok 276 Real users can sync from joined guest_access rooms if joined
+ok 277 Real users can sync from default guest_access rooms if joined
+ok 278 Only see history_visibility changes on boundaries
+ok 279 Backfill works correctly with history visibility set to joined
+ok 280 Forgotten room messages cannot be paginated
+ok 281 Forgetting room does not show up in v2 /sync
+ok 282 Can forget room you've been kicked from
+ok 283 Can't forget room you're still in
+ok 284 Can re-join room if re-invited
+not ok 285 Only original members of the room can see messages from erased users
+# Started: 2019-07-31 19:42:34.686
+# Ended: 2019-07-31 19:42:35.323
+# HTTP Request failed ( 500 Internal Server Error https://localhost:8800/_matrix/client/r0/account/deactivate?access_token=MDAxY2xvY2F0aW9uIGxvY2FsaG9zdDo4ODAwCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAzYmNpZCB1c2VyX2lkID0gQGFub24tMjAxOTA3MzFfMTk0MTA1LTI2Mzpsb2NhbGhvc3Q6ODgwMAowMDE2Y2lkIHR5cGUgPSBhY2Nlc3MKMDAyMWNpZCBub25jZSA9IGZyZXlNMHpsdTVxRXdPSTQKMDAyZnNpZ25hdHVyZSDQizj2zGtwN5fEETF5hSOV0PS1ZKAF-HQ5N1bK09N07wo ) from POST https://localhost:8800/_matrix/client/r0/account/deactivate?...
+# {"errcode":"M_UNKNOWN","error":"Internal server error"}
+# 0.150166: Registered new user @anon-20190731_194105-265:localhost:8800
+# 0.153601: Registered new user @anon-20190731_194105-264:localhost:8800
+# 0.154056: Registered new user @anon-20190731_194105-263:localhost:8800
+# 0.420401: User @anon-20190731_194105-264:localhost:8800 joined room
+# { room_id => "!dCfjHuFrGfMXBGsrNT:localhost:8800" }
+# 0.560384: User @anon-20190731_194105-265:localhost:8800 joined room
+# { room_id => "!dCfjHuFrGfMXBGsrNT:localhost:8800" }
+# 0.622354: messages for joining user before erasure
+# [
+#   {
+#     content          => {
+#                           creator => "\@anon-20190731_194105-263:localhost:8800",
+#                           room_version => 4,
+#                         },
+#     event_id         => "\$EawTzpfK4xX1xgdXQ8ZU30YwYlVNRe5xj69bY19PE7I",
+#     origin_server_ts => JSON::number(1564602154850),
+#     sender           => "\@anon-20190731_194105-263:localhost:8800",
+#     state_key        => "",
+#     type             => "m.room.create",
+#     unsigned         => { age => JSON::number(455) },
+#   },
+#   {
+#     content          => {
+#                           avatar_url  => undef,
+#                           displayname => "anon-20190731_194105-263",
+#                           membership  => "join",
+#                         },
+#     event_id         => "\$GsIY3V6X8glZf3DyvTcVseLIPYVULNJ7EGJ55xBcYo4",
+#     origin_server_ts => JSON::number(1564602154887),
+#     sender           => "\@anon-20190731_194105-263:localhost:8800",
+#     state_key        => "\@anon-20190731_194105-263:localhost:8800",
+#     type             => "m.room.member",
+#     unsigned         => { age => JSON::number(418) },
+#   },
+#   {
+#     content          => {
+#                           ban => JSON::number(50),
+#                           events => {
+#                             "m.room.avatar"             => JSON::number(50),
+#                             "m.room.canonical_alias"    => JSON::number(50),
+#                             "m.room.history_visibility" => JSON::number(100),
+#                             "m.room.name"               => JSON::number(50),
+#                             "m.room.power_levels"       => JSON::number(100),
+#                           },
+#                           events_default => JSON::number(0),
+#                           invite => JSON::number(0),
+#                           kick => JSON::number(50),
+#                           redact => JSON::number(50),
+#                           state_default => JSON::number(50),
+#                           users => {
+#                             "\@anon-20190731_194105-263:localhost:8800" => JSON::number(100),
+#                           },
+#                           users_default => JSON::number(0),
+#                         },
+#     event_id         => "\$oFc9ULKyGt8YabFi8co98Whyf_1Zyi-gu6K_d6cLUy4",
+#     origin_server_ts => JSON::number(1564602154931),
+#     sender           => "\@anon-20190731_194105-263:localhost:8800",
+#     state_key        => "",
+#     type             => "m.room.power_levels",
+#     unsigned         => { age => JSON::number(374) },
+#   },
+#   {
+#     content          => { join_rule => "public" },
+#     event_id         => "\$W4hhxWQRVFRnzP-uGr81i2PJbn72WtgFYNuZQ7eZ7zg",
+#     origin_server_ts => JSON::number(1564602154967),
+#     sender           => "\@anon-20190731_194105-263:localhost:8800",
+#     state_key        => "",
+#     type             => "m.room.join_rules",
+#     unsigned         => { age => JSON::number(338) },
+#   },
+#   {
+#     content          => { history_visibility => "shared" },
+#     event_id         => "\$4FdgHdbmn9opD40xUvhIOisxqyMPi0FcyoFRaZ3m47w",
+#     origin_server_ts => JSON::number(1564602155003),
+#     sender           => "\@anon-20190731_194105-263:localhost:8800",
+#     state_key        => "",
+#     type             => "m.room.history_visibility",
+#     unsigned         => { age => JSON::number(302) },
+#   },
+#   {
+#     content          => {
+#                           avatar_url  => undef,
+#                           displayname => "anon-20190731_194105-264",
+#                           membership  => "join",
+#                         },
+#     event_id         => "\$Sj1JPCkogTKMXaPns_O_KLC0al8v5Xl0WBfIIfJUxl8",
+#     origin_server_ts => JSON::number(1564602155078),
+#     sender           => "\@anon-20190731_194105-264:localhost:8800",
+#     state_key        => "\@anon-20190731_194105-264:localhost:8800",
+#     type             => "m.room.member",
+#     unsigned         => { age => JSON::number(227) },
+#   },
+#   {
+#     content => { body => "body1", msgtype => "m.text" },
+#     event_id => "\$YWS5TeUnjPqzzZcOhqmG88NW46Ics9nJnWLX-Wc4xMY",
+#     origin_server_ts => JSON::number(1564602155155),
+#     sender => "\@anon-20190731_194105-263:localhost:8800",
+#     type => "m.room.message",
+#     unsigned => { age => JSON::number(150) },
+#   },
+#   {
+#     content          => {
+#                           avatar_url  => undef,
+#                           displayname => "anon-20190731_194105-265",
+#                           membership  => "join",
+#                         },
+#     event_id         => "\$OyE1iBbFnBw6YEbjl2DI7DBSd41G4kQskgYB99sfOhQ",
+#     origin_server_ts => JSON::number(1564602155217),
+#     sender           => "\@anon-20190731_194105-265:localhost:8800",
+#     state_key        => "\@anon-20190731_194105-265:localhost:8800",
+#     type             => "m.room.member",
+#     unsigned         => { age => JSON::number(88) },
+#   },
+# ]
+ok 286 /joined_rooms returns only joined rooms
+ok 287 /joined_members return joined members
+ok 288 /context/ on joined room works
+ok 289 /context/ on non world readable room does not work
+ok 290 /context/ returns correct number of events
+ok 291 /context/ with lazy_load_members filter works
+ok 292 /event/ on joined room works
+ok 293 /event/ on non world readable room does not work
+ok 294 /event/ does not allow access to events before the user joined
+ok 295 Can get rooms/{roomId}/members
+ok 296 Can get rooms/{roomId}/members at a given point
+ok 297 Can filter rooms/{roomId}/members
+ok 298 /upgrade creates a new room
+ok 299 /upgrade should preserve room visibility for public rooms
+ok 300 /upgrade should preserve room visibility for private rooms
+ok 301 /upgrade copies the power levels to the new room
+ok 302 /upgrade copies important state to the new room
+ok 303 /upgrade copies ban events to the new room
+ok 304 /upgrade copies push rules to the new room
+ok 305 /upgrade moves aliases to the new room
+ok 306 /upgrade preserves direct room state
+ok 307 /upgrade preserves room federation ability
+ok 308 /upgrade restricts power levels in the old room
+ok 309 /upgrade restricts power levels in the old room when the old PLs are unusual
+ok 310 /upgrade to an unknown version is rejected
+ok 311 /upgrade is rejected if the user can't send state events
+ok 312 /upgrade of a bogus room fails gracefully
+ok 313 Name/topic keys are correct
+ok 314 Can get remote public room list
+ok 315 Can create filter
+ok 316 Can download filter
+ok 317 Can sync
+ok 318 Can sync a joined room
+ok 319 Full state sync includes joined rooms
+ok 320 Newly joined room is included in an incremental sync
+ok 321 Newly joined room has correct timeline in incremental sync
+ok 322 Newly joined room includes presence in incremental sync
+ok 323 Get presence for newly joined members in incremental sync
+ok 324 Can sync a room with a single message
+ok 325 Can sync a room with a message with a transaction id
+ok 326 A message sent after an initial sync appears in the timeline of an incremental sync.
+ok 327 A filtered timeline reaches its limit
+ok 328 Syncing a new room with a large timeline limit isn't limited
+ok 329 A full_state incremental update returns only recent timeline
+ok 330 A prev_batch token can be used in the v1 messages API
+ok 331 A next_batch token can be used in the v1 messages API
+ok 332 User sees their own presence in a sync
+ok 333 User is offline if they set_presence=offline in their sync
+ok 334 User sees updates to presence from other users in the incremental sync.
+ok 335 State is included in the timeline in the initial sync
+ok 336 State from remote users is included in the state in the initial sync
+ok 337 Changes to state are included in an incremental sync
+ok 338 Changes to state are included in an gapped incremental sync
+ok 339 State from remote users is included in the timeline in an incremental sync
+ok 340 A full_state incremental update returns all state
+ok 341 When user joins a room the state is included in the next sync
+ok 342 A change to displayname should not result in a full state sync
+ok 343 A change to displayname should appear in incremental /sync
+ok 344 When user joins a room the state is included in a gapped sync
+ok 345 When user joins and leaves a room in the same batch, the full state is still included in the next sync
+ok 346 Current state appears in timeline in private history
+ok 347 Current state appears in timeline in private history with many messages before
+ok 348 Current state appears in timeline in private history with many messages after
+ok 349 Rooms a user is invited to appear in an initial sync
+ok 350 Rooms a user is invited to appear in an incremental sync
+ok 351 Sync can be polled for updates
+ok 352 Sync is woken up for leaves
+ok 353 Left rooms appear in the leave section of sync
+ok 354 Newly left rooms appear in the leave section of incremental sync
+ok 355 We should see our own leave event, even if history_visibility is restricted (SYN-662)
+ok 356 We should see our own leave event when rejecting an invite, even if history_visibility is restricted (riot-web/3462)
+ok 357 Newly left rooms appear in the leave section of gapped sync
+ok 358 Previously left rooms don't appear in the leave section of sync
+ok 359 Left rooms appear in the leave section of full state sync
+ok 360 Archived rooms only contain history from before the user left
+ok 361 Banned rooms appear in the leave section of sync
+ok 362 Newly banned rooms appear in the leave section of incremental sync
+ok 363 Newly banned rooms appear in the leave section of incremental sync
+ok 364 Typing events appear in initial sync
+ok 365 Typing events appear in incremental sync
+ok 366 Typing events appear in gapped sync
+ok 367 Read receipts appear in initial v2 /sync
+ok 368 New read receipts appear in incremental v2 /sync
+ok 369 Can pass a JSON filter as a query parameter
+ok 370 Can request federation format via the filter
+ok 371 Read markers appear in incremental v2 /sync
+ok 372 Read markers appear in initial v2 /sync
+ok 373 Read markers can be updated
+ok 374 Lazy loading parameters in the filter are strictly boolean
+ok 375 The only membership state included in an initial sync is for all the senders in the timeline
+ok 376 The only membership state included in an incremental sync is for senders in the timeline
+not ok 377 (expected fail) The only membership state included in a gapped incremental sync is for senders in the timeline # TODO expected fail
+# Started: 2019-07-31 19:43:28.431
+# Ended: 2019-07-31 19:43:30.083
+# Expected only 1 membership events at tests/10apidoc/09synced.pl line 327.
+# 0.051272: Registered new user @anon-20190731_194105-400:localhost:8800
+# 0.055371: Registered new user @anon-20190731_194105-398:localhost:8800
+# 0.057965: Registered new user @anon-20190731_194105-399:localhost:8800
+# 0.075529: Registered new user @anon-20190731_194105-401:localhost:8800
+# 0.560679: User @anon-20190731_194105-399:localhost:8800 joined room
+# { room_id => "!QphLfMjJgvLfakijzF:localhost:8800" }
+# 0.618187: User @anon-20190731_194105-400:localhost:8800 joined room
+# { room_id => "!QphLfMjJgvLfakijzF:localhost:8800" }
+# 0.975846: expected members:
+# [
+#   "\@anon-20190731_194105-398:localhost:8800",
+#   "\@anon-20190731_194105-399:localhost:8800",
+# ]
+# 0.975993: state:
+# [
+#   {
+#     content          => {
+#                           ban => JSON::number(50),
+#                           events => {
+#                             "m.room.avatar"             => JSON::number(50),
+#                             "m.room.canonical_alias"    => JSON::number(50),
+#                             "m.room.history_visibility" => JSON::number(100),
+#                             "m.room.name"               => JSON::number(50),
+#                             "m.room.power_levels"       => JSON::number(100),
+#                           },
+#                           events_default => JSON::number(0),
+#                           invite => JSON::number(0),
+#                           kick => JSON::number(50),
+#                           redact => JSON::number(50),
+#                           state_default => JSON::number(50),
+#                           users => {
+#                             "\@anon-20190731_194105-398:localhost:8800" => JSON::number(100),
+#                           },
+#                           users_default => JSON::number(0),
+#                         },
+#     event_id         => "\$Ffdnq8TS6tF9c2XAphVy1WNC260PWw7C5Ev7bmnvO4A",
+#     origin_server_ts => JSON::number(1564602208768),
+#     sender           => "\@anon-20190731_194105-398:localhost:8800",
+#     state_key        => "",
+#     type             => "m.room.power_levels",
+#     unsigned         => { age => JSON::number(635) },
+#   },
+#   {
+#     content          => {
+#                           avatar_url  => undef,
+#                           displayname => "anon-20190731_194105-399",
+#                           membership  => "join",
+#                         },
+#     event_id         => "\$1VYiMGywGnxgewD8c0IbvVea1aaeEUAnutp5WOTVk9E",
+#     origin_server_ts => JSON::number(1564602208964),
+#     sender           => "\@anon-20190731_194105-399:localhost:8800",
+#     state_key        => "\@anon-20190731_194105-399:localhost:8800",
+#     type             => "m.room.member",
+#     unsigned         => { age => JSON::number(439) },
+#   },
+#   {
+#     content          => { join_rule => "public" },
+#     event_id         => "\$67hbVMO9AZTOq5J6Srn0V0LDPpIJ5ipu4jOjD3BBKTg",
+#     origin_server_ts => JSON::number(1564602208808),
+#     sender           => "\@anon-20190731_194105-398:localhost:8800",
+#     state_key        => "",
+#     type             => "m.room.join_rules",
+#     unsigned         => { age => JSON::number(595) },
+#   },
+#   {
+#     content          => { name => "A room name" },
+#     event_id         => "\$oIcShwrugtyDcRRtvmfZcKGRZgP0VgVOaEB3H4-_ZJU",
+#     origin_server_ts => JSON::number(1564602208916),
+#     sender           => "\@anon-20190731_194105-398:localhost:8800",
+#     state_key        => "",
+#     type             => "m.room.name",
+#     unsigned         => { age => JSON::number(487) },
+#   },
+#   {
+#     content          => {
+#                           avatar_url  => undef,
+#                           displayname => "anon-20190731_194105-398",
+#                           membership  => "join",
+#                         },
+#     event_id         => "\$UFusl-eoNJ-YkMYMIwmLPlS2fdoDyrJnIhRaNvi0vjo",
+#     origin_server_ts => JSON::number(1564602208588),
+#     sender           => "\@anon-20190731_194105-398:localhost:8800",
+#     state_key        => "\@anon-20190731_194105-398:localhost:8800",
+#     type             => "m.room.member",
+#     unsigned         => { age => JSON::number(815) },
+#   },
+#   {
+#     content          => { history_visibility => "shared" },
+#     event_id         => "\$Y7QRnNxR2mDshfVfGoUlAkf8RcQJXIaMIaJhFJZXtsw",
+#     origin_server_ts => JSON::number(1564602208845),
+#     sender           => "\@anon-20190731_194105-398:localhost:8800",
+#     state_key        => "",
+#     type             => "m.room.history_visibility",
+#     unsigned         => { age => JSON::number(558) },
+#   },
+#   {
+#     content          => {
+#                           creator => "\@anon-20190731_194105-398:localhost:8800",
+#                           room_version => 4,
+#                         },
+#     event_id         => "\$sTXXvfz5RyRi_FqJVc33teH6Os1JFbD72RjEoaNduPc",
+#     origin_server_ts => JSON::number(1564602208552),
+#     sender           => "\@anon-20190731_194105-398:localhost:8800",
+#     state_key        => "",
+#     type             => "m.room.create",
+#     unsigned         => { age => JSON::number(851) },
+#   },
+# ]
+# 1.016837: User @anon-20190731_194105-401:localhost:8800 joined room
+# { room_id => "!QphLfMjJgvLfakijzF:localhost:8800" }
+# 1.650564: expected members:
+# ["\@anon-20190731_194105-401:localhost:8800"]
+# 1.650719: state:
+# [
+#   {
+#     content          => {
+#                           avatar_url  => undef,
+#                           displayname => "anon-20190731_194105-400",
+#                           membership  => "join",
+#                         },
+#     event_id         => "\$y0qTvJVf34cHToXybrOC7ujI4i6kWL5MGF3eIt9JL2s",
+#     origin_server_ts => JSON::number(1564602209019),
+#     sender           => "\@anon-20190731_194105-400:localhost:8800",
+#     state_key        => "\@anon-20190731_194105-400:localhost:8800",
+#     type             => "m.room.member",
+#     unsigned         => { age => JSON::number(1059) },
+#   },
+#   {
+#     content          => {
+#                           avatar_url  => undef,
+#                           displayname => "anon-20190731_194105-401",
+#                           membership  => "join",
+#                         },
+#     event_id         => "\$SihiFKhYA20Y3B0fm3o6M_p7Vpnjm5W_g0T91cHJFpk",
+#     origin_server_ts => JSON::number(1564602209419),
+#     sender           => "\@anon-20190731_194105-401:localhost:8800",
+#     state_key        => "\@anon-20190731_194105-401:localhost:8800",
+#     type             => "m.room.member",
+#     unsigned         => { age => JSON::number(659) },
+#   },
+# ]
+ok 378 Gapped incremental syncs include all state changes
+ok 379 Old leaves are present in gapped incremental syncs
+ok 380 Leaves are present in non-gapped incremental syncs
+ok 381 Old members are included in gappy incr LL sync if they start speaking
+ok 382 Members from the gap are included in gappy incr LL sync
+ok 383 We don't send redundant membership state across incremental syncs by default
+ok 384 We do send redundant membership state across incremental syncs if asked
+ok 385 Unnamed room comes with a name summary
+ok 386 Named room comes with just joined member count summary
+ok 387 Room summary only has 5 heroes
+ok 388 Room summary counts change when membership changes
+  ok 1 Can create room (User can create and send/receive messages in a room with version 1)
+  ok 2 Can send/receive message in room (User can create and send/receive messages in a room with version 1)
+  1..2
+ok 389 User can create and send/receive messages in a room with version 1 (2 subtests)
+ok 390 local user can join room with version 1
+ok 391 User can invite local user to room with version 1
+ok 392 remote user can join room with version 1
+ok 393 User can invite remote user to room with version 1
+ok 394 Remote user can backfill in a room with version 1
+ok 395 Can reject invites over federation for rooms with version 1
+ok 396 Can receive redactions from regular users over federation in room version 1
+  ok 1 Can create room (User can create and send/receive messages in a room with version 2)
+  ok 2 Can send/receive message in room (User can create and send/receive messages in a room with version 2)
+  1..2
+ok 397 User can create and send/receive messages in a room with version 2 (2 subtests)
+ok 398 local user can join room with version 2
+ok 399 User can invite local user to room with version 2
+ok 400 remote user can join room with version 2
+ok 401 User can invite remote user to room with version 2
+ok 402 Remote user can backfill in a room with version 2
+ok 403 Can reject invites over federation for rooms with version 2
+ok 404 Can receive redactions from regular users over federation in room version 2
+  ok 1 Can create room (User can create and send/receive messages in a room with version 3)
+  ok 2 Can send/receive message in room (User can create and send/receive messages in a room with version 3)
+  1..2
+ok 405 User can create and send/receive messages in a room with version 3 (2 subtests)
+ok 406 local user can join room with version 3
+ok 407 User can invite local user to room with version 3
+ok 408 remote user can join room with version 3
+ok 409 User can invite remote user to room with version 3
+ok 410 Remote user can backfill in a room with version 3
+ok 411 Can reject invites over federation for rooms with version 3
+ok 412 Can receive redactions from regular users over federation in room version 3
+  ok 1 Can create room (User can create and send/receive messages in a room with version 4)
+  ok 2 Can send/receive message in room (User can create and send/receive messages in a room with version 4)
+  1..2
+ok 413 User can create and send/receive messages in a room with version 4 (2 subtests)
+ok 414 local user can join room with version 4
+ok 415 User can invite local user to room with version 4
+ok 416 remote user can join room with version 4
+ok 417 User can invite remote user to room with version 4
+ok 418 Remote user can backfill in a room with version 4
+ok 419 Can reject invites over federation for rooms with version 4
+ok 420 Can receive redactions from regular users over federation in room version 4
+  ok 1 Can create room (User can create and send/receive messages in a room with version 5)
+  ok 2 Can send/receive message in room (User can create and send/receive messages in a room with version 5)
+  1..2
+ok 421 User can create and send/receive messages in a room with version 5 (2 subtests)
+ok 422 local user can join room with version 5
+ok 423 User can invite local user to room with version 5
+ok 424 remote user can join room with version 5
+ok 425 User can invite remote user to room with version 5
+ok 426 Remote user can backfill in a room with version 5
+ok 427 Can reject invites over federation for rooms with version 5
+ok 428 Can receive redactions from regular users over federation in room version 5
+ok 429 Presence changes are reported to local room members
+ok 430 Presence changes are also reported to remote room members
+ok 431 Presence changes to UNAVAILABLE are reported to local room members
+ok 432 Presence changes to UNAVAILABLE are reported to remote room members
+not ok 433 (expected fail) Newly created users see their own presence in /initialSync (SYT-34) # TODO expected fail
+# Started: 2019-07-31 19:44:16.851
+# Ended: 2019-07-31 19:44:16.888
+# Expected to find my own presence at tests/40presence.pl line 140.
+# 0.022930: Registered new user @anon-20190731_194105-518:localhost:8800
+# 0.036454: initialSync response
+# {
+#   account_data => [],
+#   end => "s3111_606_14_10_9_4_1_551_1",
+#   presence => [],
+#   receipts => [],
+#   rooms => [],
+# }
+ok 434 Can upload device keys
+not ok 435 (expected fail) Should reject keys claiming to belong to a different user # TODO expected fail
+# Started: 2019-07-31 19:44:16.928
+# Ended: 2019-07-31 19:44:16.938
+# Expected to receive an HTTP 4xx failure but it succeeded at ./run-tests.pl line 718.
+# 0.009487: Response
+# { one_time_key_counts => { my_algorithm => JSON::number(1) } }
+ok 436 Can query device keys using POST
+ok 437 Can query specific device keys using POST
+ok 438 query for user with no keys returns empty key dict
+  ok 1 Uploaded one-time keys (Can claim one time key using POST)
+  ok 2 Took one time key (Can claim one time key using POST)
+  1..2
+ok 439 Can claim one time key using POST (2 subtests)
+  ok 1 Uploaded key (Can query remote device keys using POST)
+  1..1
+ok 440 Can query remote device keys using POST (1 subtests)
+  ok 1 Uploaded one-time keys (Can claim remote one time key using POST)
+  ok 2 Took one time key (Can claim remote one time key using POST)
+  1..2
+ok 441 Can claim remote one time key using POST (2 subtests)
+ok 442 Local device key changes appear in v2 /sync
+ok 443 Local new device changes appear in v2 /sync
+not ok 444 Local delete device changes appear in v2 /sync
+# Started: 2019-07-31 19:44:18.096
+# Ended: 2019-07-31 19:44:18.443
+# HTTP Request failed ( 500 Internal Server Error https://localhost:8800/_matrix/client/r0/devices/HUVPZRLSEK?access_token=MDAxY2xvY2F0aW9uIGxvY2FsaG9zdDo4ODAwCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAzYmNpZCB1c2VyX2lkID0gQGFub24tMjAxOTA3MzFfMTk0MTA1LTUzMTpsb2NhbGhvc3Q6ODgwMAowMDE2Y2lkIHR5cGUgPSBhY2Nlc3MKMDAyMWNpZCBub25jZSA9IG9zK3YyS2g4Mm1HcDA5OF8KMDAyZnNpZ25hdHVyZSAeCELIi3DIJ8MUCuFK1_Y9mbcX9casPuB-3ctAEw7Lxgo ) from DELETE https://localhost:8800/_matrix/client/r0/devices/HUVPZRLSEK?...
+# {"errcode":"M_UNKNOWN","error":"Internal server error"}
+# 0.038536: Registered new user @anon-20190731_194105-530:localhost:8800
+# 0.039585: Registered new user @anon-20190731_194105-531:localhost:8800
+# 0.285396: User @anon-20190731_194105-531:localhost:8800 joined room
+# { room_id => "!YNwTBVusLgskbrJFPo:localhost:8800" }
+ok 445 Local update device changes appear in v2 /sync
+ok 446 Can query remote device keys using POST after notification
+not ok 447 Device deletion propagates over federation
+# Started: 2019-07-31 19:44:19.414
+# Ended: 2019-07-31 19:44:20.209
+# HTTP Request failed ( 500 Internal Server Error https://localhost:8829/_matrix/client/r0/devices/LXSWHLGCQV?access_token=MDAxY2xvY2F0aW9uIGxvY2FsaG9zdDo4ODI5CjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAzYmNpZCB1c2VyX2lkID0gQGFub24tMjAxOTA3MzFfMTk0MTA1LTUzNzpsb2NhbGhvc3Q6ODgyOQowMDE2Y2lkIHR5cGUgPSBhY2Nlc3MKMDAyMWNpZCBub25jZSA9IHVfTkpDXnhzOzBxMjFGeVIKMDAyZnNpZ25hdHVyZSChIqFk4OqSZt2X88qu-E1YlNr5RCfdg9RO7YU954Iasgo ) from DELETE https://localhost:8829/_matrix/client/r0/devices/LXSWHLGCQV?...
+# {"errcode":"M_UNKNOWN","error":"Internal server error"}
+# 0.034137: Registered new user @anon-20190731_194105-537:localhost:8829
+# 0.036567: Registered new user @anon-20190731_194105-536:localhost:8800
+# 0.310847: Invited user @anon-20190731_194105-537:localhost:8829 to !HHErjhHSZBetjnaxib:localhost:8800
+# {}
+# 0.621803: User @anon-20190731_194105-537:localhost:8829 joined room
+# { room_id => "!HHErjhHSZBetjnaxib:localhost:8800" }
+# 0.712739: sync_until_user_in_device_list: waiting for @anon-20190731_194105-537:localhost:8829 in changed
+# 0.744466: sync_until_user_in_device_list: body
+# {
+#   account_data => { events => [] },
+#   device_lists => {
+#     changed => ["\@anon-20190731_194105-537:localhost:8829"],
+#     left => [],
+#   },
+#   device_one_time_keys_count => {},
+#   groups => { invite => {}, join => {}, leave => {} },
+#   next_batch => "s3149_612_14_10_9_4_1_576_1",
+#   presence => { events => [] },
+#   rooms => { invite => {}, join => {}, leave => {} },
+#   to_device => { events => [] },
+# }
+# 0.745022: sync_until_user_in_device_list: found @anon-20190731_194105-537:localhost:8829 in changed
+# 0.757479: sync_until_user_in_device_list: waiting for @anon-20190731_194105-537:localhost:8829 in changed
+# 0.781059: sync_until_user_in_device_list: body
+# {
+#   account_data => { events => [] },
+#   device_lists => {
+#     changed => ["\@anon-20190731_194105-537:localhost:8829"],
+#     left => [],
+#   },
+#   device_one_time_keys_count => {},
+#   groups => { invite => {}, join => {}, leave => {} },
+#   next_batch => "s3149_612_14_10_9_4_1_577_1",
+#   presence => { events => [] },
+#   rooms => { invite => {}, join => {}, leave => {} },
+#   to_device => { events => [] },
+# }
+# 0.781726: sync_until_user_in_device_list: found @anon-20190731_194105-537:localhost:8829 in changed
+ok 448 If remote user leaves room, changes device and rejoins we see update in sync
+ok 449 If remote user leaves room we no longer receive device updates
+ok 450 Local device key changes appear in /keys/changes
+ok 451 New users appear in /keys/changes
+ok 452 If remote user leaves room, changes device and rejoins we see update in /keys/changes
+ok 453 Get left notifs in sync and /keys/changes when other user leaves
+ok 454 Get left notifs for other users in sync and /keys/changes when user leaves
+ok 455 If user leaves room, remote user changes device and rejoins we see update in /sync and /keys/changes
+ok 456 Can create backup version
+ok 457 Can update backup version
+ok 458 Responds correctly when backup is empty
+ok 459 Can backup keys
+ok 460 Can update keys with better versions
+ok 461 Will not update keys with worse versions
+ok 462 Will not back up to an old backup version
+ok 463 Can delete backup
+ok 464 Deleted & recreated backups are empty
+ok 465 Can create more than 10 backup versions
+ok 466 Can add tag
+ok 467 Can remove tag
+ok 468 Can list tags for a room
+ok 469 Tags appear in the v1 /events stream
+ok 470 Tags appear in the v1 /initalSync
+ok 471 Tags appear in the v1 room initial sync
+ok 472 Tags appear in an initial v2 /sync
+ok 473 Newly updated tags appear in an incremental v2 /sync
+ok 474 Deleted tags appear in an incremental v2 /sync
+ok 475 /upgrade copies user tags to the new room
+ok 476 Can search for an event by body
+ok 477 Can get context around search results
+ok 478 Can back-paginate search results
+ok 479 Search works across an upgraded room and its predecessor
+ok 480 Can add account data
+ok 481 Can add account data to room
+ok 482 Can get account data without syncing
+ok 483 Can get room account data without syncing
+ok 484 Latest account data comes down in /initialSync
+ok 485 Latest account data comes down in room initialSync
+ok 486 Account data appears in v1 /events stream
+ok 487 Room account data appears in v1 /events stream
+ok 488 Latest account data appears in v2 /sync
+ok 489 New account data appears in incremental v2 /sync
+ok 490 Can generate a openid access_token that can be exchanged for information about a user
+ok 491 Invalid openid access tokens are rejected
+ok 492 Requests to userinfo without access tokens are rejected
+ok 493 Can send a message directly to a device using PUT /sendToDevice
+ok 494 Can recv a device message using /sync
+ok 495 Can recv device messages until they are acknowledged
+ok 496 Device messages with the same txn_id are deduplicated
+ok 497 Device messages wake up /sync
+ok 498 Can recv device messages over federation
+ok 499 Device messages over federation wake up /sync
+ok 500 Can send messages with a wildcard device id
+ok 501 Can send messages with a wildcard device id to two devices
+ok 502 Wildcard device messages wake up /sync
+ok 503 Wildcard device messages over federation wake up /sync
+ok 504 /whois
+ok 505 /purge_history
+ok 506 /purge_history by ts
+ok 507 Can backfill purged history
+  ok 1 Shutdown room returned success (Shutdown room)
+  ok 2 User cannot post in room (Shutdown room)
+  ok 3 User cannot rejoin room (Shutdown room)
+  ok 4 Remote users can't invite local users into room (Shutdown room)
+  ok 5 Aliases were repointed (Shutdown room)
+  ok 6 User was added to new room (Shutdown room)
+  ok 7 User cannot send into new room (Shutdown room)
+  1..7
+ok 508 Shutdown room (7 subtests)
+ok 509 Ignore user in existing room
+ok 510 Ignore invite in full sync
+ok 511 Ignore invite in incremental sync
+ok 512 Checking local federation server
+ok 513 Federation key API allows unsigned requests for keys
+ok 514 Federation key API can act as a notary server via a GET request
+ok 515 Federation key API can act as a notary server via a POST request
+ok 516 Key notary server should return an expired key if it can't find any others
+ok 517 Key notary server must not overwrite a valid key with a spurious result from the origin server
+ok 518 Outbound federation can query profile data
+ok 519 Inbound federation can query profile data
+ok 520 Outbound federation can query room alias directory
+ok 521 Inbound federation can query room alias directory
+ok 522 Outbound federation can send room-join requests
+ok 523 Outbound federation passes make_join failures through to the client
+#** SYN-490 detected; deploying workaround
+ok 524 Inbound federation can receive room-join requests
+ok 525 Inbound federation rejects remote attempts to join local users to rooms
+ok 526 Inbound federation rejects remote attempts to kick local users to rooms
+ok 527 Inbound federation rejects attempts to join v1 rooms from servers without v1 support
+ok 528 Inbound federation rejects attempts to join v2 rooms from servers lacking version support
+ok 529 Inbound federation rejects attempts to join v2 rooms from servers only supporting v1
+ok 530 Inbound federation accepts attempts to join v2 rooms from servers with support
+ok 531 Outbound federation correctly handles unsupported room versions
+ok 532 A pair of servers can establish a join in a v2 room
+ok 533 Outbound federation rejects send_join responses with no m.room.create event
+ok 534 Outbound federation rejects m.room.create events with an unknown room version
+ok 535 Outbound federation can send events
+ok 536 Inbound federation can receive events
+ok 537 Inbound federation can receive redacted events
+ok 538 Inbound federation can return events
+#** TODO: Unhandled incoming event of type 'm.room.message' at lib/SyTest/Federation/Server.pm line 462.
+not ok 539 Inbound federation redacts events from erased users
+# Started: 2019-07-31 19:44:49.878
+# Ended: 2019-07-31 19:44:50.239
+# HTTP Request failed ( 500 Internal Server Error https://localhost:8800/_matrix/client/r0/account/deactivate?access_token=MDAxY2xvY2F0aW9uIGxvY2FsaG9zdDo4ODAwCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAzYmNpZCB1c2VyX2lkID0gQGFub24tMjAxOTA3MzFfMTk0MTA1LTYzNDpsb2NhbGhvc3Q6ODgwMAowMDE2Y2lkIHR5cGUgPSBhY2Nlc3MKMDAyMWNpZCBub25jZSA9IHR6Xl9zZG5WNnRrVE1Ha3gKMDAyZnNpZ25hdHVyZSDKgHrR9JLV7lVljzvG5FNkBtSIAr50fV9Vg37S6bZ3dwo ) from POST https://localhost:8800/_matrix/client/r0/account/deactivate?...
+# {"errcode":"M_UNKNOWN","error":"Internal server error"}
+# 0.023827: Registered new user @anon-20190731_194105-634:localhost:8800
+# 0.347576: Fetched event before erasure
+# {
+#   origin => "localhost:8800",
+#   origin_server_ts => JSON::number(1564602290221),
+#   pdus => [
+#     {
+#       auth_events      => [
+#                             [
+#                               "\$1564602289347MAinE:localhost:8800",
+#                               { sha256 => "SCNucT2CJRLagBkAOI1YUNAst94ujxmV2RftNv91lg0" },
+#                             ],
+#                             [
+#                               "\$1564602289348objZO:localhost:8800",
+#                               { sha256 => "2oWoKVFbUhetRRUILtSMjrnB97zCnBqqI4jG5A4sq60" },
+#                             ],
+#                             [
+#                               "\$1564602289349OJayc:localhost:8800",
+#                               { sha256 => "Jkc/SCSd7ABUpTkKmkX2gtXSrNtrvwWaudfCv4ZneOc" },
+#                             ],
+#                           ],
+#       content          => { body => "body1", msgtype => "m.text" },
+#       depth            => JSON::number(7),
+#       event_id         => "\$1564602290353cAuGt:localhost:8800",
+#       hashes           => { sha256 => "UOE4n9e+eDH3jEpZtSmFohpVQxCM4X72jZtJvKGVcjw" },
+#       origin           => "localhost:8800",
+#       origin_server_ts => JSON::number(1564602290180),
+#       prev_events      => [
+#                             [
+#                               "\$18:localhost:37429",
+#                               { sha256 => "ikAE36M1b+/ILQT+ZiBX/mHjfu+cqirNFzd5zpc+iyc" },
+#                             ],
+#                           ],
+#       prev_state       => [],
+#       room_id          => "!wZvvAsAETTvjVBBjcY:localhost:8800",
+#       sender           => "\@anon-20190731_194105-634:localhost:8800",
+#       signatures       => {
+#                             "localhost:8800" => {
+#                               "ed25519:a_ULrx" => "Rv2Lvm9cPBI07fCix+Xsa3ZkqR9oLiENJvHDFDCdHrgSC7ttTL9iMBDNUZkZm7+LCnXuHmOTtHKAQ5NTCIxSAQ",
+#                             },
+#                           },
+#       type             => "m.room.message",
+#       unsigned         => { age => JSON::number(41) },
+#     },
+#   ],
+# }
+ok 540 Outbound federation can request missing events
+ok 541 Inbound federation can return missing events for world_readable visibility
+ok 542 Inbound federation can return missing events for shared visibility
+ok 543 Inbound federation can return missing events for invite visibility
+ok 544 Inbound federation can return missing events for joined visibility
+ok 545 Outbound federation can backfill events
+ok 546 Inbound federation can backfill events
+ok 547 Backfill checks the events requested belong to the room
+#** TODO: Respond to request to /_matrix/federation/v2/invite/!nVOfRumoRoqtUXvhqx:localhost:8800/$1564602294426NEwfx:localhost:8800 at lib/SyTest/Federation/Server.pm line 198.
+ok 548 Outbound federation can send invites
+ok 549 Inbound federation can receive invites via v1 API
+ok 550 Inbound federation can receive invites via v2 API
+ok 551 Inbound federation can receive invite and reject when remote replies with a 403
+ok 552 Inbound federation can receive invite and reject when remote replies with a 500
+ok 553 Inbound federation can receive invite and reject when is unreachable
+ok 554 Inbound federation can get state for a room
+ok 555 Inbound federation of state requires event_id as a mandatory paramater
+ok 556 Inbound federation can get state_ids for a room
+ok 557 Inbound federation of state_ids requires event_id as a mandatory paramater
+ok 558 Federation rejects inbound events where the prev_events cannot be found
+ok 559 Outbound federation requests missing prev_events and then asks for /state_ids and resolves the state
+ok 560 Federation handles empty auth_events in state_ids sanely
+ok 561 Getting state checks the events requested belong to the room
+ok 562 Getting state IDs checks the events requested belong to the room
+ok 563 Should not be able to take over the room by pretending there is no PL event
+ok 564 Inbound federation can get public room list
+ok 565 Outbound federation sends receipts
+#** TODO: Unhandled incoming event of type 'm.room.message' at lib/SyTest/Federation/Server.pm line 462.
+ok 566 Inbound federation rejects receipts from wrong remote
+ok 567 Inbound federation ignores redactions from invalid servers room > v3
+ok 568 An event which redacts an event in a different room should be ignored
+ok 569 An event which redacts itself should be ignored
+ok 570 A pair of events which redact each other should be ignored
+ok 571 Local device key changes get to remote servers
+ok 572 Server correctly handles incoming m.device_list_update
+#** TODO: Unhandled incoming event of type 'm.room.member' at lib/SyTest/Federation/Server.pm line 462.
+ok 573 Local device key changes get to remote servers with correct prev_id
+#** Cancelling unused user_keys_query await for  at lib/SyTest/Federation/Server.pm line 334.
+#** Cancelling unused user_devices await for @__ANON__-46:localhost:37429 at lib/SyTest/Federation/Server.pm line 334.
+#** Cancelling unused user_keys_query await for  at lib/SyTest/Federation/Server.pm line 334.
+ok 574 Device list doesn't change if remote server is down
+ok 575 Remote servers cannot set power levels in rooms without existing powerlevels
+ok 576 Remote servers should reject attempts by non-creators to set the power levels
+ok 577 Querying auth checks the events requested belong to the room
+ok 578 Forward extremities remain so even after the next events are populated as outliers
+ok 579 Server correctly handles transactions that break edu limits
+#** TODO: Unhandled incoming event of type 'm.room.power_levels' at lib/SyTest/Federation/Server.pm line 462.
+ok 580 Inbound federation correctly soft fails events
+#** TODO: Unhandled incoming event of type 'm.room.power_levels' at lib/SyTest/Federation/Server.pm line 462.
+ok 581 Inbound federation accepts a second soft-failed event
+#** TODO: Unhandled incoming event of type 'm.room.power_levels' at lib/SyTest/Federation/Server.pm line 462.
+ok 582 Inbound federation correctly handles soft failed events as extremities
+ok 583 Can upload with Unicode file name
+ok 584 Can download with Unicode file name locally
+ok 585 Can download with Unicode file name over federation
+# Starting proxy server
+# Proxy now listening at port 39821
+# connection to proxy server from 127.0.0.1:42164
+# connected to localhost:8800
+ok 586 Alternative server names do not cause a routing loop
+ok 587 Can download specifying a different Unicode file name
+ok 588 Can upload without a file name
+ok 589 Can download without a file name locally
+ok 590 Can download without a file name over federation
+ok 591 Can upload with ASCII file name
+ok 592 Can download file 'ascii'
+ok 593 Can download file 'name with spaces'
+ok 594 Can download file 'name;with;semicolons'
+ok 595 Can download specifying a different ASCII file name
+ok 596 Can send image in room message
+ok 597 Can fetch images in room
+ok 598 POSTed media can be thumbnailed
+ok 599 Remote media can be thumbnailed
+  ok 1 URL was fetched (Test URL preview)
+  ok 2 Image was fetched (Test URL preview)
+  ok 3 Preview returned successfully (Test URL preview)
+  ok 4 Preview API returned expected values (Test URL preview)
+  1..4
+ok 600 Test URL preview (4 subtests)
+ok 601 Can read configuration endpoint
+  ok 1 Quarantine returns success (Can quarantine media in rooms)
+  ok 2 404 on getting quarantined local media (Can quarantine media in rooms)
+  ok 3 404 on getting quarantined local thumbnails (Can quarantine media in rooms)
+  ok 4 404 on getting quarantined remote media (Can quarantine media in rooms)
+  ok 5 404 on getting quarantined remote thumbnails (Can quarantine media in rooms)
+  1..5
+ok 602 Can quarantine media in rooms (5 subtests)
+ok 603 User appears in user directory
+ok 604 User in private room doesn't appear in user directory
+  ok 1 User initially not in directory (User joining then leaving public room appears and dissappears from directory)
+  ok 2 User appears in directory after join (User joining then leaving public room appears and dissappears from directory)
+  ok 3 User not in directory after leaving room (User joining then leaving public room appears and dissappears from directory)
+  1..3
+ok 605 User joining then leaving public room appears and dissappears from directory (3 subtests)
+  ok 1 User initially not in directory (Users appear/disappear from directory when join_rules are changed)
+  ok 2 User appears in directory after join_rules set to public (Users appear/disappear from directory when join_rules are changed)
+  ok 3 User not in directory after join_rules set to private (Users appear/disappear from directory when join_rules are changed)
+  1..3
+ok 606 Users appear/disappear from directory when join_rules are changed (3 subtests)
+  ok 1 User initially not in directory (Users appear/disappear from directory when history_visibility are changed)
+  ok 2 User appears in directory after history_visibility set to public (Users appear/disappear from directory when history_visibility are changed)
+  ok 3 User not in directory after history_visibility set to private (Users appear/disappear from directory when history_visibility are changed)
+  1..3
+ok 607 Users appear/disappear from directory when history_visibility are changed (3 subtests)
+  ok 1 User initially not in directory (Users stay in directory when join_rules are changed but history_visibility is world_readable)
+  ok 2 User appears in directory after join_rules set to public (Users stay in directory when join_rules are changed but history_visibility is world_readable)
+  ok 3 User still in directory after join_rules set to invite (Users stay in directory when join_rules are changed but history_visibility is world_readable)
+  ok 4 User not in directory after history_visibility set to shared (Users stay in directory when join_rules are changed but history_visibility is world_readable)
+  1..4
+ok 608 Users stay in directory when join_rules are changed but history_visibility is world_readable (4 subtests)
+ok 609 User in remote room doesn't appear in user directory after server left room
+ok 610 User directory correctly update on display name change
+ok 611 User in shared private room does appear in user directory
+ok 612 User in shared private room does appear in user directory until leave
+ok 613 User in dir while user still shares private rooms
+ok 614 Create group
+ok 615 Add group rooms
+ok 616 Remove group rooms
+ok 617 Get local group profile
+ok 618 Get local group users
+ok 619 Add/remove local group rooms
+ok 620 Get local group summary
+ok 621 Get remote group profile
+ok 622 Get remote group users
+ok 623 Add/remove remote group rooms
+ok 624 Get remote group summary
+ok 625 Add local group users
+ok 626 Remove self from local group
+ok 627 Remove other from local group
+ok 628 Add remote group users
+ok 629 Remove self from remote group
+ok 630 Listing invited users of a remote group when not a member returns a 403
+ok 631 Add group category
+ok 632 Remove group category
+ok 633 Get group categories
+ok 634 Add group role
+ok 635 Remove group role
+ok 636 Get group roles
+ok 637 Add room to group summary
+ok 638 Adding room to group summary keeps room_id when fetching rooms in group
+ok 639 Adding multiple rooms to group summary have correct order
+ok 640 Remove room from group summary
+ok 641 Add room to group summary with category
+ok 642 Remove room from group summary with category
+ok 643 Add user to group summary
+ok 644 Adding multiple users to group summary have correct order
+ok 645 Remove user from group summary
+ok 646 Add user to group summary with role
+ok 647 Remove user from group summary with role
+ok 648 Local group invites come down sync
+ok 649 Group creator sees group in sync
+ok 650 Group creator sees group in initial sync
+ok 651 Get/set local group publicity
+ok 652 Bulk get group publicity
+ok 653 Joinability comes down summary
+ok 654 Set group joinable and join it
+ok 655 Group is not joinable by default
+ok 656 Group is joinable over federation
+ok 657 Can bind 3PID via home server
+ok 658 Can bind and unbind 3PID via homeserver
+ok 659 Can unbind 3PID via homeserver when bound out of band
+not ok 660 3PIDs are unbound after account deactivation
+# Started: 2019-07-31 19:45:36.944
+# Ended: 2019-07-31 19:45:37.011
+# HTTP Request failed ( 500 Internal Server Error https://localhost:8800/_matrix/client/r0/account/deactivate?access_token=MDAxY2xvY2F0aW9uIGxvY2FsaG9zdDo4ODAwCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAzYmNpZCB1c2VyX2lkID0gQGFub24tMjAxOTA3MzFfMTk0MTA1LTgzNzpsb2NhbGhvc3Q6ODgwMAowMDE2Y2lkIHR5cGUgPSBhY2Nlc3MKMDAyMWNpZCBub25jZSA9IFJvbGRfSVgtOEZrTHN6dTIKMDAyZnNpZ25hdHVyZSA5PUEn9gvDN0QtHup9NubDSFLbSThuKj4nEPfjm77Bzgo ) from POST https://localhost:8800/_matrix/client/r0/account/deactivate?...
+# {"errcode":"M_UNKNOWN","error":"Internal server error"}
+# 0.025536: Registered new user @anon-20190731_194105-837:localhost:8800
+ok 661 AS can create a user
+ok 662 AS can create a user with an underscore
+ok 663 AS can create a user with inhibit_login
+ok 664 AS cannot create users outside its own namespace
+ok 665 Regular users cannot register within the AS namespace
+ok 666 AS can make room aliases
+ok 667 Regular users cannot create room aliases within the AS namespace
+  ok 1 User joined room via AS (AS-ghosted users can use rooms via AS)
+  ok 2 User posted message via AS (AS-ghosted users can use rooms via AS)
+  1..2
+ok 668 AS-ghosted users can use rooms via AS (2 subtests)
+  ok 1 Ghost joined room themselves (AS-ghosted users can use rooms themselves)
+  ok 2 Ghost posted message themselves (AS-ghosted users can use rooms themselves)
+  ok 3 Creator received ghost's message (AS-ghosted users can use rooms themselves)
+  1..3
+ok 669 AS-ghosted users can use rooms themselves (3 subtests)
+ok 670 Ghost user must register before joining room
+#** Ignoring incoming AS event of type m.room.member
+ok 671 AS can set avatar for ghosted users
+ok 672 AS can set displayname for ghosted users
+ok 673 AS can't set displayname for random users
+  ok 1 Sent invite (Inviting an AS-hosted user asks the AS server)
+  1..1
+ok 674 Inviting an AS-hosted user asks the AS server (1 subtests)
+  ok 1 Received AS request (Accesing an AS-hosted room alias asks the AS server)
+  ok 2 Created room alias mapping (Accesing an AS-hosted room alias asks the AS server)
+  1..2
+ok 675 Accesing an AS-hosted room alias asks the AS server (2 subtests)
+ok 676 Events in rooms with AS-hosted room aliases are sent to AS server
+#** Ignoring incoming AS event of type m.room.member
+ok 677 AS user (not ghost) can join room without registering
+#** Ignoring incoming AS event of type m.room.member
+#** Ignoring incoming AS event of type m.room.member
+ok 678 AS user (not ghost) can join room without registering, with user_id query param
+#** Ignoring incoming AS event of type m.room.member
+ok 679 HS provides query metadata
+ok 680 HS can provide query metadata on a single protocol
+ok 681 HS will proxy request for 3PU mapping
+ok 682 HS will proxy request for 3PL mapping
+ok 683 AS can publish rooms in their own list
+ok 684 AS and main public room lists are separate
+not ok 685 AS can deactivate a user
+# Started: 2019-07-31 19:45:40.971
+# Ended: 2019-07-31 19:45:41.000
+# HTTP Request failed ( 500 Internal Server Error https://localhost:8800/_matrix/client/r0/account/deactivate?access_token=lFuOrdhx~K~lW%5EWfl%7B%40jyxDQxJHdnUeE&user_id=%40astest-4-20190731_194105%3Alocalhost%3A8800 ) from POST https://localhost:8800/_matrix/client/r0/account/deactivate?...
+# {"errcode":"M_UNKNOWN","error":"Internal server error"}
+  ok 1 Bob received invite (Test that a message is pushed)
+  ok 2 Alice's pusher created (Test that a message is pushed)
+  ok 3 Message sent (Test that a message is pushed)
+  ok 4 Alice was pushed (Test that a message is pushed)
+  ok 5 Receipt sent (Test that a message is pushed)
+  ok 6 Zero badge push received (Test that a message is pushed)
+  1..6
+ok 686 Test that a message is pushed (6 subtests)
+ok 687 Invites are pushed
+ok 688 Rooms with aliases are correctly named in pushed
+ok 689 Rooms with names are correctly named in pushed
+ok 690 Rooms with canonical alias are correctly named in pushed
+ok 691 Rooms with many users are correctly pushed
+ok 692 Don't get pushed for rooms you've muted
+ok 693 Can add global push rule for room
+ok 694 Can add global push rule for sender
+ok 695 Can add global push rule for content
+ok 696 Can add global push rule for override
+ok 697 Can add global push rule for underride
+#** Use of strings with code points over 0xFF as arguments to bitwise xor (^) operator is deprecated at lib/SyTest/HTTPClient.pm line 151.
+#** Use of strings with code points over 0xFF as arguments to bitwise xor (^) operator is deprecated at lib/SyTest/HTTPClient.pm line 151.
+#** Use of strings with code points over 0xFF as arguments to bitwise xor (^) operator is deprecated at lib/SyTest/HTTPClient.pm line 151.
+#** Use of strings with code points over 0xFF as arguments to bitwise xor (^) operator is deprecated at lib/SyTest/HTTPClient.pm line 151.
+#** Use of strings with code points over 0xFF as arguments to bitwise xor (^) operator is deprecated at lib/SyTest/HTTPClient.pm line 151.
+#** Use of strings with code points over 0xFF as arguments to bitwise xor (^) operator is deprecated at lib/SyTest/HTTPClient.pm line 151.
+#** Use of strings with code points over 0xFF as arguments to bitwise xor (^) operator is deprecated at lib/SyTest/HTTPClient.pm line 151.
+#** Use of strings with code points over 0xFF as arguments to bitwise xor (^) operator is deprecated at lib/SyTest/HTTPClient.pm line 151.
+ok 698 Can add global push rule for content
+ok 699 New rules appear before old rules by default
+ok 700 Can add global push rule before an existing rule
+ok 701 Can add global push rule after an existing rule
+ok 702 Can delete a push rule
+ok 703 Can disable a push rule
+ok 704 Adding the same push rule twice is idempotent
+ok 705 Messages that notify from another user increment unread notification count
+ok 706 Messages that highlight from another user increment unread highlight count
+ok 707 Can change the actions of default rules
+ok 708 Changing the actions of an unknown default rule fails with 404
+ok 709 Can change the actions of a user specified rule
+ok 710 Changing the actions of an unknown rule fails with 404
+ok 711 Can fetch a user's pushers
+ok 712 Push rules come down in an initial /sync
+ok 713 Adding a push rule wakes up an incremental /sync
+ok 714 Disabling a push rule wakes up an incremental /sync
+ok 715 Enabling a push rule wakes up an incremental /sync
+ok 716 Setting actions for a push rule wakes up an incremental /sync
+ok 717 Can enable/disable default rules
+not ok 718 (expected fail) Enabling an unknown default rule fails with 404 # TODO expected fail
+# Started: 2019-07-31 19:45:48.248
+# Ended: 2019-07-31 19:45:48.279
+# Expected to receive an HTTP 404 failure but it succeeded at ./run-tests.pl line 718.
+# 0.022935: Registered new user @anon-20190731_194105-893:localhost:8800
+# 0.030664: Response
+# {}
+  ok 1 Alice's pusher 1 created (Test that rejected pushers are removed.)
+  ok 2 Alice's pusher 2 created (Test that rejected pushers are removed.)
+  ok 3 Message 1 Pushed (Test that rejected pushers are removed.)
+  ok 4 Message 2 Pushed (Test that rejected pushers are removed.)
+  1..4
+ok 719 Test that rejected pushers are removed. (4 subtests)
+ok 720 Notifications can be viewed with GET /notifications
+ok 721 Trying to add push rule with no scope fails with 400
+ok 722 Trying to add push rule with invalid scope fails with 400
+ok 723 Trying to add push rule with missing template fails with 400
+ok 724 Trying to add push rule with missing rule_id fails with 400
+ok 725 Trying to add push rule with empty rule_id fails with 400
+ok 726 Trying to add push rule with invalid template fails with 400
+ok 727 Trying to add push rule with rule_id with slashes fails with 400
+ok 728 Trying to add push rule with override rule without conditions fails with 400
+ok 729 Trying to add push rule with underride rule without conditions fails with 400
+ok 730 Trying to add push rule with condition without kind fails with 400
+ok 731 Trying to add push rule with content rule without pattern fails with 400
+ok 732 Trying to add push rule with no actions fails with 400
+ok 733 Trying to add push rule with invalid action fails with 400
+ok 734 Trying to add push rule with invalid attr fails with 400
+ok 735 Trying to add push rule with invalid value for enabled fails with 400
+ok 736 Trying to get push rules with no trailing slash fails with 400
+ok 737 Trying to get push rules with scope without trailing slash fails with 400
+ok 738 Trying to get push rules with template without tailing slash fails with 400
+ok 739 Trying to get push rules with unknown scope fails with 400
+ok 740 Trying to get push rules with unknown template fails with 400
+ok 741 Trying to get push rules with unknown attribute fails with 400
+ok 742 Trying to get push rules with unknown rule_id fails with 404
+ok 743 GET /initialSync with non-numeric 'limit'
+ok 744 GET /events with non-numeric 'limit'
+ok 745 GET /events with negative 'limit'
+ok 746 GET /events with non-numeric 'timeout'
+ok 747 Event size limits
+ok 748 Check creating invalid filters returns 4xx
+  ok 1 Created a room (New federated private chats get full presence information (SYN-115))
+  ok 2 Sent invite (New federated private chats get full presence information (SYN-115))
+  ok 3 Received invite (New federated private chats get full presence information (SYN-115))
+  ok 4 Joined room (New federated private chats get full presence information (SYN-115))
+  ok 5 User @anon-20190731_194105-922:localhost:8800 received presence for @anon-20190731_194105-922:localhost:8800 (New federated private chats get full presence information (SYN-115))
+  ok 6 User @anon-20190731_194105-922:localhost:8800 received presence for @anon-20190731_194105-923:localhost:8829 (New federated private chats get full presence information (SYN-115))
+  ok 7 User @anon-20190731_194105-923:localhost:8829 received presence for @anon-20190731_194105-922:localhost:8800 (New federated private chats get full presence information (SYN-115))
+  ok 8 User @anon-20190731_194105-923:localhost:8829 received presence for @anon-20190731_194105-923:localhost:8829 (New federated private chats get full presence information (SYN-115))
+  ok 9 Both users see both users' presence (New federated private chats get full presence information (SYN-115))
+  1..9
+ok 749 (expected fail) New federated private chats get full presence information (SYN-115) (9 subtests) # TODO passed but expected fail
+  ok 1 Created room (Left room members do not cause problems for presence)
+  ok 2 Left room (Left room members do not cause problems for presence)
+  1..2
+ok 750 Left room members do not cause problems for presence (2 subtests)
+  ok 1 Created room (Rooms can be created with an initial invite list (SYN-205))
+  ok 2 Invitee received invite event (Rooms can be created with an initial invite list (SYN-205))
+  1..2
+ok 751 Rooms can be created with an initial invite list (SYN-205) (2 subtests)
+  ok 1 Created room (Typing notifications don't leak)
+  ok 2 Members received notification (Typing notifications don't leak)
+  ok 3 Non-member did not receive it up to timeout (Typing notifications don't leak)
+  1..3
+ok 752 Typing notifications don't leak (3 subtests)
+  ok 1 Created room (Non-present room members cannot ban others)
+  ok 2 Set powerlevel (Non-present room members cannot ban others)
+  ok 3 Attempt to ban is rejected (Non-present room members cannot ban others)
+  1..3
+ok 753 Non-present room members cannot ban others (3 subtests)
+  ok 1 Set push rules for user (Getting push rules doesn't corrupt the cache SYN-390)
+  ok 2 Got push rules the first time (Getting push rules doesn't corrupt the cache SYN-390)
+  ok 3 Got push rules the second time (Getting push rules doesn't corrupt the cache SYN-390)
+  1..3
+ok 754 Getting push rules doesn't corrupt the cache SYN-390 (3 subtests)
+  ok 1 User A created a room (Test that we can be reinvited to a room we created)
+  ok 2 User A set the join rules to 'invite' (Test that we can be reinvited to a room we created)
+  ok 3 User A invited user B (Test that we can be reinvited to a room we created)
+  ok 4 User B received the invite from A (Test that we can be reinvited to a room we created)
+  ok 5 User B joined the room (Test that we can be reinvited to a room we created)
+  ok 6 User A set user B's power level to 100 (Test that we can be reinvited to a room we created)
+  ok 7 User A left the room (Test that we can be reinvited to a room we created)
+  ok 8 User B received the leave event (Test that we can be reinvited to a room we created)
+  ok 9 User B invited user A back to the room (Test that we can be reinvited to a room we created)
+  ok 10 User A received the invite from user B (Test that we can be reinvited to a room we created)
+  ok 11 User A joined the room (Test that we can be reinvited to a room we created)
+  1..11
+ok 755 Test that we can be reinvited to a room we created (11 subtests)
+  ok 1 User A created a room (Multiple calls to /sync should not cause 500 errors)
+  ok 2 Sent typing notification (Multiple calls to /sync should not cause 500 errors)
+  ok 3 Sent message (Multiple calls to /sync should not cause 500 errors)
+  ok 4 Updated read receipt (Multiple calls to /sync should not cause 500 errors)
+  ok 5 Completed first sync (Multiple calls to /sync should not cause 500 errors)
+  ok 6 Completed second sync (Multiple calls to /sync should not cause 500 errors)
+  1..6
+ok 756 Multiple calls to /sync should not cause 500 errors (6 subtests)
+ok 757 Guest user can call /events on another world_readable room (SYN-606)
+ok 758 Real user can call /events on another world_readable room (SYN-606)
+ok 759 Events come down the correct room
+# Killing 166
+# Killing 206
+206 stopped
+166 stopped
+1..759
