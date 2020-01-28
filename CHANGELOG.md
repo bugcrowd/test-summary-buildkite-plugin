@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v1.11.0](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.10.0...v1.11.0) - 2020-01-28
+- Forward `HTTP_PROXY` ENV var to respect proxies [#58](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/58)
+
 ## [v1.10.0](https://github.com/bugcrowd/test-summary-buildkite-plugin/compare/v1.9.1...v1.10.0) - 2019-10-12
 - Support TAP version 12 plus skipped and TODO tests [#54](https://github.com/bugcrowd/test-summary-buildkite-plugin/pull/54)
 
