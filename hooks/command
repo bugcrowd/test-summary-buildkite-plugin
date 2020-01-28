@@ -33,4 +33,5 @@ docker run --rm \
   --mount type=bind,src=/tmp,dst=/tmp \
   -e BUILDKITE_BUILD_ID -e BUILDKITE_JOB_ID -e BUILDKITE_PLUGINS \
   -e BUILDKITE_AGENT_ID -e BUILDKITE_AGENT_ACCESS_TOKEN -e BUILDKITE_AGENT_ENDPOINT   \
+  -e HTTP_PROXY -e HTTPS_PROXY \
   $IMAGE
