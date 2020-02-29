@@ -8,7 +8,7 @@ gem 'bundler', '~> 1.16'
 gem 'haml'
 
 group :development, :test do
-  gem 'rake', '~> 10.0'
+  gem 'rake', '~> 12.3'
   gem 'rspec', '~> 3.0'
   gem 'rspec_junit_formatter'
   gem 'rubocop'
