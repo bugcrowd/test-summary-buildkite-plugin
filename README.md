@@ -151,6 +151,7 @@ Other formatter options are:
 * `style:` Set the annotation style. Defaults to `error`.
 * `fail_on_error:` Whether the command should return non-zero exit status on failure. Defaults to `false` so failing
   to annotate a build does not cause the entire pipeline to fail.
+* `mount_in_buildkite_agent:` Whether to bind mount `buildkite-agent` into the container. The `bugcrowd/test-summary-buildkite-plugin` image has `buildkite-agent` v3 installed. This option is useful if the agent itself is running in a container, thus it can't bind mount the agent binary directly into the container. Defaults to `true`, i.e. the same agent binary performing the build will be mounted in.
   
 ## Truncation
 

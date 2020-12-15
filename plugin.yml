@@ -66,6 +66,8 @@ configuration:
       type: string
     fail_on_error:
       type: boolean
+    mount_in_buildkite_agent:
+      type: boolean
   required:
     - inputs
   additionalProperties: false
