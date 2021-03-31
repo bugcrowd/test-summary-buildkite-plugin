@@ -40,12 +40,8 @@ module TestSummaryBuildkitePlugin
           Agent.run('artifact', 'download', artifact_path, WORKDIR)
           Dir.glob("#{WORKDIR}/#{artifact_path}")
         rescue Agent::CommandFailed => err
-          if fail_on_error
-            raise
-          else
-            Utils.log_error(err)
-            []
-          end
+          handle_error(err)
+          []
         end
       end
 
@@ -63,6 +59,9 @@ module TestSummaryBuildkitePlugin
 
       def filename_to_failures(filename)
         file_contents_to_failures(read(filename)).each { |failure| failure.job_id = job_id(filename) }
+      rescue StandardError => err
+        handle_error(err)
+        []
       end
 
       def job_id(filename)
@@ -76,6 +75,14 @@ module TestSummaryBuildkitePlugin
           r
         else
           DEFAULT_JOB_ID_REGEX
+        end
+      end
+
+      def handle_error(err)
+        if fail_on_error
+          raise err
+        else
+          Utils.log_error(err)
         end
       end
     end

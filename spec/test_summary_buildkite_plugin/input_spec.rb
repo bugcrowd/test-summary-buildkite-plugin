@@ -265,7 +265,7 @@ severity: fail')
   describe 'setting ascii encoding' do
     let(:type) { 'oneline' }
     let(:artifact_path) { 'eslint-00112233-0011-0011-0011-001122334455.txt' }
-    let(:additional_options) { { encoding: 'ascii' } }
+    let(:additional_options) { { encoding: 'ascii', fail_on_error: true } }
 
     it 'tries to parse as ascii' do
       expect { input.failures }.to raise_error('invalid byte sequence in US-ASCII')
@@ -301,7 +301,7 @@ severity: fail')
     end
 
     context 'with bad custom job_id_regex' do
-      let(:additional_options) { { job_id_regex: '(eslint)' } }
+      let(:additional_options) { { job_id_regex: '(eslint)', fail_on_error: true } }
       let(:artifact_path) { 'eslint-00112233-0011-0011-0011-001122334455.txt' }
 
       it 'gives helpful error' do
@@ -335,6 +335,28 @@ severity: fail')
 
       it 'raises error' do
         expect { input.failures }.to raise_error(TestSummaryBuildkitePlugin::Agent::CommandFailed)
+      end
+    end
+  end
+
+  describe 'parsing exceptions' do
+    let(:type) { 'oneline' }
+    let(:artifact_path) { 'rubocop.txt' }
+
+    before do
+      allow(input).to receive(:file_contents_to_failures).and_raise('no good')
+    end
+
+    it 'handles the error' do
+      expect { input.failures }.to output(/no good/).to_stdout
+      expect(input.failures).to be_empty
+    end
+
+    describe 'with fail_on_error' do
+      let(:additional_options) { { fail_on_error: true } }
+
+      it 're-raises the error' do
+        expect { input.failures }.to raise_error('no good')
       end
     end
   end
