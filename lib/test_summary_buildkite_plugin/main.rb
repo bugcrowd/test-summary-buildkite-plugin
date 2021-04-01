@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 module TestSummaryBuildkitePlugin
-  class Runner
+  class Main
     MAX_MARKDOWN_SIZE = 100_000
+    OUTPUT_PATH = 'test-summary.html'
 
     attr_reader :options
 
@@ -11,21 +12,35 @@ module TestSummaryBuildkitePlugin
     end
 
     def run
-      markdown = Truncater.new(
+      processor = Processor.new(
+        formatter_options: formatter,
         max_size: MAX_MARKDOWN_SIZE,
+        output_path: OUTPUT_PATH,
         inputs: inputs,
-        formatter_opts: options[:formatter],
         fail_on_error: fail_on_error
-      ).markdown
-      if markdown.nil? || markdown.empty?
+      )
+
+      if processor.truncated_markdown.nil? || processor.truncated_markdown.empty?
         puts('No errors found! 🎉')
       else
-        annotate(markdown)
+        upload_artifact(processor.inputs_markdown)
+        annotate(processor.truncated_markdown)
       end
+    end
+
+    private
+
+    def upload_artifact(markdown)
+      File.write(OUTPUT_PATH, Utils.standalone_markdown(markdown))
+      Agent.run('artifact', 'upload', OUTPUT_PATH)
     end
 
     def annotate(markdown)
       Agent.run('annotate', '--context', context, '--style', style, stdin: markdown)
+    end
+
+    def formatter
+      options[:formatter] || {}
     end
 
     def inputs
