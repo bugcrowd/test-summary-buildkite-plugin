@@ -66,6 +66,8 @@ configuration:
       type: string
     fail_on_error:
       type: boolean
+    run_without_docker:
+      type: boolean
   required:
     - inputs
   additionalProperties: false
