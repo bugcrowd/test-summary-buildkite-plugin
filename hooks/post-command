@@ -2,7 +2,7 @@
 
 set -eEuo pipefail
 
-DOCKER_REPO=bugcrowd/test-summary-buildkite-plugin
+DOCKER_REPO=linhpha/test-summary-buildkite-plugin
 
 on_failure() {
     echo "Command failed with exit status: $?"
