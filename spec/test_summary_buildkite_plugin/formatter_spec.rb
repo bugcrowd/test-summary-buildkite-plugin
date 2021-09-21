@@ -7,9 +7,10 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
   let(:truncate) { nil }
   let(:input) { double(TestSummaryBuildkitePlugin::Input::Base, label: 'animals') }
   let(:failures) { [] }
-  let(:options) { { type: type, show_first: show_first, truncate: truncate } }
+  let(:options) { { type: type, show_first: show_first } }
+  let(:formatter) { described_class.create(input: input, output_path: 'output_path', options: options) }
 
-  subject(:markdown) { described_class.create(options).markdown(input) }
+  subject(:markdown) { formatter.markdown(truncate) }
 
   before do
     allow(input).to receive(:failures).and_return(failures)
@@ -70,6 +71,10 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
 
       it 'has a <details> element' do
         expect(markdown).to include('<details')
+      end
+
+      it 'doesn\'t have a link to output artifact' do
+        expect(markdown).to_not include('[See all failures]')
       end
 
       context 'and job_id' do
@@ -142,6 +147,10 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
 
       it 'includes the summary' do
         expect(markdown).to include('ponies are awesome')
+      end
+
+      it 'doesn\'t have a link to output artifact' do
+        expect(markdown).to_not include('[See all failures]')
       end
     end
   end
@@ -227,6 +236,10 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
         expect(markdown).to include('dog', 'cat', 'pony')
         expect(markdown).not_to include('horse', 'unicorn')
       end
+
+      it 'has a link to output artifact' do
+        expect(markdown.delete("\n")).to include('<a href=\'artifact://output_path\'>See all failures</a>')
+      end
     end
 
     context 'without truncation' do
@@ -245,7 +258,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
   end
 
   describe 'with no formatter options' do
-    subject(:markdown) { described_class.create.markdown(input) }
+    let(:options) { {} }
     let(:failures) do
       [TestSummaryBuildkitePlugin::Failure::Structured.new(
         summary: 'ponies are awesome',

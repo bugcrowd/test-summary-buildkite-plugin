@@ -4,51 +4,55 @@ require 'haml'
 
 module TestSummaryBuildkitePlugin
   class Formatter
-    def self.create(**options)
+    def self.create(input:, output_path:, options:)
       options[:type] ||= 'details'
       type = options[:type].to_sym
       raise "Unknown type: #{type}" unless TYPES.key?(type)
-      TYPES[type].new(options)
+      TYPES[type].new(input: input, output_path: output_path, options: options)
     end
 
     class Base
-      attr_reader :options
+      attr_reader :input, :output_path, :options
 
-      def initialize(options = {})
+      def initialize(input:, output_path:, options:)
+        @input = input
+        @output_path = output_path
         @options = options || {}
       end
 
-      def markdown(input)
+      def markdown(truncate)
         return nil if input.failures.count.zero?
-        [heading(input), input_markdown(input), footer(input)].compact.join("\n\n")
+        [heading(truncate), input_markdown(truncate), footer].compact.join("\n\n")
       end
 
       protected
 
-      def input_markdown(input)
-        if show_first.negative? || show_first >= include_failures(input).count
-          failures_markdown(include_failures(input))
+      def input_markdown(truncate)
+        failures = include_failures(truncate)
+
+        if show_first.negative? || show_first >= failures.count
+          failures_markdown(failures, truncate)
         elsif show_first.zero?
-          details('Show failures', failures_markdown(include_failures(input)))
+          details('Show failures', failures_markdown(failures, truncate))
         else
-          failures_markdown(include_failures(input)[0...show_first]) +
-            details('Show additional failures', failures_markdown(include_failures(input)[show_first..-1]))
+          failures_markdown(failures[0...show_first], false) +
+            details('Show additional failures', failures_markdown(failures[show_first..-1], truncate))
         end
       end
 
-      def failures_markdown(failures)
-        render_template('failures', failures: failures)
+      def failures_markdown(failures, truncate)
+        render_template('failures', failures: failures, output_path: truncate ? output_path : nil)
       end
 
-      def heading(input)
+      def heading(truncate)
         count = input.failures.count
-        show_count = include_failures(input).count
+        show_count = include_failures(truncate).count
         s = "##### #{input.label}: #{count} failure#{'s' unless count == 1}"
         s += "\n\n_Including first #{show_count} failures_" if show_count < count
         s
       end
 
-      def footer(input)
+      def footer
         job_ids = input.failures.map(&:job_id).uniq.reject(&:nil?)
         render_template('footer', job_ids: job_ids)
       end
@@ -65,11 +69,7 @@ module TestSummaryBuildkitePlugin
         options[:type] || 'details'
       end
 
-      def truncate
-        options[:truncate]
-      end
-
-      def include_failures(input)
+      def include_failures(truncate)
         if truncate
           input.failures[0...truncate]
         else

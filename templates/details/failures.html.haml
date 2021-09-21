@@ -27,3 +27,7 @@
       - else
         %code
           = failure.summary
+
+- if output_path
+  %a{href: "artifact://#{output_path}"}
+    See all failures
