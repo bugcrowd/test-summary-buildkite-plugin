@@ -6,13 +6,17 @@ require 'rexml/document'
 
 module TestSummaryBuildkitePlugin
   module Input
-    WORKDIR = 'tmp/test-summary'
+    WORKDIR = "/tmp/test-summary/#{ENV['BUILDKITE_BUILD_ID']}"
     DEFAULT_JOB_ID_REGEX = /(?<job_id>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/
 
     def self.create(type:, **options)
       type = type.to_sym
       raise StandardError, "Unknown file type: #{type}" unless TYPES.key?(type)
       TYPES[type].new(options)
+    end
+
+    def self.clean_up
+      FileUtils.rm_rf(WORKDIR)
     end
 
     class Base

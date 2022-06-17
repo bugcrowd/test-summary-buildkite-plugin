@@ -22,6 +22,8 @@ module TestSummaryBuildkitePlugin
       else
         annotate(markdown)
       end
+
+      Input.clean_up
     end
 
     def annotate(markdown)
