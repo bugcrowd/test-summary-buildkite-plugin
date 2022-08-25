@@ -7,7 +7,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
   let(:options) { { type: type, label: label, artifact_path: artifact_path }.merge(additional_options) }
   let(:additional_options) { {} }
 
-  subject(:input) { described_class.create(options) }
+  subject(:input) { described_class.create(**options) }
 
   describe 'oneline' do
     let(:type) { 'oneline' }

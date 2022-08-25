@@ -42,7 +42,7 @@ module TestSummaryBuildkitePlugin
     private
 
     def formatter(truncate)
-      @_formatter[truncate] ||= Formatter.create(formatter_opts.merge(truncate: truncate))
+      @_formatter[truncate] ||= Formatter.create(**formatter_opts.merge(truncate: truncate))
     end
 
     def input_markdown(input, truncate = nil)

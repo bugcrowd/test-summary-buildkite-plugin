@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe TestSummaryBuildkitePlugin::Runner do
   let(:params) { { inputs: inputs } }
-  let(:runner) { described_class.new(params) }
+  let(:runner) { described_class.new(**params) }
 
   subject(:run) { runner.run }
 

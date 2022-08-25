@@ -16,7 +16,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Truncater do
   let(:formatter_opts) { nil }
   let(:fail_on_error) { false }
   let(:options) { { max_size: max_size, inputs: inputs, formatter_opts: formatter_opts, fail_on_error: fail_on_error } }
-  let(:truncater) { described_class.new(options) }
+  let(:truncater) { described_class.new(**options) }
 
   subject(:truncated) { truncater.markdown }
 

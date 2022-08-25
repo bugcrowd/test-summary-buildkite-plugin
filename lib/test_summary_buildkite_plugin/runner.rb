@@ -22,8 +22,6 @@ module TestSummaryBuildkitePlugin
       else
         annotate(markdown)
       end
-
-      Input.clean_up
     end
 
     def annotate(markdown)
@@ -31,7 +29,7 @@ module TestSummaryBuildkitePlugin
     end
 
     def inputs
-      @inputs ||= options[:inputs].map { |opts| Input.create(opts.merge(fail_on_error: fail_on_error)) }
+      @inputs ||= options[:inputs].map { |opts| Input.create(**opts.merge(fail_on_error: fail_on_error)) }
     end
 
     def context

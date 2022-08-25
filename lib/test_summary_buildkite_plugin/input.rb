@@ -16,10 +16,6 @@ module TestSummaryBuildkitePlugin
       TYPES[type].new(options)
     end
 
-    def self.clean_up
-      FileUtils.rm_rf(WORKDIR)
-    end
-
     class Base
       attr_reader :label, :artifact_path, :options
 
