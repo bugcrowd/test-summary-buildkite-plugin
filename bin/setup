@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PLUGIN_BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
-
-bundle install --quiet --gemfile="${PLUGIN_BASEDIR}/Gemfile"
-
-# Do any other automated setup that you need to do here
+bundle install --quiet

@@ -18,8 +18,8 @@ trap on_failure ERR
 PLUGIN_BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
 
 if [[ ${BUILDKITE_PLUGIN_TEST_SUMMARY_RUN_WITHOUT_DOCKER:-false} = true ]]; then
-    $PLUGIN_BASEDIR/bin/setup
-    $PLUGIN_BASEDIR/bin/run
+    BUNDLE_GEMFILE="$PLUGIN_BASEDIR/Gemfile" $PLUGIN_BASEDIR/bin/setup
+    BUNDLE_GEMFILE="$PLUGIN_BASEDIR/Gemfile" bundler exec $PLUGIN_BASEDIR/bin/run
 else
     TAG=$(git describe --tags --exact-match 2> /dev/null || true)
 
