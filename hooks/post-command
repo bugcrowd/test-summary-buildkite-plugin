@@ -1,17 +1,15 @@
 #!/bin/bash
 
-set -eEuo pipefail
+set -euo pipefail
 
 PLUGIN_BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
 # shellcheck source=./lib/helpers.bash
 source "${PLUGIN_BASEDIR}/lib/helpers.bash"
 
-trap on_failure ERR
-
 # if there are no artifacts uploaded from the step, the post-artifact hook won't be run
-if [[ -n "${BUILDKITE_ARTIFACT_PATHS}" ]]; then
-    echo "Running test-summary in post-artifact since step 'artifact_paths' were found"
+if [[ -z "${BUILDKITE_ARTIFACT_PATHS}" ]]; then
+    echo "Running test-summary in post-command since step 'artifact_paths' were not found"
     run_plugin
 else
-    echo "Skipping since plugin was run in post-command"
+    echo "Skipping, plugin will be run in post-artifact since since step 'artifact_paths' were found"
 fi
