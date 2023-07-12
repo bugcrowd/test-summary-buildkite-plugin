@@ -11,7 +11,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Failure do
     describe 'strip_colors' do
       let(:details) { 'Failure/Error: \\e[0m\\e[32mit\\e[0m { \\e[32mexpect\\e[0m(url).to be_nil }' }
 
-      subject(:failure) { described_class.new(params) }
+      subject(:failure) { described_class.new(**params) }
 
       before { failure.strip_colors }
 

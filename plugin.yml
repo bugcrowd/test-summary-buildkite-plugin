@@ -21,6 +21,7 @@ configuration:
               - checkstyle
               - tap
               - oneline
+              - rspec_json
           encoding:
             type: string
           strip_colors:

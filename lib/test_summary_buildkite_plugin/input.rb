@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require 'tmpdir'
+require 'json'
 
 # We don't use nokogiri because we use an alpine-based docker image
 # And adding the required dependencies triples the size of the image
@@ -6,13 +8,13 @@ require 'rexml/document'
 
 module TestSummaryBuildkitePlugin
   module Input
-    WORKDIR = 'tmp/test-summary'
+    WORKDIR = Dir.mktmpdir
     DEFAULT_JOB_ID_REGEX = /(?<job_id>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/
 
     def self.create(type:, **options)
       type = type.to_sym
       raise StandardError, "Unknown file type: #{type}" unless TYPES.key?(type)
-      TYPES[type].new(options)
+      TYPES[type].new(**options)
     end
 
     class Base
@@ -217,11 +219,49 @@ module TestSummaryBuildkitePlugin
       end
     end
 
+    class RSpecJSON < Base
+      def file_contents_to_failures(str)
+        json = JSON.parse(str)
+
+        json["examples"].select { |e| e["status"] == "failed" }.map do |example|
+          Failure::Structured.new(
+            summary: summary(example),
+            message: message(example),
+            details: details(example),
+          )
+        end
+      end
+
+      def summary(example)
+        "#{example['id']} : #{example['full_description']}"
+      end
+
+      def message(example)
+        if example["failure_line"] # This isn't in the standard JSON formatter
+          "Failure/Error: #{example['failure_line']}"
+        else
+          example["message"]
+        end
+      end
+
+      def details(example)
+        if example["failure_line"]
+          [
+            example["exception"]["message"],
+            *example["exception"]["backtrace"],
+          ].join("\n")
+        else
+          example["exception"]["backtrace"].join("\n")
+        end
+      end
+    end
+
     TYPES = {
       oneline: Input::OneLine,
       junit: Input::JUnit,
       tap: Input::Tap,
-      checkstyle: Input::Checkstyle
+      checkstyle: Input::Checkstyle,
+      rspec_json: Input::RSpecJSON,
     }.freeze
   end
 end

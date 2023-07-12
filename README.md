@@ -7,6 +7,7 @@ for all your test failures using
 Supported formats:
 
 * JUnit
+* Rspec JSON
 * Checkstyle
 * [TAP](https://testanything.org)^
 * Plain text files with one failure per line
@@ -57,20 +58,23 @@ Add a build step using the test-summary plugin:
 ```yaml
   - label: annotate
     plugins:
-      - bugcrowd/test-summary#v1.11.0:
+      - instacart/test-summary#v1.17.0:
           inputs:
-            - label: rspec
+            - label: RSpec
               artifact_path: artifacts/rspec*
               type: junit
-            - label: eslint
+            - label: ESLint
               artifact_path: artifacts/eslint.xml
               type: checkstyle
             - label: ava
               artifact_path: artifacts/ava.tap
               type: tap
-            - label: rubocop
+            - label: RuboCop
               artifact_path: artifacts/rubocop.txt
               type: oneline
+            - label: RSpec (JSON)
+              artifact_path: artifacts/rspec.json
+              type: rspec_json
           formatter:
             type: details
           context: test-summary
@@ -86,7 +90,7 @@ The plugin takes a list of input sources. Each input source has:
 
 * `label:` the name used in the heading to identify the test group.
 * `artifact_path:` a glob used to download one or more artifacts.
-* `type:` one of `junit`, `checkstyle`, `tap` or `oneline`.
+* `type:` one of `junit`, `rspec_json`, `checkstyle`, `tap` or `oneline`.
 * `encoding:` The file encoding to use. Defaults to `UTF-8`.
 * `strip_colors:` Remove ANSI color escape sequences. Defaults to `false`.
 * `crop:` (`oneline` type only) Number of lines to crop from the start and end of the file,
@@ -152,7 +156,7 @@ Other formatter options are:
 * `fail_on_error:` Whether the command should return non-zero exit status on failure. Defaults to `false` so failing
   to annotate a build does not cause the entire pipeline to fail.
 * `run_without_docker:` Set the enviroment to run without docker. Defaults to `false`.
-  
+
 ## Truncation
 
 Buildkite has a maximum annotation size of 100 kilobytes. If there are too many failures to fit within this limit, the

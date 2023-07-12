@@ -2,13 +2,13 @@
 
 source 'https://rubygems.org'
 
-git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
-
-gem 'bundler', '~> 1.16'
+gem 'bundler', '~> 2.3'
 gem 'haml'
+gem 'rexml'
+gem 'json'
 
 group :development, :test do
-  gem 'rake', '~> 12.3'
+  gem 'rake', '~> 13.0'
   gem 'rspec', '~> 3.0'
   gem 'rspec_junit_formatter'
   gem 'rubocop'

@@ -13,6 +13,8 @@ require 'test_summary_buildkite_plugin/truncater'
 require 'test_summary_buildkite_plugin/utils'
 require 'test_summary_buildkite_plugin/version'
 
+ROOT_DIR = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+
 module TestSummaryBuildkitePlugin
   def self.run
     plugins = JSON.parse(ENV.fetch('BUILDKITE_PLUGINS'), symbolize_names: true)

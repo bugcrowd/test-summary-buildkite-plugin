@@ -9,7 +9,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Formatter do
   let(:failures) { [] }
   let(:options) { { type: type, show_first: show_first, truncate: truncate } }
 
-  subject(:markdown) { described_class.create(options).markdown(input) }
+  subject(:markdown) { described_class.create(**options).markdown(input) }
 
   before do
     allow(input).to receive(:failures).and_return(failures)
