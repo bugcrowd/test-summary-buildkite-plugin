@@ -58,7 +58,7 @@ Add a build step using the test-summary plugin:
 ```yaml
   - label: annotate
     plugins:
-      - instacart/test-summary#v1.16.0:
+      - instacart/test-summary#v1.17.0:
           inputs:
             - label: RSpec
               artifact_path: artifacts/rspec*
