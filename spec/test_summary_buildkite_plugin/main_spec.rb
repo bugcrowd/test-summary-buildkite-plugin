@@ -2,11 +2,11 @@
 
 require 'spec_helper'
 
-RSpec.describe TestSummaryBuildkitePlugin::Runner do
+RSpec.describe TestSummaryBuildkitePlugin::Main do
   let(:params) { { inputs: inputs } }
-  let(:runner) { described_class.new(params) }
+  let(:main) { described_class.new(params) }
 
-  subject(:run) { runner.run }
+  subject(:run) { main.run }
 
   context 'with no failures' do
     let(:inputs) do
@@ -35,6 +35,7 @@ RSpec.describe TestSummaryBuildkitePlugin::Runner do
     it 'calls annotate with correct args' do
       run
       expect(agent_annotate_commands.first).to include('annotate', '--context', 'test-summary', '--style', 'error')
+      expect(agent_artifact_commands).to include(include('artifact', 'upload', 'test-summary.html'))
     end
 
     context 'with custom style' do

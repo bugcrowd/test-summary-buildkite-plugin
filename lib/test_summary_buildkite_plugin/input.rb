@@ -16,6 +16,8 @@ module TestSummaryBuildkitePlugin
     end
 
     class Base
+      include ErrorHandler
+
       attr_reader :label, :artifact_path, :options
 
       def initialize(label:, artifact_path:, **options)
@@ -75,14 +77,6 @@ module TestSummaryBuildkitePlugin
           r
         else
           DEFAULT_JOB_ID_REGEX
-        end
-      end
-
-      def handle_error(err)
-        if fail_on_error
-          raise err
-        else
-          Utils.log_error(err)
         end
       end
     end

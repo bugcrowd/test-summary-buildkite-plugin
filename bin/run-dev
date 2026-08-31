@@ -5,7 +5,6 @@ require 'bundler/setup'
 require 'pathname'
 $LOAD_PATH.unshift(Pathname.new(__FILE__).dirname.dirname.join('lib').to_s)
 
-require 'commonmarker'
 require 'yaml'
 require 'test_summary_buildkite_plugin'
 
@@ -20,8 +19,7 @@ module TestSummaryBuildkitePlugin
       log(args, stdin: stdin)
       if args.first == 'annotate'
         context = args[2]
-        content = CommonMarker.render_html(stdin)
-        html = HamlRender.render('test_layout', content: content)
+        html = Utils.standalone_markdown(stdin)
         FileUtils.mkdir_p('tmp')
         out = Pathname.new('tmp').join(context + '.html')
         out.open('w') { |file| file.write(html) }

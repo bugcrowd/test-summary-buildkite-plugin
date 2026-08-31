@@ -1,3 +1,7 @@
 %pre
   %code
     = failures.map(&:summary).join("\n")
+
+- if output_path
+  %a{href: "artifact://#{output_path}"}
+    See all failures
