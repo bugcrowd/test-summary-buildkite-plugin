@@ -177,6 +177,80 @@ RSpec.describe TestSummaryBuildkitePlugin::Input do
         expect(input.failures.first.details).to be_nil
       end
     end
+
+    context 'with failure and error elements in one testcase' do
+      let(:mixed_failure_junit) do
+        <<~XML
+          <testsuite>
+            <testcase name="mixed">
+              <error message="error first in XML"/>
+              <failure message="failure second in XML"/>
+            </testcase>
+          </testsuite>
+        XML
+      end
+
+      it 'preserves failure-before-error ordering' do
+        failures = input.file_contents_to_failures(mixed_failure_junit)
+
+        expect(failures.map(&:message)).to eq(['failure second in XML', 'error first in XML'])
+      end
+    end
+
+    context 'with many passing sibling testcases' do
+      let(:additional_options) do
+        {
+          summary: {
+            format: '%{testsuites.name}: %{testsuite.name}: %{testcase.name} '\
+                    '(%{failure.message}%{error.message})'
+          }
+        }
+      end
+      let(:wide_junit) do
+        testcases = Array.new(2_000) do |index|
+          case index
+          when 500
+            '<testcase name="early error"><error message="boom">error details</error></testcase>'
+          when 1_500
+            '<testcase name="late failure"><failure message="bang">failure details'\
+              '<error message="nested error"/></failure></testcase>'
+          else
+            %(<testcase name="passing #{index}"/>)
+          end
+        end.join
+
+        <<~XML
+          <testsuites name="root">
+            <testsuite name="wide">
+              <error message="suite-level error"/>
+              #{testcases}
+            </testsuite>
+          </testsuites>
+        XML
+      end
+
+      it 'preserves testcase failure and error output in document order' do
+        failures = input.file_contents_to_failures(wide_junit)
+
+        expect(failures.map { |failure| [failure.summary, failure.message, failure.details] }).to eq(
+          [
+            ['root: wide: early error (boom)', 'boom', 'error details'],
+            ['root: wide: late failure (bang)', 'bang', 'failure details']
+          ]
+        )
+      end
+
+      it 'does not build sibling indexes for every passing testcase' do
+        parent_index_calls = 0
+        trace = TracePoint.new(:call) do |event|
+          parent_index_calls += 1 if event.defined_class == REXML::Parent && event.method_id == :index
+        end
+
+        trace.enable { input.file_contents_to_failures(wide_junit) }
+
+        expect(parent_index_calls).to be < 100
+      end
+    end
   end
 
   describe 'with glob path' do
